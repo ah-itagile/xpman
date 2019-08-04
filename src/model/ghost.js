@@ -6,7 +6,7 @@ export default class Ghost {
     constructor(){
         this.posX = 0;
         this.posY = 0;
-        this.direction = Constants.UP;
+        this.direction = Constants.DIRECTION_UP;
     }
 
     getPosX() {
@@ -35,35 +35,51 @@ export default class Ghost {
 
     findPossibleMoves(map) {
         var canMove = {};
-        // canMove[Constants.DIRECTION_LEFT] = this.map.getTileAt(x-1,y).index === this.EMPTY_FIELD;//(map[y][x - 1] === 0);
         canMove[Constants.DIRECTION_RIGHT] = map.getTileAt(this.posX+1,this.posY) === Constants.MAP_FREE;
-        // canMove[Phaser.UP] = this.map.getTileAt(x,y-1).index === this.EMPTY_FIELD;;//(map[y - 1][x] === 0 || map[y - 1][x] === 12);
         canMove[Constants.DIRECTION_DOWN] = map.getTileAt(this.posX,this.posY+1) ===Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_LEFT] = map.getTileAt(this.posX-1,this.posY) === Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_UP] = map.getTileAt(this.posX,this.posY-1) ===Constants.MAP_FREE;
 
         var wasHeading = this.direction;
 
         var options = [];
 
-        // if (canMove[Phaser.LEFT] && wasHeading !== Phaser.RIGHT)
-        // {
-        //     options.push(Phaser.LEFT);
-        // }
 
         if (canMove[Constants.DIRECTION_RIGHT] && wasHeading !== Constants.DIRECTION_LEFT)
         {
             options.push(Constants.DIRECTION_RIGHT);
         }
-
-        // if (canMove[Phaser.UP] && wasHeading !== Phaser.DOWN)
-        // {
-        //     options.push(Phaser.UP);
-        // }
-
+        if (canMove[Constants.DIRECTION_LEFT] && wasHeading !== Constants.DIRECTION_RIGHT)
+        {
+            options.push(Constants.DIRECTION_LEFT);
+        }
         if (canMove[Constants.DIRECTION_DOWN] && wasHeading !== Constants.DIRECTION_UP)
         {
             options.push(Constants.DIRECTION_DOWN);
         }
+        if (canMove[Constants.DIRECTION_UP] && wasHeading !== Constants.DIRECTION_DOWN)
+        {
+            options.push(Constants.DIRECTION_UP);
+        }
 
         return options;                    
     };
+    
+    move(direction) {
+        switch (direction)
+        {
+            case Constants.DIRECTION_LEFT:
+                this.posX -= 1;
+                break;
+            case Constants.DIRECTION_RIGHT:
+                this.posX += 1;
+                break;
+            case Constants.DIRECTION_UP:
+                this.posY -= 1;
+                break;
+            case Constants.DIRECTION_DOWN:
+                this.posY += 1;
+                break;
+        }
+    }
 }
