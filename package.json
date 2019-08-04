@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
     "start": "webpack-dev-server --config webpack/base.js --open",
-    "test": "jasmine" 
+    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/jasmine $@ --config=spec/support/jasmine.json"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/photonstorm/phaser3-project-template#readme",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.2.3",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^1.0.0",
@@ -35,6 +36,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@babel/cli": "^7.0.0",
     "phaser": "^3.16.2"
   }
 }
