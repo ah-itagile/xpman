@@ -10,5 +10,7 @@
       }
     }]
   ],
+  "sourceMaps": "inline",
+  "retainLines": true
 }
   
