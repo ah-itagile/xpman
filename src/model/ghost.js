@@ -3,10 +3,11 @@ import * as Constants from './constants';
 
 export default class Ghost {
 
-    constructor(){
+    constructor(map){
         this.posX = 0;
         this.posY = 0;
         this.direction = Constants.DIRECTION_UP;
+        this.map = map;
     }
 
     getPosX() {
@@ -33,12 +34,12 @@ export default class Ghost {
         this.direction = direction;
     }
 
-    findPossibleMoves(map) {
+    findPossibleMoves() {
         var canMove = {};
-        canMove[Constants.DIRECTION_RIGHT] = map.getTileAt(this.posX+1,this.posY) === Constants.MAP_FREE;
-        canMove[Constants.DIRECTION_DOWN] = map.getTileAt(this.posX,this.posY+1) ===Constants.MAP_FREE;
-        canMove[Constants.DIRECTION_LEFT] = map.getTileAt(this.posX-1,this.posY) === Constants.MAP_FREE;
-        canMove[Constants.DIRECTION_UP] = map.getTileAt(this.posX,this.posY-1) ===Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_RIGHT] = this.map.getTileAt(this.posX+1,this.posY) === Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_DOWN] = this.map.getTileAt(this.posX,this.posY+1) ===Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_LEFT] = this.map.getTileAt(this.posX-1,this.posY) === Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_UP] = this.map.getTileAt(this.posX,this.posY-1) ===Constants.MAP_FREE;
 
         var wasHeading = this.direction;
 

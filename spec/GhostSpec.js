@@ -59,12 +59,12 @@ describe("Ghost", function() {
                 return map[y][x];
             }
         };
-        let ghost = new Ghost();
+        let ghost = new Ghost(map);
         ghost.setPosX(1);
         ghost.setPosY(1);
         ghost.setDirection(parameter.currentDirection);
         
-        let possibleOptions = ghost.findPossibleMoves(map);
+        let possibleOptions = ghost.findPossibleMoves();
         expect(possibleOptions).toEqual(parameter.expected);
     })});
 

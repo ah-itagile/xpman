@@ -5,6 +5,7 @@ import ghostPng from "./assets/security.png";
 import tileMapCsv from "./assets/stadium-tilemap.csv";
 
 import Ghost from './model/ghost';
+import PhaserGhost from './phaseradapter/phaserghost';
 import * as ModelConstants from './model/constants';
 
 export default class MyScene extends Phaser.Scene {
@@ -14,7 +15,6 @@ export default class MyScene extends Phaser.Scene {
       this.lastPlayerUpdate=0;
       this.playerSpeedDelay = 500;
       this.player;
-      this.ghostImage;
       this.tilesize = 16;
       this.offset = (this.tilesize / 2)
       this.map;
@@ -35,12 +35,29 @@ export default class MyScene extends Phaser.Scene {
       this.map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
       var tileset = this.map.addTilesetImage('tiles', null, 16, 16, 0, 0);
       var layer = this.map.createStaticLayer(0, tileset, 0, 0);
-  
+      let phaserMap = this.map;
+      let mapAdapter = {
+        getTileAt: function(x,y) {
+          const PhaserEmptyField = 33;
+          const PhaserOccupiedField = 11;
+
+          let phaserTile = phaserMap.getTileAt(x,y).index;
+          if (phaserTile === PhaserEmptyField) {
+            return ModelConstants.MAP_FREE;
+          } else {
+            return ModelConstants.MAP_WALL;              
+          } 
+        }
+      }
+
       var player = this.add.image(32+16, 32+16, 'player');
-      this.ghost = new Ghost();
+      this.ghost = new Ghost(mapAdapter);
       this.ghost.setPosX(2);
       this.ghost.setPosY(14);
-      this.ghostImage = this.add.image(this.ghost.posX*this.tilesize+this.offset, this.ghost.posY*this.tilesize+this.offset, 'ghost');    
+
+      this.phaserGhost = new PhaserGhost(this, this.tilesize, 'ghost', this.ghost);
+
+
 
       //  Left
       this.input.keyboard.on('keydown_A', function (event) {
@@ -113,31 +130,9 @@ export default class MyScene extends Phaser.Scene {
   }
   
   update(time, delta) {
-      let phaserMap = this.map;
       if (this.lastPlayerUpdate+this.playerSpeedDelay < time) {
           this.lastPlayerUpdate = time;
-
-          let mapAdapter = {
-            getTileAt: function(x,y) {
-              const PhaserEmptyField = 33;
-              const PhaserOccupiedField = 11;
-
-              let phaserTile = phaserMap.getTileAt(x,y).index;
-              if (phaserTile === PhaserEmptyField) {
-                return ModelConstants.MAP_FREE;
-              } else {
-                return ModelConstants.MAP_WALL;              
-              } 
-            }
-          }
-          
-          let options = this.ghost.findPossibleMoves(mapAdapter);
-          let newDirection = Phaser.Math.RND.pick(options);
-          this.ghost.setDirection(newDirection);          
-          this.ghost.move(newDirection);
-
-          this.ghostImage.x = this.ghost.posX*this.tilesize+this.offset;
-          this.ghostImage.y = this.ghost.posY*this.tilesize+this.offset;
+          this.phaserGhost.update();
       }
   }
 }
