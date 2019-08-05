@@ -1,14 +1,20 @@
 import * as Constants from './constants'
 
 export default class Player {
-    constructor(map, controls) {
+    constructor(map, controls, waitTimeInMs, lastUpdatedAtInMs) {
         this.map = map;
         this.controls = controls;
         this.posX = 0;
-        this.posY = 0;     
+        this.posY = 0;
+        this.waitTimeInMs = waitTimeInMs;
+        this.lastUpdatedAtInMs = lastUpdatedAtInMs;
     }
 
-    update() {
+    shouldUpdateAtTime(time) {
+        return this.lastUpdatedAtInMs+this.waitTimeInMs < time;
+    }
+
+    update(time) {
         if (this.controls.up()) {
             this.posY--;
         }
@@ -21,6 +27,7 @@ export default class Player {
         if (this.controls.right()) {
             this.posX++;
         }
+        this.lastUpdatedAtInMs = time;
     }
 
     getPosX() {

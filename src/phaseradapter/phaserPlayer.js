@@ -18,8 +18,11 @@ export default class PhaserPlayer {
         return this.tilePositionToPhaserTranslator.translate(this.model.getPosX(), this.model.getPosY());
     }
 
-    update() {
-        this.model.update();
+    shouldUpdateAtTime(time) {
+        return this.model.shouldUpdateAtTime(time);
+    }
+    update(time) {
+        this.model.update(time);
         let position = this.getTranslatedPosition();
         this.image.x = position.x;
         this.image.y = position.y;

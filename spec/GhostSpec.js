@@ -84,4 +84,14 @@ describe("Ghost", function() {
         expect(ghost.getPosX()).toBe(parameters.expectedX);
         expect(ghost.getPosY()).toBe(parameters.expectedY);
     }));
+
+    it("should update after waiting long enough", ()=>{
+        let waitTimeInMs = 500;
+        let lastUpdatedAtTimeInMs = 0;
+        let ghost = new Ghost({}, waitTimeInMs, lastUpdatedAtTimeInMs);
+
+        expect(ghost.shouldUpdateAtTime(0)).toBeFalsy();
+        expect(ghost.shouldUpdateAtTime(500)).toBeFalsy();
+        expect(ghost.shouldUpdateAtTime(501)).toBeTruthy();
+    });
 });

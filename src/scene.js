@@ -15,9 +15,6 @@ export default class MyScene extends Phaser.Scene {
 
   constructor (config) {
       super(config);
-      this.lastPlayerUpdate=0;
-      this.playerSpeedDelay = 500;
-      this.player;
       this.tilesize = 16;
       this.offset = (this.tilesize / 2)
       this.map;
@@ -53,91 +50,22 @@ export default class MyScene extends Phaser.Scene {
         }
       }
 
-      this.ghost = new Ghost(mapAdapter);
-      this.ghost.setPosX(2);
-      this.ghost.setPosY(14);
-
-      this.phaserGhost = new PhaserGhost(this, this.tilesize, 'ghost', this.ghost);
+      let ghostModel = new Ghost(mapAdapter, 500, 0);
+      ghostModel.setPosX(2);
+      ghostModel.setPosY(14);
+      this.phaserGhost = new PhaserGhost(this, this.tilesize, 'ghost', ghostModel);
 
       let phaserKeyAdapter = new PhaserKeyControlsAdapter(this);
-      let playerModel = new Player(mapAdapter, phaserKeyAdapter);
+      let playerModel = new Player(mapAdapter, phaserKeyAdapter, 250, 0);
       this.phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel);
-
-      // //  Left
-      // this.input.keyboard.on('keydown_A', function (event) {
-  
-      //     var tile = layer.getTileAtWorldXY(player.x - 32, player.y, true);
-  
-      //     if (tile.index === 2)
-      //     {
-      //         //  Blocked, we can't move
-      //     }
-      //     else
-      //     {
-      //         player.x -= 32;
-      //         player.angle = 180;
-      //     }
-  
-      // });
-  
-      // //  Right
-      // this.input.keyboard.on('keydown_D', function (event) {
-  
-      //     var tile = layer.getTileAtWorldXY(player.x + 32, player.y, true);
-  
-      //     if (tile.index === 2)
-      //     {
-      //         //  Blocked, we can't move
-      //     }
-      //     else
-      //     {
-      //         player.x += 32;
-      //         player.angle = 0;
-      //     }
-  
-      // });
-  
-      // //  Up
-      // this.input.keyboard.on('keydown_W', function (event) {
-  
-      //     var tile = layer.getTileAtWorldXY(player.x, player.y - 32, true);
-  
-      //     if (tile.index === 2)
-      //     {
-      //         //  Blocked, we can't move
-      //     }
-      //     else
-      //     {
-      //         player.y -= 32;
-      //         player.angle = -90;
-      //     }
-  
-      // });
-  
-      // //  Down
-      // this.input.keyboard.on('keydown_S', function (event) {
-  
-      //     var tile = layer.getTileAtWorldXY(player.x, player.y + 32, true);
-  
-      //     if (tile.index === 2)
-      //     {
-      //         //  Blocked, we can't move
-      //     }
-      //     else
-      //     {
-      //         player.y += 32;
-      //         player.angle = 90;
-      //     }
-  
-      // });
-  
   }
   
   update(time, delta) {
-      if (this.lastPlayerUpdate+this.playerSpeedDelay < time) {
-          this.lastPlayerUpdate = time;
-          this.phaserGhost.update();
-          this.phaserPlayer.update();
+      if (this.phaserGhost.shouldUpdateAtTime(time)) {
+        this.phaserGhost.update(time);
+      }
+      if (this.phaserPlayer.shouldUpdateAtTime(time)) {
+        this.phaserPlayer.update(time);
       }
   }
 }

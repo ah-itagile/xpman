@@ -3,11 +3,13 @@ import * as Constants from './constants';
 
 export default class Ghost {
 
-    constructor(map){
+    constructor(map, waitTimeInMs, lastUpdatedAtInMs){
         this.posX = 0;
         this.posY = 0;
         this.direction = Constants.DIRECTION_UP;
         this.map = map;
+        this.waitTimeInMs = waitTimeInMs;
+        this.lastUpdatedAtInMs = lastUpdatedAtInMs;
     }
 
     getPosX() {
@@ -32,6 +34,14 @@ export default class Ghost {
     
     setDirection(direction) {
         this.direction = direction;
+    }
+
+    shouldUpdateAtTime(time) {
+        return this.lastUpdatedAtInMs+this.waitTimeInMs < time;
+    }
+
+    update(time) {
+        this.lastUpdatedAtInMs = time;
     }
 
     findPossibleMoves() {

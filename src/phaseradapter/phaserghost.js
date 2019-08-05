@@ -18,12 +18,16 @@ export default class PhaserGhost {
     getTranslatedPosition() {
         return this.tilePositionToPhaserTranslator.translate(this.ghostModel.getPosX(), this.ghostModel.getPosY());
     }
-
-    update() {
+    
+    shouldUpdateAtTime(time) {
+        return this.ghostModel.shouldUpdateAtTime(time);
+    }
+    update(time) {
         let options = this.ghostModel.findPossibleMoves();
         let newDirection = Phaser.Math.RND.pick(options);
         this.ghostModel.setDirection(newDirection);          
         this.ghostModel.move(newDirection);
+        this.ghostModel.update(time);
 
         let position = this.getTranslatedPosition();
         this.ghostImage.x = position.x;

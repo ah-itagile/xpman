@@ -23,4 +23,14 @@ describe("Player", () => {
             expect(player.getPosY()).toBe(parameter.expectedPosY);
         });
     });
+
+    it("should call update after waiting long enough", ()=>{
+        let waitTimeInMs = 500;
+        let lastUpdatedAtTimeInMs = 0;
+        let player = new Player({}, {}, waitTimeInMs, lastUpdatedAtTimeInMs);
+
+        expect(player.shouldUpdateAtTime(0)).toBeFalsy();
+        expect(player.shouldUpdateAtTime(500)).toBeFalsy();
+        expect(player.shouldUpdateAtTime(501)).toBeTruthy();
+    });
 });
