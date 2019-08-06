@@ -10,8 +10,14 @@ export default class Player {
         this.waitTimeInMs = waitTimeWithoutMovementInMs;
         this.waitTimeAfterMovementInMs = waitTimeAfterMovementInMs;
         this.lastUpdatedAtInMs = lastUpdatedAtInMs;
+        this.movements = [
+            {name: 'up', dx: 0, dy:-1},
+            {name: 'down', dx: 0, dy:1},
+            {name: 'left', dx: -1, dy:0},
+            {name: 'right', dx: +1, dy:0},
+        ];
     }
-
+ 
     shouldUpdateAtTime(time) {
         return this.lastUpdatedAtInMs+this.waitTimeInMs <= time;
     }
@@ -19,22 +25,16 @@ export default class Player {
     update(time) {
         this.waitTimeInMs = this.waitTimeWithoutMovementInMs;
         
-        if (this.controls.up()) {
-            this.posY--;
-            this.waitTimeInMs = this.waitTimeAfterMovementInMs;
-        }
-        if (this.controls.left()) {
-            this.posX--;
-            this.waitTimeInMs = this.waitTimeAfterMovementInMs;
-        }
-        if (this.controls.down()) {
-            this.posY++;
-            this.waitTimeInMs = this.waitTimeAfterMovementInMs;
-        }
-        if (this.controls.right()) {
-            this.posX++;
-            this.waitTimeInMs = this.waitTimeAfterMovementInMs;
-        }
+        this.movements.forEach((movement) => {
+            if (this.controls[movement.name]()) {
+                    if (this.map.getTileAt(this.posX+movement.dx,this.posY+movement.dy) === Constants.MAP_FREE) {
+                    this.posX += movement.dx;
+                    this.posY += movement.dy;
+                    this.waitTimeInMs = this.waitTimeAfterMovementInMs;
+                }
+            }
+        });
+
         this.lastUpdatedAtInMs = time;
     }
 

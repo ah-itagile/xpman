@@ -1,16 +1,22 @@
-import Player from '../src/model/player'
+import Player from '../src/model/player';
+import * as Constants from '../src/model/constants';
 
 describe("Player", () => {
 
     let parameters = [
-        {pressedControl:'up', expectedPosX:1, expectedPosY:0},
-        {pressedControl:'left', expectedPosX:0, expectedPosY:1},
-        {pressedControl:'down', expectedPosX:1, expectedPosY:2},
-        {pressedControl:'right', expectedPosX:2, expectedPosY:1}
+        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_FREE},
+        {pressedControl:'left', expectedPosX:0, expectedPosY:1, tiles:Constants.MAP_FREE},
+        {pressedControl:'down', expectedPosX:1, expectedPosY:2, tiles:Constants.MAP_FREE},
+        {pressedControl:'right', expectedPosX:2, expectedPosY:1, tiles:Constants.MAP_FREE},
+
+        {pressedControl:'up', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
+        {pressedControl:'left', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
+        {pressedControl:'down', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
+        {pressedControl:'right', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL}
     ];
     parameters.forEach((parameter)=> {
         it("should move according to input controls", () => {
-            let map = {};
+            let map = { getTileAt: () => { return parameter.tiles;}};
             let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
             let player = new Player(map, stubControls);
             player.setPosX(1);
@@ -53,7 +59,7 @@ describe("Player", () => {
             let waitTimeAfterMovementInMs = 250;
             let lastUpdatedAtTimeInMs = 0;
 
-            let map = {};
+            let map = { getTileAt: () => { return Constants.MAP_FREE;}};
             let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
             stubControls[parameter.pressedControl] = ()=>{return true;};
             let player = new Player(map, stubControls, waitTimeInMs, waitTimeAfterMovementInMs, lastUpdatedAtTimeInMs);
@@ -71,7 +77,7 @@ describe("Player", () => {
         let waitTimeAfterMovementInMs = 250;
         let lastUpdatedAtTimeInMs = 0;
 
-        let map = {};
+        let map = { getTileAt: () => { return Constants.MAP_FREE;}};
         let stubControls = { up: ()=> {return true;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
         let player = new Player(map, stubControls, waitTimeInMs, waitTimeAfterMovementInMs, lastUpdatedAtTimeInMs);
         
