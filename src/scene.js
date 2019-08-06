@@ -10,6 +10,7 @@ import * as ModelConstants from './model/constants';
 import PhaserKeyControlsAdapter from "./phaseradapter/phaserKeyControlsAdapter";
 import Player from "./model/player";
 import PhaserPlayer from "./phaseradapter/phaserPlayer";
+import { constants } from "zlib";
 
 export default class MyScene extends Phaser.Scene {
 
@@ -34,19 +35,27 @@ export default class MyScene extends Phaser.Scene {
   {
       this.map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
       var tileset = this.map.addTilesetImage('tiles', null, 16, 16, 0, 0);
-      var layer = this.map.createStaticLayer(0, tileset, 0, 0);
+      var layer = this.map.createDynamicLayer(0, tileset, 0, 0);
       let phaserMap = this.map;
+      const PhaserEmptyField = 33;
+      const PhaserPillField = 4;
+      const PhaserOccupiedField = 11;
       let mapAdapter = {
         getTileAt: function(x,y) {
-          const PhaserEmptyField = 33;
-          const PhaserOccupiedField = 11;
 
           let phaserTile = phaserMap.getTileAt(x,y).index;
           if (phaserTile === PhaserEmptyField) {
             return ModelConstants.MAP_FREE;
+          } else if (phaserTile === PhaserPillField) {
+            return ModelConstants.MAP_PILL;              
           } else {
             return ModelConstants.MAP_WALL;              
           } 
+        },
+        replaceTile: function(x,y,newTile) {
+          if (newTile===ModelConstants.MAP_FREE) {
+            phaserMap.putTileAt(PhaserEmptyField, x,y);
+          }
         }
       }
 
@@ -57,6 +66,8 @@ export default class MyScene extends Phaser.Scene {
 
       let phaserKeyAdapter = new PhaserKeyControlsAdapter(this);
       let playerModel = new Player(mapAdapter, phaserKeyAdapter, 1, 250, 0);
+      playerModel.setPosX(2);
+      playerModel.setPosY(3);
       this.phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel);
   }
   

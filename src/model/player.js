@@ -27,9 +27,13 @@ export default class Player {
         
         this.movements.forEach((movement) => {
             if (this.controls[movement.name]()) {
-                    if (this.map.getTileAt(this.posX+movement.dx,this.posY+movement.dy) === Constants.MAP_FREE) {
+                if (this.map.getTileAt(this.posX+movement.dx,this.posY+movement.dy) !== Constants.MAP_WALL) {
                     this.posX += movement.dx;
                     this.posY += movement.dy;
+                    if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_PILL) {
+                        this.map.replaceTile(this.posX,this.posY, Constants.MAP_FREE);
+                    }
+
                     this.waitTimeInMs = this.waitTimeAfterMovementInMs;
                 }
             }

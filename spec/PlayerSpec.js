@@ -30,6 +30,33 @@ describe("Player", () => {
         });
     });
 
+    [
+        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_FREE, expectTileToBeReplaced: false },
+        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_PILL, expectTileToBeReplaced: true },
+    ].forEach((parameter)=> {
+        it("should eat pill if pill on field", () => {
+            let map = { getTileAt: () => { return parameter.tiles;}, replaceTile: ()=>{}};
+            spyOn(map, 'replaceTile');
+            let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
+            let player = new Player(map, stubControls);
+            player.setPosX(1);
+            player.setPosY(1);
+
+            stubControls[parameter.pressedControl] = ()=>{return true;};
+            player.update();
+
+            expect(player.getPosX()).toBe(parameter.expectedPosX);
+            expect(player.getPosY()).toBe(parameter.expectedPosY);
+
+            if (parameter.expectTileToBeReplaced) {
+                expect(map.replaceTile).toHaveBeenCalledWith(1,0, Constants.MAP_FREE);
+            } else {
+                expect(map.replaceTile).toHaveBeenCalledTimes(0);
+            }
+            
+        });
+    });
+
     it("should call update after waiting short time when no movement", ()=>{
         let waitTimeInMs = 1;
         let waitTimeAfterMovementInMs = 250;

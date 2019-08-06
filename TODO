@@ -1,2 +1,3 @@
-Timer class for handling intervals.
+Move Map adaptor into class.
 Movement abstraction: player, ghost
+Timer class for handling intervals.

@@ -5,3 +5,4 @@ export const DIRECTION_LEFT = 4;
 
 export const MAP_FREE = 0;
 export const MAP_WALL = 1;
+export const MAP_PILL = 2;

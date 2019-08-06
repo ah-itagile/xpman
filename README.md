@@ -53,3 +53,11 @@ After you run the `npm run build` command, your code will be built into a single
 
 If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://mycoolserver.com`), 
 you should be able to open `http://mycoolserver.com/index.html` and play your game.
+
+## Using Tiled
+You need a tileset and map
+### Tileset
+Import tileset from image. (e.g. 'super-mario.png')
+### Map
+Create map for tileset.
+"Export as" CSV to assets (e.g. 'stadium-tilemap.csv').
