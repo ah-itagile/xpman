@@ -56,7 +56,7 @@ export default class MyScene extends Phaser.Scene {
       this.phaserGhost = new PhaserGhost(this, this.tilesize, 'ghost', ghostModel);
 
       let phaserKeyAdapter = new PhaserKeyControlsAdapter(this);
-      let playerModel = new Player(mapAdapter, phaserKeyAdapter, 250, 0);
+      let playerModel = new Player(mapAdapter, phaserKeyAdapter, 1, 250, 0);
       this.phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel);
   }
   

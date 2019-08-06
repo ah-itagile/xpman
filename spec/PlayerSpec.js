@@ -24,13 +24,61 @@ describe("Player", () => {
         });
     });
 
-    it("should call update after waiting long enough", ()=>{
-        let waitTimeInMs = 500;
+    it("should call update after waiting short time when no movement", ()=>{
+        let waitTimeInMs = 1;
+        let waitTimeAfterMovementInMs = 250;
         let lastUpdatedAtTimeInMs = 0;
-        let player = new Player({}, {}, waitTimeInMs, lastUpdatedAtTimeInMs);
+
+        let map = {};
+        let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
+        let player = new Player(map, stubControls, waitTimeInMs, waitTimeAfterMovementInMs, lastUpdatedAtTimeInMs);
 
         expect(player.shouldUpdateAtTime(0)).toBeFalsy();
-        expect(player.shouldUpdateAtTime(500)).toBeFalsy();
-        expect(player.shouldUpdateAtTime(501)).toBeTruthy();
+        expect(player.shouldUpdateAtTime(1)).toBeTruthy();
+        
+        player.update(1);
+
+        expect(player.shouldUpdateAtTime(1)).toBeFalsy();
+        expect(player.shouldUpdateAtTime(2)).toBeTruthy();
+    });
+
+    [
+        {pressedControl:'up'},
+        {pressedControl:'left'},
+        {pressedControl:'down'},
+        {pressedControl:'right'}
+    ].forEach((parameter)=> {
+        it("should call update after waiting longer time after movement", ()=>{
+            let waitTimeInMs = 1;
+            let waitTimeAfterMovementInMs = 250;
+            let lastUpdatedAtTimeInMs = 0;
+
+            let map = {};
+            let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
+            stubControls[parameter.pressedControl] = ()=>{return true;};
+            let player = new Player(map, stubControls, waitTimeInMs, waitTimeAfterMovementInMs, lastUpdatedAtTimeInMs);
+            
+            player.update(1);
+
+            expect(player.shouldUpdateAtTime(1)).toBeFalsy();
+            expect(player.shouldUpdateAtTime(2)).toBeFalsy();
+            expect(player.shouldUpdateAtTime(251)).toBeTruthy();
+        });
+    });
+
+    it("should reset wait interval to short when movement stopped", ()=>{
+        let waitTimeInMs = 1;
+        let waitTimeAfterMovementInMs = 250;
+        let lastUpdatedAtTimeInMs = 0;
+
+        let map = {};
+        let stubControls = { up: ()=> {return true;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
+        let player = new Player(map, stubControls, waitTimeInMs, waitTimeAfterMovementInMs, lastUpdatedAtTimeInMs);
+        
+        player.update(1);
+
+        stubControls.up = () => { return false;};    
+        player.update(251);
+        expect(player.shouldUpdateAtTime(252)).toBeTruthy();        
     });
 });
