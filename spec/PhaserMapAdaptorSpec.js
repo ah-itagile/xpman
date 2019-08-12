@@ -5,7 +5,7 @@ import * as TilesConstants from '../src/phaseradaptor/TilesConstants'
 describe("PhaserMapAdaptor", () => {
     [{phaserMapTile:TilesConstants.EmptyField, expectedMappedTile:Constants.MAP_FREE},
      {phaserMapTile:TilesConstants.OccupiedField, expectedMappedTile:Constants.MAP_WALL},
-     {phaserMapTile:TilesConstants.PillField, expectedMappedTile:Constants.MAP_PILL}].forEach((parameter) => {
+     {phaserMapTile:TilesConstants.DotField, expectedMappedTile:Constants.MAP_DOT}].forEach((parameter) => {
         it("should map tile map tiles to domain tiles", ()=>{
             let phaserMap = { getTileAt: ()=>{
                     return {

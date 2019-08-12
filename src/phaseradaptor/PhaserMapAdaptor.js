@@ -11,8 +11,8 @@ export default class PhaserMapAdaptor{
         let phaserTile = this.phaserMap.getTileAt(x,y).index;
         if (phaserTile === TilesConstants.EmptyField) {
           return ModelConstants.MAP_FREE;
-        } else if (phaserTile === TilesConstants.PillField) {
-          return ModelConstants.MAP_PILL;              
+        } else if (phaserTile === TilesConstants.DotField) {
+          return ModelConstants.MAP_DOT;              
         } else {
           return ModelConstants.MAP_WALL;              
         } 

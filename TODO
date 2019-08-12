@@ -1,3 +1,9 @@
-Move Map adaptor into class.
+Counter with ending game when all points are eaten.
+Move ghost over all fields except walls.
+Kill player if on same field.
+
 Movement abstraction: player, ghost
 Timer class for handling intervals.
+
+Done:
+Move Map adaptor into class.
