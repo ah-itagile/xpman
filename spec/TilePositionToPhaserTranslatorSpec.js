@@ -1,4 +1,4 @@
-import TilePositionToPhaserTranslator from '../src/phaseradapter/tilePositionToPhaserTranslator';
+import TilePositionToPhaserTranslator from '../src/phaseradaptor/tilePositionToPhaserTranslator';
 
 describe("TilePositionToPhaserTranslator", () => {
     it("should calculate position on screen", () => {

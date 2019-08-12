@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export default class PhaserKeyControlsAdapter {
+export default class PhaserKeyControlsAdaptor {
     constructor(scene) {
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);

@@ -54,6 +54,10 @@ After you run the `npm run build` command, your code will be built into a single
 If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://mycoolserver.com`), 
 you should be able to open `http://mycoolserver.com/index.html` and play your game.
 
+## Tests
+Use `npm test` for test execution in console.
+Use `Jasmine Test` in debug view in VS Code for debugging.
+
 ## Using Tiled
 You need a tileset and map
 ### Tileset
