@@ -32,9 +32,9 @@ describe("Player", () => {
 
     [
         {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_FREE, expectTileToBeReplaced: false },
-        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_PILL, expectTileToBeReplaced: true },
+        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_DOT, expectTileToBeReplaced: true },
     ].forEach((parameter)=> {
-        it("should eat pill if pill on field", () => {
+        it("should eat dot if dot on field", () => {
             let map = { getTileAt: () => { return parameter.tiles;}, replaceTile: ()=>{}};
             spyOn(map, 'replaceTile');
             let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};

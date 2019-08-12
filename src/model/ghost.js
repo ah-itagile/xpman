@@ -44,12 +44,16 @@ export default class Ghost {
         this.lastUpdatedAtInMs = time;
     }
 
+    canMoveTo(tile) {
+        return tile===Constants.MAP_FREE || tile===Constants.MAP_DOT;
+    }
+
     findPossibleMoves() {
         var canMove = {};
-        canMove[Constants.DIRECTION_RIGHT] = this.map.getTileAt(this.posX+1,this.posY) === Constants.MAP_FREE;
-        canMove[Constants.DIRECTION_DOWN] = this.map.getTileAt(this.posX,this.posY+1) ===Constants.MAP_FREE;
-        canMove[Constants.DIRECTION_LEFT] = this.map.getTileAt(this.posX-1,this.posY) === Constants.MAP_FREE;
-        canMove[Constants.DIRECTION_UP] = this.map.getTileAt(this.posX,this.posY-1) ===Constants.MAP_FREE;
+        canMove[Constants.DIRECTION_RIGHT] = this.canMoveTo(this.map.getTileAt(this.posX+1,this.posY));
+        canMove[Constants.DIRECTION_DOWN] = this.canMoveTo(this.map.getTileAt(this.posX,this.posY+1));
+        canMove[Constants.DIRECTION_LEFT] = this.canMoveTo(this.map.getTileAt(this.posX-1,this.posY));
+        canMove[Constants.DIRECTION_UP] = this.canMoveTo(this.map.getTileAt(this.posX,this.posY-1));
 
         var wasHeading = this.direction;
 

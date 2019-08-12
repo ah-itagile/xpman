@@ -30,7 +30,7 @@ export default class Player {
                 if (this.map.getTileAt(this.posX+movement.dx,this.posY+movement.dy) !== Constants.MAP_WALL) {
                     this.posX += movement.dx;
                     this.posY += movement.dy;
-                    if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_PILL) {
+                    if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_DOT) {
                         this.map.replaceTile(this.posX,this.posY, Constants.MAP_FREE);
                     }
 

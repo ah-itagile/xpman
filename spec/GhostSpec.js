@@ -40,7 +40,15 @@ describe("Ghost", function() {
                 [Constants.MAP_WALL,Constants.MAP_WALL,Constants.MAP_WALL],
                 ],
             expected: [Constants.DIRECTION_UP]
-        },              
+        },         
+        { // move also to fields with dots
+            currentDirection: Constants.DIRECTION_UP,
+            map:[ [Constants.MAP_WALL,Constants.MAP_DOT,Constants.MAP_WALL],
+                [Constants.MAP_WALL,Constants.MAP_FREE,Constants.MAP_WALL],
+                [Constants.MAP_WALL,Constants.MAP_WALL,Constants.MAP_WALL],
+                ],
+            expected: [Constants.DIRECTION_UP]
+        },       
         {  // filter only the opposing direction
             currentDirection: Constants.DIRECTION_UP,
             map:[ [Constants.MAP_WALL,Constants.MAP_FREE,Constants.MAP_WALL],
