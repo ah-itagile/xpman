@@ -1,9 +1,13 @@
 Counter with ending game when all points are eaten.
-Move ghost over all fields except walls.
+Continuous testing in VS Code
 Kill player if on same field.
+Integration Test
+CI Build
+Continuous Testing
 
 Movement abstraction: player, ghost
 Timer class for handling intervals.
 
 Done:
 Move Map adaptor into class.
+Move ghost over all fields except walls.

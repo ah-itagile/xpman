@@ -31,4 +31,23 @@ describe("PhaserMapAdaptor", () => {
             expect(phaserMapMock.putTileAt).toHaveBeenCalledWith(parameter.expectedReplacementTile, 0,0);
         });
     });
+
+    
+    it("should count initial amount of dots to be eaten", ()=>{
+        let phaserMapMock = {
+            height: 2,
+            width: 2,
+            getTileAt: (x,y) => { 
+                if (x==1&&y==1) {
+                    return {index: TilesConstants.EmptyField}; 
+                } else return {index: TilesConstants.DotField};
+            }
+        };
+        let phaserMapAdapter = new PhaserMapAdaptor(phaserMapMock);
+
+        let dotCount = phaserMapAdapter.countDots();
+
+        expect(dotCount).toBe(3);
+    });
+
 });

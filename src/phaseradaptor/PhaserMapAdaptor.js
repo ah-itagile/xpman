@@ -23,4 +23,16 @@ export default class PhaserMapAdaptor{
           this.phaserMap.putTileAt(TilesConstants.EmptyField, x,y);
         }
     }
+
+    countDots(){
+      let count = 0;
+      for (var x=0; x<this.phaserMap.width; x++) {
+        for (var y=0; y<this.phaserMap.height; y++) {
+          if (this.getTileAt(x,y)===ModelConstants.MAP_DOT) {
+            count++;
+          }
+        }
+      } 
+      return count;
+    } 
 } 
