@@ -3,10 +3,14 @@
   "version": "1.1.0",
   "description": "A Phaser 3 Project Template",
   "main": "src/index.js",
+  "watch": {
+    "test": "{src,spec}/*.js"
+  },
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
     "start": "webpack-dev-server --config webpack/base.js --open",
-    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/jasmine $@ --config=spec/support/jasmine.json"
+    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/jasmine $@ --config=spec/support/jasmine.json",
+    "watch": "npm-watch"
   },
   "repository": {
     "type": "git",
@@ -37,6 +41,7 @@
   },
   "dependencies": {
     "@babel/cli": "^7.0.0",
+    "npm-watch": "^0.6.0",
     "phaser": "^3.16.2"
   }
 }

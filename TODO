@@ -1,5 +1,6 @@
 Counter with ending game when all points are eaten.
 Continuous testing in VS Code
+ Wallaby.js
 Kill player if on same field.
 Integration Test
 CI Build
