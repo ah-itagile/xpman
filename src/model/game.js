@@ -18,5 +18,9 @@ export default class Game {
         if (this.player.getEatenDots()===this.initialDotCount) {
             this.endGameCallback();
         }
+        if (this.ghost.getPosX()===this.player.getPosX() && this.ghost.getPosY()===this.player.getPosY()) {
+            this.player.decreaseLives();
+            console.log("Lives left:" + this.player.getLivesLeft());
+        }
     }
 }

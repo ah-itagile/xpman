@@ -14,12 +14,27 @@ export default class PhaserPlayer {
                                     imageName);    
     }
 
+    getPosX() {
+        return this.model.getPosX();
+    }
+
+    getPosY() {
+        return this.model.getPosY();
+    }
+
     getTranslatedPosition() {
         return this.tilePositionToPhaserTranslator.translate(this.model.getPosX(), this.model.getPosY());
     }
 
     shouldUpdateAtTime(time) {
         return this.model.shouldUpdateAtTime(time);
+    }
+
+    getLivesLeft() {
+        return this.model.getLivesLeft();
+    }
+    decreaseLives() {
+        this.model.decreaseLives();
     }
     getEatenDots() {
         return this.model.getEatenDots();

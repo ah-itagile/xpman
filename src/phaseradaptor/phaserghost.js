@@ -15,6 +15,14 @@ export default class PhaserGhost {
                                           imageName);    
     }
 
+    getPosX() {
+        return this.ghostModel.getPosX();
+    }
+
+    getPosY() {
+        return this.ghostModel.getPosY();
+    }
+
     getTranslatedPosition() {
         return this.tilePositionToPhaserTranslator.translate(this.ghostModel.getPosX(), this.ghostModel.getPosY());
     }
