@@ -1,4 +1,5 @@
 import * as Constants from './constants'
+import { throws } from 'assert';
 
 export default class Player {
     constructor(map, controls, waitTimeWithoutMovementInMs, waitTimeAfterMovementInMs, lastUpdatedAtInMs) {
@@ -10,6 +11,7 @@ export default class Player {
         this.waitTimeInMs = waitTimeWithoutMovementInMs;
         this.waitTimeAfterMovementInMs = waitTimeAfterMovementInMs;
         this.lastUpdatedAtInMs = lastUpdatedAtInMs;
+        this.eatenDots = 0;
         this.movements = [
             {name: 'up', dx: 0, dy:-1},
             {name: 'down', dx: 0, dy:1},
@@ -32,6 +34,7 @@ export default class Player {
                     this.posY += movement.dy;
                     if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_DOT) {
                         this.map.replaceTile(this.posX,this.posY, Constants.MAP_FREE);
+                        this.eatenDots++;
                     }
 
                     this.waitTimeInMs = this.waitTimeAfterMovementInMs;
@@ -56,6 +59,10 @@ export default class Player {
     
     setPosY(y) {
         this.posY = y;
+    }
+
+    getEatenDots() {
+        return this.eatenDots;
     }
     
 }

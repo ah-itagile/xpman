@@ -1,4 +1,5 @@
 Counter with ending game when all points are eaten.
+Is PhaserGhost/Player a wrapper dispatching to the model or should they be an inverse relation?
 Continuous testing in VS Code
  Wallaby.js
 Kill player if on same field.

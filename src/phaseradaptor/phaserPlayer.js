@@ -21,6 +21,9 @@ export default class PhaserPlayer {
     shouldUpdateAtTime(time) {
         return this.model.shouldUpdateAtTime(time);
     }
+    getEatenDots() {
+        return this.model.getEatenDots();
+    }
     update(time) {
         this.model.update(time);
         let position = this.getTranslatedPosition();

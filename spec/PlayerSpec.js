@@ -31,8 +31,8 @@ describe("Player", () => {
     });
 
     [
-        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_FREE, expectTileToBeReplaced: false },
-        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_DOT, expectTileToBeReplaced: true },
+        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_FREE, expectTileToBeReplaced: false, expectedEatenDots: 0 },
+        {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_DOT, expectTileToBeReplaced: true, expectedEatenDots: 1},
     ].forEach((parameter)=> {
         it("should eat dot if dot on field", () => {
             let map = { getTileAt: () => { return parameter.tiles;}, replaceTile: ()=>{}};
@@ -47,6 +47,7 @@ describe("Player", () => {
 
             expect(player.getPosX()).toBe(parameter.expectedPosX);
             expect(player.getPosY()).toBe(parameter.expectedPosY);
+            expect(player.getEatenDots()).toBe(parameter.expectedEatenDots);
 
             if (parameter.expectTileToBeReplaced) {
                 expect(map.replaceTile).toHaveBeenCalledWith(1,0, Constants.MAP_FREE);

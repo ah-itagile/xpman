@@ -50,7 +50,9 @@ export default class MyScene extends Phaser.Scene {
       playerModel.setPosY(3);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel);
 
-      this.game = new Game(mapAdaptor, phaserGhost, phaserPlayer);
+      this.endGameCallback = () => { console.log("Game finished!");};
+
+      this.game = new Game(mapAdaptor, phaserGhost, phaserPlayer, this.endGameCallback);
   }
   
   update(time, delta) {
