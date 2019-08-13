@@ -33,26 +33,35 @@ export default class MyScene extends Phaser.Scene {
   
   create ()
   {
+
+      let levelConfig = {
+        ghosts: [{posX: 2, posY: 14},
+                 {posX: 6, posY: 14}
+        ],
+        player: {posX: 2, posY: 3}
+      };
+
       let phaserTileMap = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
       var tileset = phaserTileMap.addTilesetImage('tiles', null, 16, 16, 0, 0);
       phaserTileMap.createDynamicLayer(0, tileset, 0, 0);
 
       let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
-
-      let ghostModel = new Ghost(mapAdaptor, 500, 0);
-      ghostModel.setPosX(2);
-      ghostModel.setPosY(14);
-      let phaserGhost = new PhaserGhost(this, this.tilesize, 'ghost', ghostModel);
-
+      let phaserGhosts = [];
+      levelConfig.ghosts.forEach((ghost) => {
+        let ghostModel = new Ghost(mapAdaptor, 500, 0);
+        ghostModel.setPosX(ghost.posX);
+        ghostModel.setPosY(ghost.posY);
+        phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel));
+      });
       let phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
       let playerModel = new Player(mapAdaptor, phaserKeyAdaptor, 1, 250, 0, 2);
-      playerModel.setPosX(2);
-      playerModel.setPosY(3);
+      playerModel.setPosX(levelConfig.player.posX);
+      playerModel.setPosY(levelConfig.player.posY);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel);
 
       this.endGameCallback = () => { console.log("Game finished!");};
 
-      this.game = new Game(mapAdaptor, phaserGhost, phaserPlayer, this.endGameCallback);
+      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback);
   }
   
   update(time, delta) {
