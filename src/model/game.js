@@ -1,11 +1,12 @@
 
 export default class Game {
-    constructor(map, ghosts, player, endGameCallback) {
+    constructor(map, ghosts, player, endGameCallback, pointsDisplay) {
         this.map = map;
         this.ghosts = ghosts;
         this.player = player;
         this.initialDotCount = map.countDots();
         this.endGameCallback = endGameCallback;
+        this.pointsDisplay = pointsDisplay;
     }
 
     update(time) {
@@ -21,6 +22,7 @@ export default class Game {
         });
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);
+            this.pointsDisplay.update(this.player.getEatenDots());
         }
         if (this.player.getEatenDots()===this.initialDotCount) {
             this.endGameCallback();

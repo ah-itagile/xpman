@@ -8,6 +8,7 @@ import Ghost from '../model/ghost';
 import PhaserGhost from '../phaseradaptor/phaserghost';
 import PhaserKeyControlsAdapter from "../phaseradaptor/phaserKeyControlsAdaptor";
 import PhaserMapAdaptor from '../phaseradaptor/PhaserMapAdaptor';
+import PhaserPointsDisplay from '../phaseradaptor/phaserPointsDisplay';
 import Player from "../model/player";
 import PhaserPlayer from "../phaseradaptor/phaserPlayer";
 import Game from '../model/game'
@@ -19,6 +20,7 @@ export default class GameScene extends Phaser.Scene {
       super(config);
       this.tilesize = 16;
       this.offset = (this.tilesize / 2)
+      this.mazeOffsetY = 20;
   }
 
   init(data) {}
@@ -41,9 +43,11 @@ export default class GameScene extends Phaser.Scene {
         player: {posX: 2, posY: 3}
       };
 
+      
+      let pointsDisplay = new PhaserPointsDisplay(this);
       let phaserTileMap = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
       var tileset = phaserTileMap.addTilesetImage('tiles', null, 16, 16, 0, 0);
-      phaserTileMap.createDynamicLayer(0, tileset, 0, 0);
+      phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
 
       let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
       let phaserGhosts = [];
@@ -51,17 +55,17 @@ export default class GameScene extends Phaser.Scene {
         let ghostModel = new Ghost(mapAdaptor, 500, 0);
         ghostModel.setPosX(ghost.posX);
         ghostModel.setPosY(ghost.posY);
-        phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel));
+        phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
       let phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
       let playerModel = new Player(mapAdaptor, phaserKeyAdaptor, 1, 250, 0, 2);
       playerModel.setPosX(levelConfig.player.posX);
       playerModel.setPosY(levelConfig.player.posY);
-      let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel);
+      let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
 
-      this.endGameCallback = () => { console.log("Game finished!");};
+      this.endGameCallback = () => { this.scene.restart();};
 
-      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback);
+      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback, pointsDisplay);
   }
   
   update(time, delta) {

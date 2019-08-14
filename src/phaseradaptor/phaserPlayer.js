@@ -2,11 +2,12 @@ import TilePositionToPhaserTranslator from "./TilePositionToPhaserTranslator";
 
 export default class PhaserPlayer {
 
-    constructor(scene, tilesize, imageName, model) {
+    constructor(scene, tilesize, imageName, model, mazeOffsetY) {
         this.tilesize = tilesize;
         this.model = model;
         this.offset = tilesize / 2;
-        this.tilePositionToPhaserTranslator = new TilePositionToPhaserTranslator(tilesize);
+        this.mazeOffsetY = mazeOffsetY;
+        this.tilePositionToPhaserTranslator = new TilePositionToPhaserTranslator(tilesize, mazeOffsetY);
         let position = this.getTranslatedPosition();
 
         this.image = scene.add.image(position.x, 
