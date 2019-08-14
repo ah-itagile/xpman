@@ -1,18 +1,24 @@
+Show Title
 Counter with ending game when all points are eaten.
+ Display Counter
+ Show "Next Level"
 Is PhaserGhost/Player a wrapper dispatching to the model or should they be an inverse relation?
-Continuous testing in VS Code
- Wallaby.js
-Kill player if on same field.
 Integration Test
 CI Build
-Continuous Testing
 
 Movement abstraction: player, ghost
 Timer class for handling intervals.
 
+Ideas:
+Wallaby.js
 
 https://www.retrogames.cc/arcade-games/pac-man-midway.html
+https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
+----------
 Done:
+Continuous testing in VS Code
+Continuous Testing
+Kill player if on same field.
 Move Map adaptor into class.
 Move ghost over all fields except walls.

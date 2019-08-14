@@ -1,19 +1,19 @@
 import Phaser from "phaser";
-import tilesImg from "./assets/super-mario.png";
-import playerImg from "./assets/player16x16.png";
-import ghostPng from "./assets/security.png";
-import tileMapCsv from "./assets/stadium-tilemap.csv";
+import tilesImg from "../assets/super-mario.png";
+import playerImg from "../assets/player16x16.png";
+import ghostPng from "../assets/security.png";
+import tileMapCsv from "../assets/stadium-tilemap.csv";
 
-import Ghost from './model/ghost';
-import PhaserGhost from './phaseradaptor/phaserghost';
-import PhaserKeyControlsAdapter from "./phaseradaptor/phaserKeyControlsAdaptor";
-import PhaserMapAdaptor from './phaseradaptor/PhaserMapAdaptor';
-import Player from "./model/player";
-import PhaserPlayer from "./phaseradaptor/phaserPlayer";
-import Game from './model/game'
+import Ghost from '../model/ghost';
+import PhaserGhost from '../phaseradaptor/phaserghost';
+import PhaserKeyControlsAdapter from "../phaseradaptor/phaserKeyControlsAdaptor";
+import PhaserMapAdaptor from '../phaseradaptor/PhaserMapAdaptor';
+import Player from "../model/player";
+import PhaserPlayer from "../phaseradaptor/phaserPlayer";
+import Game from '../model/game'
 
 
-export default class MyScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
 
   constructor (config) {
       super(config);
