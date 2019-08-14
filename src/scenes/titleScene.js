@@ -12,8 +12,8 @@ export default class TitleScene extends Phaser.Scene {
  
   create () {
     this.add.image(400, 300, 'title');
-    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.input.keyboard.on('keydown_ENTER', ()=> {
+        this.scene.stop();
         this.scene.start('Game');
     });
   }

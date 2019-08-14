@@ -1,5 +1,6 @@
-Counter with ending game when all points are eaten.
- Show "Next Level"
+Show Dead-Scene.
+Make real level
+Draw graphics
 Integration Test
 CI Build
 
@@ -15,6 +16,8 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+Counter with ending game when all points are eaten.
+ Show "Next Level" Scene
 Display Counter
 Show Title
 Continuous testing in VS Code

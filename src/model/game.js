@@ -9,7 +9,7 @@ export default class Game {
         this.pointsDisplay = pointsDisplay;
     }
 
-    update(time) {
+    update(time, forceLevelEnd) {
         this.ghosts.forEach(ghost => {
             if (ghost.shouldUpdateAtTime(time)) {
                 ghost.update(time);
@@ -24,7 +24,7 @@ export default class Game {
             this.player.update(time);
             this.pointsDisplay.update(this.player.getEatenDots());
         }
-        if (this.player.getEatenDots()===this.initialDotCount) {
+        if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
             this.endGameCallback();
         }
     }

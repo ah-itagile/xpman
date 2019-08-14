@@ -63,12 +63,22 @@ export default class GameScene extends Phaser.Scene {
       playerModel.setPosY(levelConfig.player.posY);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
 
-      this.endGameCallback = () => { this.scene.restart();};
-
+      this.endGameCallback = () => { 
+        this.scene.stop()        
+        this.scene.start('NextLevel');
+      };
       this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback, pointsDisplay);
+
+      this.keyL_ONLY_FOR_DEVELOPMENT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
+  }
+
+  // only for development
+  isLevelEndForced() {
+    return this.keyL_ONLY_FOR_DEVELOPMENT.isDown;
   }
   
   update(time, delta) {
-    this.game.update(time);
+    let forceLevelEnd = this.isLevelEndForced();
+    this.game.update(time, forceLevelEnd);
   }
 }
