@@ -1,12 +1,18 @@
 
 export default class Game {
-    constructor(map, ghosts, player, endGameCallback, pointsDisplay) {
+    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesDisplay) {
         this.map = map;
         this.ghosts = ghosts;
         this.player = player;
         this.initialDotCount = map.countDots();
         this.endGameCallback = endGameCallback;
         this.pointsDisplay = pointsDisplay;
+        this.playerLivesDisplay = playerLivesDisplay;
+    }
+
+    ghostCaughtPlayer() {
+        this.player.decreaseLives();
+        this.playerLivesDisplay.update(this.player.getLivesLeft());
     }
 
     update(time, forceLevelEnd) {
@@ -15,8 +21,7 @@ export default class Game {
                 ghost.update(time);
             }
             if (ghost.getPosX()===this.player.getPosX() && ghost.getPosY()===this.player.getPosY()) {
-                this.player.decreaseLives();
-                console.log("Lives left:" + this.player.getLivesLeft());
+                this.ghostCaughtPlayer();
             }
                     
         });

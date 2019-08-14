@@ -9,6 +9,7 @@ import PhaserGhost from '../phaseradaptor/phaserghost';
 import PhaserKeyControlsAdapter from "../phaseradaptor/phaserKeyControlsAdaptor";
 import PhaserMapAdaptor from '../phaseradaptor/PhaserMapAdaptor';
 import PhaserPointsDisplay from '../phaseradaptor/phaserPointsDisplay';
+import PhaserLivesDisplay from '../phaseradaptor/phaserLivesDisplay';
 import Player from "../model/player";
 import PhaserPlayer from "../phaseradaptor/phaserPlayer";
 import Game from '../model/game'
@@ -45,6 +46,7 @@ export default class GameScene extends Phaser.Scene {
 
       
       let pointsDisplay = new PhaserPointsDisplay(this);
+      let playerLivesDisplay = new PhaserLivesDisplay(this);
       let phaserTileMap = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
       var tileset = phaserTileMap.addTilesetImage('tiles', null, 16, 16, 0, 0);
       phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
@@ -67,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
         this.scene.stop()        
         this.scene.start('NextLevel');
       };
-      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback, pointsDisplay);
+      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback, pointsDisplay, playerLivesDisplay);
 
       this.keyL_ONLY_FOR_DEVELOPMENT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
   }

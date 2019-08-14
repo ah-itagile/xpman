@@ -51,8 +51,7 @@ describe("Game", ()=>{
         let player = jasmine.createSpyObj("player", {shouldUpdateAtTime: true, update:()=>{}, 
             getEatenDots: 1, getPosX: 1, getPosY: 1 }
         );
-        // let pointsDisplay = jasmine.createSpyObj('pointsDisplay', ['update']);
-        let pointsDisplay = jasmine.createSpyObj('pointsDisplay', {update:()=>{}});
+        let pointsDisplay = jasmine.createSpyObj('pointsDisplay', ['update']);
         let game = new Game(map,[], player, endGameCallback, pointsDisplay);
 
         game.update();
@@ -67,12 +66,13 @@ describe("Game", ()=>{
 
         let initialLives = 2;                    
         let player = new Player(map, {}, 0, 0, 0, initialLives);      
-
-        let game = new Game(map, [ ghost ], player, ()=>{}, endGameCallback, pointsDisplay);
+        let playerLivesDisplay = jasmine.createSpyObj('playerLivesDisplay', ['update']);
+        let game = new Game(map, [ ghost ], player, endGameCallback, pointsDisplay, playerLivesDisplay);
 
         game.update();
 
         expect(player.getLivesLeft()).toBe(1);
+        expect(playerLivesDisplay.update).toHaveBeenCalledWith(1);
     });
 
 });
