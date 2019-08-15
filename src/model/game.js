@@ -1,6 +1,6 @@
 
 export default class Game {
-    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesDisplay) {
+    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesDisplay, gameOverCallback) {
         this.map = map;
         this.ghosts = ghosts;
         this.player = player;
@@ -8,10 +8,18 @@ export default class Game {
         this.endGameCallback = endGameCallback;
         this.pointsDisplay = pointsDisplay;
         this.playerLivesDisplay = playerLivesDisplay;
+        this.gameOverCallback = gameOverCallback;
+    }
+
+    create() {
+        this.pointsDisplay.update(this.player.getEatenDots());
     }
 
     ghostCaughtPlayer() {
         this.player.decreaseLives();
+        if (this.player.getLivesLeft()<0) {
+            this.gameOverCallback();
+        }
         this.playerLivesDisplay.update(this.player.getLivesLeft());
     }
 

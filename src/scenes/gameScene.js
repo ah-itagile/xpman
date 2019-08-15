@@ -69,7 +69,11 @@ export default class GameScene extends Phaser.Scene {
         this.scene.stop()        
         this.scene.start('NextLevel');
       };
-      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback, pointsDisplay, playerLivesDisplay);
+      this.gameOverCallback = () => { 
+        this.scene.stop()        
+        this.scene.start('GameOver');
+      };
+      this.game = new Game(mapAdaptor, phaserGhosts, phaserPlayer, this.endGameCallback, pointsDisplay, playerLivesDisplay, this.gameOverCallback);
 
       this.keyL_ONLY_FOR_DEVELOPMENT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
   }
