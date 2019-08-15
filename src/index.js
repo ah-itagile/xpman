@@ -3,6 +3,7 @@ import GameScene from "./scenes/gameScene";
 import TitleScene from "./scenes/titleScene"
 import NextLevelScene from "./scenes/nextLevelScene"
 import GameOverScene from "./scenes/gameOverScene";
+import LifeLostScene from "./scenes/lifeLostScene";
 
 
 const config = {
@@ -20,6 +21,7 @@ class Game extends Phaser.Game {
     this.scene.add('NextLevel', NextLevelScene);
     this.scene.add('GameOver', GameOverScene);
     this.scene.add('Title', TitleScene);
+    this.scene.add('LifeLost', LifeLostScene);
     this.scene.start('Title');
   }
 }

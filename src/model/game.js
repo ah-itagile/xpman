@@ -1,6 +1,6 @@
 
 export default class Game {
-    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback) {
+    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback, lostLifeDisplay) {
         this.map = map;
         this.ghosts = ghosts;
         this.player = player;
@@ -9,6 +9,7 @@ export default class Game {
         this.pointsDisplay = pointsDisplay;
         this.playerLivesLeftDisplay = playerLivesLeftDisplay;
         this.gameOverCallback = gameOverCallback;
+        this.lostLifeDisplay = lostLifeDisplay;
     }
 
     initialize() {
@@ -20,6 +21,8 @@ export default class Game {
         this.player.decreaseLives();
         if (this.player.getLivesLeft()<0) {
             this.gameOverCallback();
+        } else {
+            this.lostLifeDisplay.showMessage("YOU LOST ONE LIFE!");
         }
         this.playerLivesLeftDisplay.update(this.player.getLivesLeft());
     }

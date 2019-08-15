@@ -73,20 +73,22 @@ describe("Game", ()=>{
         expect(pointsDisplay.update).toHaveBeenCalledWith(1);
     });
 
-    it("should decrease player lives if ghost catches player", ()=>{
+    it("should decrease player lives and show message if ghost catches player", ()=>{
         let map = { countDots: () => { return 1; }};        
         let ghost = jasmine.createSpyObj("ghost", {shouldUpdateAtTime: true, update:()=>{},
                         getPosX: 0, getPosY: 0});
 
         let initialLives = 2;                    
         let player = new Player(map, {}, 0, 0, 0, initialLives);      
-        let playerLivesDisplay = jasmine.createSpyObj('playerLivesDisplay', ['update']);
-        let game = new Game(map, [ ghost ], player, endGameCallback, pointsDisplay, playerLivesDisplay);
+        let playerLivesLeftDisplay = jasmine.createSpyObj('playerLivesLeftDisplay', ['update']);
+        let lostLifeDisplay = jasmine.createSpyObj('lostLifeDisplay', ['showMessage']);
+        let game = new Game(map, [ ghost ], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, ()=>{} , lostLifeDisplay);
 
         game.update();
 
         expect(player.getLivesLeft()).toBe(1);
-        expect(playerLivesDisplay.update).toHaveBeenCalledWith(1);
+        expect(lostLifeDisplay.showMessage).toHaveBeenCalledWith("YOU LOST ONE LIFE!");
+        expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
     });
 
     it("should end game if no player lives left", ()=>{
@@ -96,12 +98,14 @@ describe("Game", ()=>{
 
         let initialLivesLeft = 0;                    
         let player = new Player(map, {}, 0, 0, 0, initialLivesLeft);      
-        let playerLivesDisplay = jasmine.createSpyObj('playerLivesDisplay', ['update']);
+        let playerLivesLeftDisplay = jasmine.createSpyObj('playerLivesLeftDisplay', ['update']);
         let gameOverCallback = jasmine.createSpy("gameOverCallback");
-        let game = new Game(map, [ ghost ], player, endGameCallback, pointsDisplay, playerLivesDisplay, gameOverCallback);
+        let lostLifeDisplay = jasmine.createSpyObj('lostLifeDisplay', ['showMessage']);
+        let game = new Game(map, [ ghost ], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback, lostLifeDisplay);
 
         game.update();
 
+        expect(lostLifeDisplay.showMessage).not.toHaveBeenCalled();
         expect(gameOverCallback).toHaveBeenCalled();
     });
 
