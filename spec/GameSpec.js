@@ -11,6 +11,20 @@ describe("Game", ()=>{
         endGameCallback = () => {}; 
     });
 
+    it("should initialize on creation", ()=>{
+        let map = { countDots: () => { return 1; }};
+        let player = { getEatenDots: ()=>1, getLivesLeft: ()=> 2 };
+        let endGameCallback = jasmine.createSpy();
+        let pointsDisplay = jasmine.createSpyObj("pointsDisplay", ["update"]);
+        let playerLivesLeftDisplay = jasmine.createSpyObj("playerLivesLeftDisplay", ["update"]);
+        let game = new Game(map, [], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay);        
+
+        game.initialize();
+
+        expect(pointsDisplay.update).toHaveBeenCalledWith(1);
+        expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(2);
+    });
+
     it("should update all ghosts and player during update loop", ()=>{
         let map = { countDots: () => { return 1; }}; 
         let ghost1 = jasmine.createSpyObj("ghost1", {shouldUpdateAtTime: true, update:()=>{},
@@ -75,7 +89,7 @@ describe("Game", ()=>{
         expect(playerLivesDisplay.update).toHaveBeenCalledWith(1);
     });
 
-    it("should end game if  no player lives left", ()=>{
+    it("should end game if no player lives left", ()=>{
         let map = { countDots: () => { return 1; }};        
         let ghost = jasmine.createSpyObj("ghost", {shouldUpdateAtTime: true, update:()=>{},
                         getPosX: 0, getPosY: 0});
