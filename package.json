@@ -4,7 +4,7 @@
   "description": "A Phaser 3 Project Template",
   "main": "src/index.js",
   "watch": {
-    "test": "{src,spec}/*.js"
+    "test": "{src,spec}/**/*.js"
   },
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
