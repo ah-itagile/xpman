@@ -10,11 +10,15 @@ export default class TitleScene extends Phaser.Scene {
     this.load.image('title', titleImg);
   }
  
+  init(xpacmanGame) {
+      this.xpacmanGame = xpacmanGame;
+  };
+
   create () {
     this.add.image(400, 300, 'title');
     this.input.keyboard.on('keydown_ENTER', ()=> {
         this.scene.stop();
-        this.scene.start('Game');
+        this.scene.start('Game', this.xpacmanGame);
     });
   }
 };

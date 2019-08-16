@@ -1,8 +1,8 @@
-import Game from '../src/model/game';
+import XPacmanGame from '../src/model/xpacmanGame';
 import Player from '../src/model/player';
 import Ghost from '../src/model/ghost';
 
-describe("Game", () => {
+describe("XPacmanGame", () => {
 
     let pointsDisplay;
     let endGameCallback;
@@ -24,7 +24,13 @@ describe("Game", () => {
         let pointsDisplay = jasmine.createSpyObj("pointsDisplay", ["update"]);
         let playerLivesLeftDisplay = jasmine.createSpyObj("playerLivesLeftDisplay", ["update"]);
         let ghost = new Ghost(map, 0, 0);
-        let game = new Game(map, [ghost], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, () => { }, {}, levels);
+        let game = new XPacmanGame(levels);
+        game.setPlayer(player);
+        game.setGhosts([ghost]);
+        game.setMapAdaptor(map);
+        game.setEndGameCallback(endGameCallback);
+        game.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
+        game.setPointsDisplay(pointsDisplay);
 
         game.initialize();
 
@@ -50,7 +56,10 @@ describe("Game", () => {
             shouldUpdateAtTime: true, update: () => { }, getEatenDots: () => { return 1; },
             getPosX: 1, getPosY: 1
         });
-        let game = new Game(map, [ghost1, ghost2], player, endGameCallback, pointsDisplay);
+        let game = new XPacmanGame(map);
+        game.setPointsDisplay(pointsDisplay);
+        game.setPlayer(player);
+        game.setGhosts([ghost1, ghost2]);
 
         game.update();
 
@@ -74,8 +83,14 @@ describe("Game", () => {
         }
         );
         let endGameCallback = jasmine.createSpy("endGameCallback");
-        let game = new Game(map, [ghost], player, endGameCallback, pointsDisplay);
+        let game = new XPacmanGame(map);
+        game.setPlayer(player);
+        game.setGhosts([ghost]);
+        game.setMapAdaptor(map);
+        game.setPointsDisplay(pointsDisplay);
+        game.setEndGameCallback(endGameCallback);
 
+        game.resetLevel();
         game.update();
 
         expect(endGameCallback).toHaveBeenCalled();
@@ -89,7 +104,10 @@ describe("Game", () => {
         }
         );
         let pointsDisplay = jasmine.createSpyObj('pointsDisplay', ['update']);
-        let game = new Game(map, [], player, endGameCallback, pointsDisplay);
+        let game = new XPacmanGame(map, [],endGameCallback);
+        game.setPlayer(player);
+        game.setGhosts([]);
+        game.setPointsDisplay(pointsDisplay);
 
         game.update();
 
@@ -107,7 +125,11 @@ describe("Game", () => {
         let player = new Player(map, {}, 0, 0, 0, initialLives);
         let playerLivesLeftDisplay = jasmine.createSpyObj('playerLivesLeftDisplay', ['update']);
         let lostLifeDisplay = jasmine.createSpyObj('lostLifeDisplay', ['showMessage']);
-        let game = new Game(map, [ghost], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, () => { }, lostLifeDisplay);
+        let game = new XPacmanGame(map, [ghost]);
+        game.setPlayer(player);
+        game.setGhosts([ghost]);
+        game.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
+        game.setLifeLostDisplay(lostLifeDisplay);
 
         game.update();
 
@@ -130,8 +152,13 @@ describe("Game", () => {
             ],
             player: { posX: 3, posY: 3 }
         }];
-        let game = new Game(map, [ghost], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, () => { }, lostLifeDisplay, levels);
-
+        let game = new XPacmanGame(levels);
+        game.setPlayer(player);
+        game.setGhosts([ghost]);
+        game.setMapAdaptor(map);
+        game.setLifeLostDisplay(lostLifeDisplay);
+        game.setPointsDisplay(pointsDisplay);
+        game.setEndGameCallback(endGameCallback);
         game.continueAfterLifeLost();
 
         expect(ghost.getPosX()).toBe(levels[0].ghosts[0].posX);
@@ -152,8 +179,11 @@ describe("Game", () => {
         let playerLivesLeftDisplay = jasmine.createSpyObj('playerLivesLeftDisplay', ['update']);
         let gameOverCallback = jasmine.createSpy("gameOverCallback");
         let lostLifeDisplay = jasmine.createSpyObj('lostLifeDisplay', ['showMessage']);
-        let game = new Game(map, [ghost], player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback, lostLifeDisplay);
-
+        let game = new XPacmanGame(map);
+        game.setPlayer(player);
+        game.setGhosts([ghost]);
+        game.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
+        game.setGameOverCallback(gameOverCallback);
         game.update();
 
         expect(lostLifeDisplay.showMessage).not.toHaveBeenCalled();

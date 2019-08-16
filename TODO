@@ -1,6 +1,9 @@
 Multi-Level-Game
+ create ghosts and player via injected factory
+ cleanup game resetLevel / initialize
  Show "Next level" scene.
  Save global state (points, left lives) for whole game.
+ no hard coded tilemap loading ing gameScene
 Make real level
 Draw graphics
 Integration Test

@@ -1,17 +1,39 @@
-import { throws } from "assert";
-
-export default class Game {
-    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback, lostLifeDisplay, levels) {
-        this.map = map;
-        this.ghosts = ghosts;
-        this.player = player;
-        this.initialDotCount = map.countDots();
-        this.endGameCallback = endGameCallback;
-        this.pointsDisplay = pointsDisplay;
-        this.playerLivesLeftDisplay = playerLivesLeftDisplay;
-        this.gameOverCallback = gameOverCallback;
-        this.lostLifeDisplay = lostLifeDisplay;
+export default class XPacmanGame {
+    constructor(levels) {
+        this.initialDotCount;
         this.levels = levels;
+    }
+
+    setGhosts(ghosts) {
+        this.ghosts = ghosts;
+    }
+
+    setPlayer(player) {
+        this.player = player;
+    }
+
+    setMapAdaptor(mapAdaptor) {
+        this.mapAdaptor = mapAdaptor;   
+    }
+
+    setEndGameCallback(endGameCallback) {
+        this.endGameCallback = endGameCallback;
+    }
+
+    setPlayerLivesLeftDisplay(playerLivesLeftDisplay) {
+        this.playerLivesLeftDisplay = playerLivesLeftDisplay;
+    }
+
+    setGameOverCallback(gameOverCallback) {
+        this.gameOverCallback = gameOverCallback;
+    }
+
+    setLifeLostDisplay(lifeLostDisplay) {
+        this.lifeLostDisplay = lifeLostDisplay;
+    }
+
+    setPointsDisplay(pointsDisplay) {
+        this.pointsDisplay = pointsDisplay;
     }
 
     initialize() {
@@ -22,6 +44,10 @@ export default class Game {
 
     continueAfterLifeLost() {
        this.resetGhostAndPlayerPositions();
+    }
+
+    resetLevel() {
+        this.initialDotCount = this.mapAdaptor.countDots();
     }
 
     resetGhostAndPlayerPositions() {
@@ -40,7 +66,7 @@ export default class Game {
         if (this.player.getLivesLeft()<0) {
             this.gameOverCallback();
         } else {
-            this.lostLifeDisplay.showMessage("YOU LOST ONE LIFE!");
+            this.lifeLostDisplay.showMessage("YOU LOST ONE LIFE!");
         }
         this.playerLivesLeftDisplay.update(this.player.getLivesLeft());
     }
