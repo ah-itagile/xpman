@@ -12,7 +12,7 @@ import PhaserPointsDisplay from '../phaseradaptor/phaserPointsDisplay';
 import PhaserLivesDisplay from '../phaseradaptor/phaserLivesDisplay';
 import Player from "../model/player";
 import PhaserPlayer from "../phaseradaptor/phaserPlayer";
-import Game from '../model/game'
+import Game from '../model/game';
 
 
 export default class GameScene extends Phaser.Scene {
@@ -55,14 +55,10 @@ export default class GameScene extends Phaser.Scene {
       let phaserGhosts = [];
       levelConfig.ghosts.forEach((ghost) => {
         let ghostModel = new Ghost(mapAdaptor, 500, 0);
-        ghostModel.setPosX(ghost.posX);
-        ghostModel.setPosY(ghost.posY);
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
-      let phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
-      let playerModel = new Player(mapAdaptor, phaserKeyAdaptor, 1, 250, 0, 2);
-      playerModel.setPosX(levelConfig.player.posX);
-      playerModel.setPosY(levelConfig.player.posY);
+      this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
+      let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0, 2);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
 
       this.endGameCallback = () => { 
@@ -83,8 +79,14 @@ export default class GameScene extends Phaser.Scene {
         this.endGameCallback, 
         pointsDisplay, playerLivesDisplay, 
         this.gameOverCallback, 
-        this.lifeLostDisplay);
+        this.lifeLostDisplay,
+        [levelConfig]);
       this.game.initialize();
+      this.events.on('resume', ()=>{
+        this.phaserKeyAdaptor.reset();
+        this.game.continueAfterLifeLost();
+      });
+
       this.keyL_ONLY_FOR_DEVELOPMENT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
   }
 

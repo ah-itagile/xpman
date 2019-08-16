@@ -23,6 +23,14 @@ export default class PhaserPlayer {
         return this.model.getPosY();
     }
 
+    setPosX(x) {
+        this.model.setPosX(x);
+    }
+
+    setPosY(y) {
+        this.model.setPosY(y);
+    }
+
     getTranslatedPosition() {
         return this.tilePositionToPhaserTranslator.translate(this.model.getPosX(), this.model.getPosY());
     }

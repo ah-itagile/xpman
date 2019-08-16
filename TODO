@@ -1,5 +1,6 @@
-Reset positions when caught by ghost
-Save global state (points, left lives) for whole game.
+Multi-Level-Game
+ Show "Next level" scene.
+ Save global state (points, left lives) for whole game.
 Make real level
 Draw graphics
 Integration Test
@@ -19,6 +20,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+Reset positions when caught by ghost
 Show lives.
  Initially.
 Show Game-Over-Scene.

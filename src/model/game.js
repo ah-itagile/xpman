@@ -1,6 +1,7 @@
+import { throws } from "assert";
 
 export default class Game {
-    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback, lostLifeDisplay) {
+    constructor(map, ghosts, player, endGameCallback, pointsDisplay, playerLivesLeftDisplay, gameOverCallback, lostLifeDisplay, levels) {
         this.map = map;
         this.ghosts = ghosts;
         this.player = player;
@@ -10,11 +11,28 @@ export default class Game {
         this.playerLivesLeftDisplay = playerLivesLeftDisplay;
         this.gameOverCallback = gameOverCallback;
         this.lostLifeDisplay = lostLifeDisplay;
+        this.levels = levels;
     }
 
     initialize() {
         this.pointsDisplay.update(this.player.getEatenDots());
-        this.playerLivesLeftDisplay.update(this.player.getLivesLeft());        
+        this.playerLivesLeftDisplay.update(this.player.getLivesLeft());
+        this.resetGhostAndPlayerPositions();
+    }
+
+    continueAfterLifeLost() {
+       this.resetGhostAndPlayerPositions();
+    }
+
+    resetGhostAndPlayerPositions() {
+        for (let i = 0; i < this.ghosts.length; i++) {
+            const ghost = this.ghosts[i];
+            ghost.setPosX(this.levels[0].ghosts[i].posX);
+            ghost.setPosY(this.levels[0].ghosts[i].posY);
+        }
+
+        this.player.setPosX(this.levels[0].player.posX);
+        this.player.setPosY(this.levels[0].player.posY);
     }
 
     ghostCaughtPlayer() {
