@@ -24,7 +24,15 @@ class Game extends Phaser.Game {
     this.scene.add('Title', TitleScene);
     this.scene.add('LifeLost', LifeLostScene);
 
-    let xpacmanGame = new XPacmanGame();
+    
+    let levelConfig = {
+      ghosts: [{posX: 2, posY: 14},
+               {posX: 6, posY: 14}
+      ],
+      player: {posX: 2, posY: 3}
+    };
+
+    let xpacmanGame = new XPacmanGame([levelConfig]);
     this.scene.start('Title', xpacmanGame);
   }
 }

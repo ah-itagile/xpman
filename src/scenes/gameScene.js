@@ -25,7 +25,9 @@ export default class GameScene extends Phaser.Scene {
       this.mazeOffsetY = 20;
   }
 
-  init(data) {}
+  init(xpacmanGame) {
+    this.xpacmanGame = xpacmanGame;
+  }
   
   preload ()
   {
@@ -37,14 +39,6 @@ export default class GameScene extends Phaser.Scene {
   
   create ()
   {
-
-      let levelConfig = {
-        ghosts: [{posX: 2, posY: 14},
-                 {posX: 6, posY: 14}
-        ],
-        player: {posX: 2, posY: 3}
-      };
-
       
       let pointsDisplay = new PhaserPointsDisplay(this);
       let playerLivesLeftDisplay = new PhaserLivesDisplay(this);
@@ -54,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
 
       let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
       let phaserGhosts = [];
-      levelConfig.ghosts.forEach((ghost) => {
+      this.xpacmanGame.getLevelConfigs()[0].ghosts.forEach((ghost) => {
         let ghostModel = new Ghost(mapAdaptor, 500, 0);
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
@@ -74,20 +68,19 @@ export default class GameScene extends Phaser.Scene {
         this.scene.pause('Game')        
         this.scene.launch('LifeLost', message);
       }};
-      this.game = new XPacmanGame([levelConfig]);
-      this.game.setMapAdaptor(mapAdaptor);
-      this.game.setGhosts(phaserGhosts);
-      this.game.setPlayer(phaserPlayer);
-      this.game.setEndGameCallback(this.endGameCallback);
-      this.game.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
-      this.game.setGameOverCallback(this.gameOverCallback);
-      this.game.setLifeLostDisplay(this.lifeLostDisplay);
-      this.game.setPointsDisplay(pointsDisplay);
-      this.game.resetLevel();
-      this.game.initialize();
+      this.xpacmanGame.setMapAdaptor(mapAdaptor);
+      this.xpacmanGame.setGhosts(phaserGhosts);
+      this.xpacmanGame.setPlayer(phaserPlayer);
+      this.xpacmanGame.setEndGameCallback(this.endGameCallback);
+      this.xpacmanGame.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
+      this.xpacmanGame.setGameOverCallback(this.gameOverCallback);
+      this.xpacmanGame.setLifeLostDisplay(this.lifeLostDisplay);
+      this.xpacmanGame.setPointsDisplay(pointsDisplay);
+      this.xpacmanGame.resetLevel();
+      this.xpacmanGame.initialize();
       this.events.on('resume', ()=>{
         this.phaserKeyAdaptor.reset();
-        this.game.continueAfterLifeLost();
+        this.xpacmanGame.continueAfterLifeLost();
       });
 
       this.keyL_ONLY_FOR_DEVELOPMENT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
@@ -100,6 +93,6 @@ export default class GameScene extends Phaser.Scene {
   
   update(time, delta) {
     let forceLevelEnd = this.isLevelEndForced();
-    this.game.update(time, forceLevelEnd);
+    this.xpacmanGame.update(time, forceLevelEnd);
   }
 }

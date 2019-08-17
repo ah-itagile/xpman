@@ -36,6 +36,10 @@ export default class XPacmanGame {
         this.pointsDisplay = pointsDisplay;
     }
 
+    getLevelConfigs() {
+        return this.levels;
+    }
+
     initialize() {
         this.pointsDisplay.update(this.player.getEatenDots());
         this.playerLivesLeftDisplay.update(this.player.getLivesLeft());

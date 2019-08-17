@@ -1,4 +1,5 @@
 Multi-Level-Game
+ remove public XPacmanGame.getLevel
  create ghosts and player via injected factory
  cleanup game resetLevel / initialize
  Show "Next level" scene.
