@@ -4,6 +4,7 @@ import TitleScene from "./scenes/titleScene"
 import NextLevelScene from "./scenes/nextLevelScene"
 import GameOverScene from "./scenes/gameOverScene";
 import LifeLostScene from "./scenes/lifeLostScene";
+import EndGameScene from "./scenes/endGameScene";
 import XPacmanGame from "./model/xpacmanGame";
 
 
@@ -23,7 +24,7 @@ class Game extends Phaser.Game {
     this.scene.add('GameOver', GameOverScene);
     this.scene.add('Title', TitleScene);
     this.scene.add('LifeLost', LifeLostScene);
-
+    this.scene.add('EndGame', EndGameScene);
     
     let levelConfigs = [
       {

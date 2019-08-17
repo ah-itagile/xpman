@@ -20,6 +20,10 @@ export default class XPacmanGame {
         this.mapAdaptor = mapAdaptor;   
     }
 
+    setLevelFinishedCallback(levelFinishedCallback) {
+        this.levelFinishedCallback = levelFinishedCallback;
+    }
+
     setEndGameCallback(endGameCallback) {
         this.endGameCallback = endGameCallback;
     }
@@ -98,8 +102,13 @@ export default class XPacmanGame {
             this.pointsDisplay.update(this.player.getEatenDots());
         }
         if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
-            this.currentLevelOneBased++;
-            this.endGameCallback();
+            if (this.currentLevelOneBased == this.levels.length) {
+                this.endGameCallback();
+            } else
+            {
+                this.currentLevelOneBased++;
+                this.levelFinishedCallback();
+            }
         }
     }
 }

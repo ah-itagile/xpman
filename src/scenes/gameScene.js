@@ -57,13 +57,17 @@ export default class GameScene extends Phaser.Scene {
       let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0, 2);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
 
-      this.endGameCallback = () => { 
+      this.levelFinishedCallback = () => { 
         this.scene.stop()        
         this.scene.start('NextLevel', this.xpacmanGame);
       };
       this.gameOverCallback = () => { 
         this.scene.stop()        
         this.scene.start('GameOver');
+      };
+      this.endGameCallback = () => { 
+        this.scene.stop()        
+        this.scene.start('EndGame', this.xpacmanGame);
       };
       this.lifeLostDisplay = { showMessage: (message) => { 
         this.scene.pause('Game')        
@@ -72,9 +76,10 @@ export default class GameScene extends Phaser.Scene {
       this.xpacmanGame.setMapAdaptor(mapAdaptor);
       this.xpacmanGame.setGhosts(phaserGhosts);
       this.xpacmanGame.setPlayer(phaserPlayer);
-      this.xpacmanGame.setEndGameCallback(this.endGameCallback);
+      this.xpacmanGame.setLevelFinishedCallback(this.levelFinishedCallback);
       this.xpacmanGame.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
       this.xpacmanGame.setGameOverCallback(this.gameOverCallback);
+      this.xpacmanGame.setEndGameCallback(this.endGameCallback);
       this.xpacmanGame.setLifeLostDisplay(this.lifeLostDisplay);
       this.xpacmanGame.setPointsDisplay(pointsDisplay);
       this.xpacmanGame.resetLevel();

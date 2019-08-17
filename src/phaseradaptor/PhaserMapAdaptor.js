@@ -8,7 +8,6 @@ export default class PhaserMapAdaptor {
   }
 
   getTileAt(x, y) {
-    console.log("tile " + x + " - " + y);
     let phaserTileField = this.phaserMap.getTileAt(x, y);
     if (phaserTileField === null) {
       return ModelConstants.MAP_UNSET;

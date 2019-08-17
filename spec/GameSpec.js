@@ -6,6 +6,7 @@ describe("XPacmanGame", () => {
 
     let pointsDisplay;
     let endGameCallback;
+    let levelFinishedCallback;
     let gameOverCallback;
     let game;
     let map;
@@ -16,8 +17,9 @@ describe("XPacmanGame", () => {
 
     beforeEach(() => {
         pointsDisplay = { update: () => { } };
-        endGameCallback = () => { };
         game = new XPacmanGame();
+        levelFinishedCallback = jasmine.createSpy("levelFinishedCallback");
+        game.setLevelFinishedCallback(levelFinishedCallback);
         map = { countDots: () => { return 1; } };
         game.setMapAdaptor(map);
         endGameCallback = jasmine.createSpy("endGameCallback");
@@ -34,6 +36,12 @@ describe("XPacmanGame", () => {
         game.setLifeLostDisplay(lifeLostDisplay);
         gameOverCallback = jasmine.createSpy("gameOverCallback");
         game.setGameOverCallback(gameOverCallback);
+        let levels = [{
+            ghosts: [{ posX: 2, posY: 2 }
+            ],
+            player: { posX: 3, posY: 3 }
+        }];
+        game.setLevelConfigs(levels);
     });
 
     it("should initialize on creation", () => {
@@ -81,7 +89,17 @@ describe("XPacmanGame", () => {
         expect(player.update).toHaveBeenCalled();
     });
 
-    it("should fire end game event if player ate all dots", () => {
+    it("should fire level finished event if player ate all dots", () => {
+        let levels = [{
+            ghosts: [{ posX: 2, posY: 2 }
+            ],
+            player: { posX: 3, posY: 3 }
+        }, {
+            ghosts: [{ posX: 2, posY: 2 }
+            ],
+            player: { posX: 3, posY: 3 }
+        }];
+        game.setLevelConfigs(levels);
         let player = jasmine.createSpyObj("player", 
             {
                 shouldUpdateAtTime: true, update: () => { },
@@ -93,7 +111,7 @@ describe("XPacmanGame", () => {
         game.resetLevel();
         game.update();
 
-        expect(endGameCallback).toHaveBeenCalled();
+        expect(levelFinishedCallback).toHaveBeenCalled();
     });
 
     it("should update point display with eaten dots after player movement", () => {
@@ -172,6 +190,16 @@ describe("XPacmanGame", () => {
     });
 
     it("should increase current level if level was finished", ()=>{
+        let levels = [{
+            ghosts: [{ posX: 2, posY: 2 }
+            ],
+            player: { posX: 3, posY: 3 }
+        }, {
+            ghosts: [{ posX: 2, posY: 2 }
+            ],
+            player: { posX: 3, posY: 3 }
+        }];
+        game.setLevelConfigs(levels);
         game.resetLevel();
         expect(game.getCurrentLevel()).toBe(1);
 
@@ -186,6 +214,23 @@ describe("XPacmanGame", () => {
         game.update();
 
         expect(game.getCurrentLevel()).toBe(2);
+    });
+
+    it("should finish game if level was finished and no more levels left", ()=>{
+        game.resetLevel();
+        expect(game.getCurrentLevel()).toBe(1);
+
+        let player = jasmine.createSpyObj("player", 
+            {
+                shouldUpdateAtTime: true, update: () => { },
+                getEatenDots: 1, getPosX: 1, getPosY: 1
+            }
+        );
+        game.setPlayer(player);        
+
+        game.update();
+
+        expect(endGameCallback).toHaveBeenCalled();
     });
 
 });

@@ -1,5 +1,4 @@
 Multi-Level-Game
- remove public XPacmanGame.getLevel
  XPacmanGame.endgame -> levelFinished
  create ghosts and player via injected factory
  cleanup game resetLevel / initialize
