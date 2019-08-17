@@ -88,8 +88,7 @@ describe("XPacmanGame", () => {
                 getEatenDots: 1, getPosX: 1, getPosY: 1
             }
         );
-        game.setPlayer(player);
-        game.setMapAdaptor(map);
+        game.setPlayer(player);        
 
         game.resetLevel();
         game.update();
@@ -172,8 +171,21 @@ describe("XPacmanGame", () => {
         expect(gameOverCallback).toHaveBeenCalled();
     });
 
-    // it("should return selected level", ()=>{
-    //     let game = new XPacmanGame(map);
-    // });
+    it("should increase current level if level was finished", ()=>{
+        game.resetLevel();
+        expect(game.getCurrentLevel()).toBe(1);
+
+        let player = jasmine.createSpyObj("player", 
+            {
+                shouldUpdateAtTime: true, update: () => { },
+                getEatenDots: 1, getPosX: 1, getPosY: 1
+            }
+        );
+        game.setPlayer(player);        
+
+        game.update();
+
+        expect(game.getCurrentLevel()).toBe(2);
+    });
 
 });

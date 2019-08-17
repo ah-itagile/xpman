@@ -3,7 +3,6 @@ Multi-Level-Game
  XPacmanGame.endgame -> levelFinished
  create ghosts and player via injected factory
  cleanup game resetLevel / initialize
- Show "Next level" scene.
  Save global state (points, left lives) for whole game.
  no hard coded tilemap loading ing gameScene
 Make real level
@@ -25,6 +24,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+Show "Next level" scene.
 Reset positions when caught by ghost
 Show lives.
  Initially.

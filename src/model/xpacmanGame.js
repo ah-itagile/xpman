@@ -1,5 +1,6 @@
 export default class XPacmanGame {
     constructor() {
+        this.currentLevelOneBased = 1;
         this.initialDotCount;
     }
 
@@ -43,6 +44,10 @@ export default class XPacmanGame {
         return this.levels;
     }
 
+    getCurrentLevel() {
+        return this.currentLevelOneBased;
+    }
+
     initialize() {
         this.pointsDisplay.update(this.player.getEatenDots());
         this.playerLivesLeftDisplay.update(this.player.getLivesLeft());
@@ -60,12 +65,12 @@ export default class XPacmanGame {
     resetGhostAndPlayerPositions() {
         for (let i = 0; i < this.ghosts.length; i++) {
             const ghost = this.ghosts[i];
-            ghost.setPosX(this.levels[0].ghosts[i].posX);
-            ghost.setPosY(this.levels[0].ghosts[i].posY);
+            ghost.setPosX(this.levels[this.currentLevelOneBased-1].ghosts[i].posX);
+            ghost.setPosY(this.levels[this.currentLevelOneBased-1].ghosts[i].posY);
         }
 
-        this.player.setPosX(this.levels[0].player.posX);
-        this.player.setPosY(this.levels[0].player.posY);
+        this.player.setPosX(this.levels[this.currentLevelOneBased-1].player.posX);
+        this.player.setPosY(this.levels[this.currentLevelOneBased-1].player.posY);
     }
 
     ghostCaughtPlayer() {
@@ -93,6 +98,7 @@ export default class XPacmanGame {
             this.pointsDisplay.update(this.player.getEatenDots());
         }
         if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
+            this.currentLevelOneBased++;
             this.endGameCallback();
         }
     }

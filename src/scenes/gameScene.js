@@ -35,6 +35,7 @@ export default class GameScene extends Phaser.Scene {
       this.load.image('player', playerImg);
       this.load.image('ghost', ghostPng);
       this.load.tilemapCSV('tileMapLevel1', tileMapLevel1);
+      this.load.tilemapCSV('tileMapLevel2', tileMapLevel2);
   }
   
   create ()
@@ -42,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
       
       let pointsDisplay = new PhaserPointsDisplay(this);
       let playerLivesLeftDisplay = new PhaserLivesDisplay(this);
-      let phaserTileMap = this.make.tilemap({ key: 'tileMapLevel1', tileWidth: 16, tileHeight: 16 });
+      let phaserTileMap = this.make.tilemap({ key: this.xpacmanGame.getLevelConfigs()[this.xpacmanGame.getCurrentLevel()-1].mapName, tileWidth: 16, tileHeight: 16 });
       var tileset = phaserTileMap.addTilesetImage('tiles', null, 16, 16, 0, 0);
       phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
 
@@ -58,7 +59,7 @@ export default class GameScene extends Phaser.Scene {
 
       this.endGameCallback = () => { 
         this.scene.stop()        
-        this.scene.start('NextLevel');
+        this.scene.start('NextLevel', this.xpacmanGame);
       };
       this.gameOverCallback = () => { 
         this.scene.stop()        
