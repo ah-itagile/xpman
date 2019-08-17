@@ -1,9 +1,9 @@
 Multi-Level-Game
- XPacmanGame.endgame -> levelFinished
+ remove point count duplication in game and player
+ remove lives left duplication in game and player
  create ghosts and player via injected factory
  cleanup game resetLevel / initialize
- Save global state (points, left lives) for whole game.
- no hard coded tilemap loading ing gameScene
+ no hard coded tilemap loading in gameScene
 Make real level
 Draw graphics
 Integration Test
@@ -23,6 +23,8 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+ Save global state (points, left lives) for whole game.
+ XPacmanGame.endgame -> levelFinished
 Show "Next level" scene.
 Reset positions when caught by ghost
 Show lives.

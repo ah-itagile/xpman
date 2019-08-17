@@ -44,6 +44,7 @@ class Game extends Phaser.Game {
     ];
 
     let xpacmanGame = new XPacmanGame();
+    
     xpacmanGame.setLevelConfigs(levelConfigs);
     this.scene.start('Title', xpacmanGame);
   }

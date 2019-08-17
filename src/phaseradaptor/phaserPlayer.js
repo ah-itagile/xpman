@@ -35,6 +35,10 @@ export default class PhaserPlayer {
         return this.tilePositionToPhaserTranslator.translate(this.model.getPosX(), this.model.getPosY());
     }
 
+    setDotEatenEventListener(listener) {
+        this.model.setDotEatenEventListener(listener);
+    }
+
     shouldUpdateAtTime(time) {
         return this.model.shouldUpdateAtTime(time);
     }

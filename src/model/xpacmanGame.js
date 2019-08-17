@@ -2,6 +2,8 @@ export default class XPacmanGame {
     constructor() {
         this.currentLevelOneBased = 1;
         this.initialDotCount;
+        this.points = 0;
+        this.livesLeft = 2;
     }
 
     setLevelConfigs(levelConfigs) {
@@ -14,6 +16,9 @@ export default class XPacmanGame {
 
     setPlayer(player) {
         this.player = player;
+        this.player.setDotEatenEventListener(()=>{
+            this.points++;
+        });
     }
 
     setMapAdaptor(mapAdaptor) {
@@ -54,7 +59,7 @@ export default class XPacmanGame {
 
     initialize() {
         this.pointsDisplay.update(this.player.getEatenDots());
-        this.playerLivesLeftDisplay.update(this.player.getLivesLeft());
+        this.playerLivesLeftDisplay.update(this.livesLeft);
         this.resetGhostAndPlayerPositions();
     }
 
@@ -64,6 +69,12 @@ export default class XPacmanGame {
 
     resetLevel() {
         this.initialDotCount = this.mapAdaptor.countDots();
+    }
+
+    resetGame() {
+        this.currentLevelOneBased = 1;
+        this.points = 0;
+        this.livesLeft = 2;
     }
 
     resetGhostAndPlayerPositions() {
@@ -79,12 +90,13 @@ export default class XPacmanGame {
 
     ghostCaughtPlayer() {
         this.player.decreaseLives();
-        if (this.player.getLivesLeft()<0) {
+        this.livesLeft--;
+        if (this.livesLeft<0) {
             this.gameOverCallback();
         } else {
             this.lifeLostDisplay.showMessage("YOU LOST ONE LIFE!");
         }
-        this.playerLivesLeftDisplay.update(this.player.getLivesLeft());
+        this.playerLivesLeftDisplay.update(this.livesLeft);
     }
 
     update(time, forceLevelEnd) {
@@ -99,7 +111,7 @@ export default class XPacmanGame {
         });
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);
-            this.pointsDisplay.update(this.player.getEatenDots());
+            this.pointsDisplay.update(this.points);
         }
         if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
             if (this.currentLevelOneBased == this.levels.length) {

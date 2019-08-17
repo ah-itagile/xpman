@@ -74,7 +74,8 @@ describe("XPacmanGame", () => {
         });
         let player = jasmine.createSpyObj("player", {
             shouldUpdateAtTime: true, update: () => { }, getEatenDots: () => { return 1; },
-            getPosX: 1, getPosY: 1
+            getPosX: 1, getPosY: 1,
+            setDotEatenEventListener: ()=>{}
         });
         game.setPlayer(player);
         game.setGhosts([ghost1, ghost2]);
@@ -103,7 +104,8 @@ describe("XPacmanGame", () => {
         let player = jasmine.createSpyObj("player", 
             {
                 shouldUpdateAtTime: true, update: () => { },
-                getEatenDots: 1, getPosX: 1, getPosY: 1
+                getEatenDots: 1, getPosX: 1, getPosY: 1,
+                setDotEatenEventListener: ()=>{}
             }
         );
         game.setPlayer(player);        
@@ -114,10 +116,11 @@ describe("XPacmanGame", () => {
         expect(levelFinishedCallback).toHaveBeenCalled();
     });
 
-    it("should update point display with eaten dots after player movement", () => {
+    it("should update point display after player movement", () => {
         let player = jasmine.createSpyObj("player", {
             shouldUpdateAtTime: true, update: () => { },
-            getEatenDots: 1, getPosX: 1, getPosY: 1
+            getEatenDots: 0, getPosX: 1, getPosY: 1,
+            setDotEatenEventListener: ()=>{}
         }
         );
         game.setPlayer(player);
@@ -125,7 +128,7 @@ describe("XPacmanGame", () => {
 
         game.update();
 
-        expect(pointsDisplay.update).toHaveBeenCalledWith(1);
+        expect(pointsDisplay.update).toHaveBeenCalledWith(0);
     });
 
     it("should decrease player lives and show message if ghost catches player", () => {
@@ -184,8 +187,10 @@ describe("XPacmanGame", () => {
         game.setGhosts([ghost]);
 
         game.update();
+        game.update();
+        game.update();
 
-        expect(lifeLostDisplay.showMessage).not.toHaveBeenCalled();
+        expect(lifeLostDisplay.showMessage).toHaveBeenCalledTimes(2);
         expect(gameOverCallback).toHaveBeenCalled();
     });
 
@@ -206,7 +211,8 @@ describe("XPacmanGame", () => {
         let player = jasmine.createSpyObj("player", 
             {
                 shouldUpdateAtTime: true, update: () => { },
-                getEatenDots: 1, getPosX: 1, getPosY: 1
+                getEatenDots: 1, getPosX: 1, getPosY: 1,
+                setDotEatenEventListener: ()=>{}
             }
         );
         game.setPlayer(player);        
@@ -223,7 +229,8 @@ describe("XPacmanGame", () => {
         let player = jasmine.createSpyObj("player", 
             {
                 shouldUpdateAtTime: true, update: () => { },
-                getEatenDots: 1, getPosX: 1, getPosY: 1
+                getEatenDots: 1, getPosX: 1, getPosY: 1,
+                setDotEatenEventListener: ()=>{}
             }
         );
         game.setPlayer(player);        

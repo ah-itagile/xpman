@@ -21,6 +21,10 @@ export default class Player {
         ];
     }
  
+    setDotEatenEventListener(dotEatenEventListener) {
+        this.dotEatenEventListener = dotEatenEventListener;
+    }
+
     shouldUpdateAtTime(time) {
         return this.lastUpdatedAtInMs+this.waitTimeInMs <= time;
     }
@@ -36,6 +40,7 @@ export default class Player {
                     if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_DOT) {
                         this.map.replaceTile(this.posX,this.posY, Constants.MAP_FREE);
                         this.eatenDots++;
+                        this.dotEatenEventListener();
                     }
 
                     this.waitTimeInMs = this.waitTimeAfterMovementInMs;
