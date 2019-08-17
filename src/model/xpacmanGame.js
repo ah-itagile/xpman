@@ -1,7 +1,10 @@
 export default class XPacmanGame {
-    constructor(levels) {
+    constructor() {
         this.initialDotCount;
-        this.levels = levels;
+    }
+
+    setLevelConfigs(levelConfigs) {
+        this.levels = levelConfigs;
     }
 
     setGhosts(ghosts) {

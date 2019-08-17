@@ -32,7 +32,8 @@ class Game extends Phaser.Game {
       player: {posX: 2, posY: 3}
     };
 
-    let xpacmanGame = new XPacmanGame([levelConfig]);
+    let xpacmanGame = new XPacmanGame();
+    xpacmanGame.setLevelConfigs([levelConfig]);
     this.scene.start('Title', xpacmanGame);
   }
 }
