@@ -2,7 +2,7 @@ import * as Constants from './constants'
 import { throws } from 'assert';
 
 export default class Player {
-    constructor(map, controls, waitTimeWithoutMovementInMs, waitTimeAfterMovementInMs, lastUpdatedAtInMs, initialLivesLeft) {
+    constructor(map, controls, waitTimeWithoutMovementInMs, waitTimeAfterMovementInMs, lastUpdatedAtInMs) {
         this.map = map;
         this.controls = controls;
         this.posX = 0;
@@ -12,7 +12,6 @@ export default class Player {
         this.waitTimeAfterMovementInMs = waitTimeAfterMovementInMs;
         this.lastUpdatedAtInMs = lastUpdatedAtInMs;
         this.eatenDots = 0;
-        this.livesLeft = initialLivesLeft;
         this.movements = [
             {name: 'up', dx: 0, dy:-1},
             {name: 'down', dx: 0, dy:1},
@@ -69,14 +68,6 @@ export default class Player {
 
     getEatenDots() {
         return this.eatenDots;
-    }
-
-    getLivesLeft() {
-       return this.livesLeft;
-    }
-
-    decreaseLives() {
-        this.livesLeft--;
     }
     
 }

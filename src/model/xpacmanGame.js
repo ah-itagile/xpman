@@ -89,7 +89,6 @@ export default class XPacmanGame {
     }
 
     ghostCaughtPlayer() {
-        this.player.decreaseLives();
         this.livesLeft--;
         if (this.livesLeft<0) {
             this.gameOverCallback();

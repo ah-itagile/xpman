@@ -1,6 +1,4 @@
 Multi-Level-Game
- remove point count duplication in game and player
- remove lives left duplication in game and player
  create ghosts and player via injected factory
  cleanup game resetLevel / initialize
  no hard coded tilemap loading in gameScene
@@ -13,6 +11,7 @@ Different ghosts
 * tracer ghost
 
 Ideas:
+ Rename point count in player to story points done in level
 Wallaby.js
 Movement abstraction: player, ghost
 Timer class for handling intervals.
@@ -23,6 +22,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+ remove lives left duplication in game and player
  Save global state (points, left lives) for whole game.
  XPacmanGame.endgame -> levelFinished
 Show "Next level" scene.

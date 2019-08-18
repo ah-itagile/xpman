@@ -43,12 +43,6 @@ export default class PhaserPlayer {
         return this.model.shouldUpdateAtTime(time);
     }
 
-    getLivesLeft() {
-        return this.model.getLivesLeft();
-    }
-    decreaseLives() {
-        this.model.decreaseLives();
-    }
     getEatenDots() {
         return this.model.getEatenDots();
     }

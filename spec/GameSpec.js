@@ -138,14 +138,12 @@ describe("XPacmanGame", () => {
             getPosX: 0, getPosY: 0
         });
 
-        let initialLives = 2;
-        let player = new Player(map, {}, 0, 0, 0, initialLives);
+        let player = new Player(map, {}, 0, 0, 0);
         game.setPlayer(player);
         game.setGhosts([ghost]);
 
         game.update();
 
-        expect(player.getLivesLeft()).toBe(1);
         expect(lifeLostDisplay.showMessage).toHaveBeenCalledWith("YOU LOST ONE LIFE!");
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
     });
@@ -154,8 +152,7 @@ describe("XPacmanGame", () => {
         let map = { countDots: () => { return 1; } };
         let ghost = new Ghost(map, 0, 0);
 
-        let initialLives = 2;
-        let player = new Player(map, {}, 0, 0, 0, initialLives);
+        let player = new Player(map, {}, 0, 0, 0);
 
         let levels = [{
             ghosts: [{ posX: 2, posY: 2 }
@@ -181,8 +178,7 @@ describe("XPacmanGame", () => {
             getPosX: 0, getPosY: 0
         });
 
-        let initialLivesLeft = 0;
-        let player = new Player(map, {}, 0, 0, 0, initialLivesLeft);
+        let player = new Player(map, {}, 0, 0, 0);
         game.setPlayer(player);
         game.setGhosts([ghost]);
 

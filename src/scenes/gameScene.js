@@ -54,7 +54,7 @@ export default class GameScene extends Phaser.Scene {
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
-      let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0, 2);
+      let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
 
       this.levelFinishedCallback = () => { 
