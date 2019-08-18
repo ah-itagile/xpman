@@ -1,4 +1,4 @@
-New ghost class for ghosts chasing the player.
+Chasing ghosts: pick random move when two possible chasing directions possible.
 Make real level
 Draw graphics
 Integration Test
@@ -21,6 +21,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+New ghost class for ghosts chasing the player.
 Multi-Level-Game
 cleanup game resetLevel / initialize
  remove lives left duplication in game and player

@@ -98,7 +98,7 @@ export default class XPacmanGame {
     update(time, forceLevelEnd) {
         this.ghosts.forEach(ghost => {
             if (ghost.shouldUpdateAtTime(time)) {
-                ghost.update(time);
+                ghost.update(time, this.player);
             }
             if (ghost.getPosX()===this.player.getPosX() && ghost.getPosY()===this.player.getPosY()) {
                 this.ghostCaughtPlayer();

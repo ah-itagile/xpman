@@ -16,6 +16,7 @@ import PhaserPlayer from "../phaseradaptor/phaserPlayer";
 import XPacmanGame from '../model/xpacmanGame';
 import PhaserRandomMoveDecider from "../phaseradaptor/phaserRandomMoveDecider";
 import GhostPossibleMovesFinder from "../model/ghostPossibleMovesFinder";
+import ChasingMoveDecider from "../model/chasingMoveDecider";
 
 
 export default class GameScene extends Phaser.Scene {
@@ -50,10 +51,11 @@ export default class GameScene extends Phaser.Scene {
 
       let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
       let phaserGhosts = [];
-      let phaserMoveDecider = new PhaserRandomMoveDecider();
+      let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
       let possibleMovesFinder = new GhostPossibleMovesFinder();
+      let chasingMoveDecider = new ChasingMoveDecider(phaserRandomMoveDecider);
       this.xpacmanGame.getLevelConfigs()[0].ghosts.forEach((ghost) => {
-        let ghostModel = new Ghost(mapAdaptor, 500, 0, phaserMoveDecider, possibleMovesFinder);
+        let ghostModel = new Ghost(mapAdaptor, 500, 0, chasingMoveDecider, possibleMovesFinder);
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);

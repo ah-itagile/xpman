@@ -39,8 +39,8 @@ export default class PhaserGhost {
     shouldUpdateAtTime(time) {
         return this.ghostModel.shouldUpdateAtTime(time);
     }
-    update(time) {
-        this.ghostModel.update(time);
+    update(time, player) {
+        this.ghostModel.update(time, player);
 
         let position = this.getTranslatedPosition();
         this.ghostImage.x = position.x;

@@ -43,9 +43,9 @@ export default class Ghost {
         return this.lastUpdatedAtInMs+this.waitTimeInMs < time;
     }
 
-    update(time) {
+    update(time, player) {
         let options = this.possibleMovesFinder.findPossibleMoves(this.map, this.posX, this.posY, this.direction);
-        let newDirection = this.moveDecider.chooseMove(options, this, null);
+        let newDirection = this.moveDecider.chooseMove(options, this, player);
         this.setDirection(newDirection);          
         this.move(newDirection);
         this.lastUpdatedAtInMs = time;
