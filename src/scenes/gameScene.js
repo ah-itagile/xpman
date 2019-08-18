@@ -81,9 +81,8 @@ export default class GameScene extends Phaser.Scene {
       this.xpacmanGame.setGameOverCallback(this.gameOverCallback);
       this.xpacmanGame.setEndGameCallback(this.endGameCallback);
       this.xpacmanGame.setLifeLostDisplay(this.lifeLostDisplay);
-      this.xpacmanGame.setPointsDisplay(pointsDisplay);
-      this.xpacmanGame.resetLevel();
-      this.xpacmanGame.initialize();
+      this.xpacmanGame.setPointsDisplay(pointsDisplay);      
+      this.xpacmanGame.initializeLevel();
       this.events.on('resume', ()=>{
         this.phaserKeyAdaptor.reset();
         this.xpacmanGame.continueAfterLifeLost();

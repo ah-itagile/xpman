@@ -1,6 +1,5 @@
 Multi-Level-Game
- create ghosts and player via injected factory
- cleanup game resetLevel / initialize
+
  no hard coded tilemap loading in gameScene
 Make real level
 Draw graphics
@@ -11,6 +10,7 @@ Different ghosts
 * tracer ghost
 
 Ideas:
+ create ghosts and player via injected factory
  Rename point count in player to story points done in level
 Wallaby.js
 Movement abstraction: player, ghost
@@ -22,6 +22,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+cleanup game resetLevel / initialize
  remove lives left duplication in game and player
  Save global state (points, left lives) for whole game.
  XPacmanGame.endgame -> levelFinished

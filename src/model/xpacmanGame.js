@@ -57,7 +57,8 @@ export default class XPacmanGame {
         return this.currentLevelOneBased;
     }
 
-    initialize() {
+    initializeLevel() {
+        this.initialDotCount = this.mapAdaptor.countDots();
         this.pointsDisplay.update(this.player.getEatenDots());
         this.playerLivesLeftDisplay.update(this.livesLeft);
         this.resetGhostAndPlayerPositions();
@@ -65,10 +66,6 @@ export default class XPacmanGame {
 
     continueAfterLifeLost() {
        this.resetGhostAndPlayerPositions();
-    }
-
-    resetLevel() {
-        this.initialDotCount = this.mapAdaptor.countDots();
     }
 
     resetGame() {

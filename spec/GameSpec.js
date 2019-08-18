@@ -53,7 +53,7 @@ describe("XPacmanGame", () => {
 
         game.setLevelConfigs(levels);
 
-        game.initialize();
+        game.initializeLevel();
 
         expect(pointsDisplay.update).toHaveBeenCalled();
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(2);
@@ -104,13 +104,17 @@ describe("XPacmanGame", () => {
         let player = jasmine.createSpyObj("player", 
             {
                 shouldUpdateAtTime: true, update: () => { },
-                getEatenDots: 1, getPosX: 1, getPosY: 1,
-                setDotEatenEventListener: ()=>{}
+                getEatenDots: 1, 
+                getPosX: 1, 
+                getPosY: 1,
+                setDotEatenEventListener: ()=>{},
+                setPosX: ()=>{},
+                setPosY: ()=>{}
             }
         );
         game.setPlayer(player);        
 
-        game.resetLevel();
+        game.initializeLevel();
         game.update();
 
         expect(levelFinishedCallback).toHaveBeenCalled();
@@ -201,7 +205,7 @@ describe("XPacmanGame", () => {
             player: { posX: 3, posY: 3 }
         }];
         game.setLevelConfigs(levels);
-        game.resetLevel();
+        game.initializeLevel();
         expect(game.getCurrentLevel()).toBe(1);
 
         let player = jasmine.createSpyObj("player", 
@@ -219,7 +223,7 @@ describe("XPacmanGame", () => {
     });
 
     it("should finish game if level was finished and no more levels left", ()=>{
-        game.resetLevel();
+        game.initializeLevel();
         expect(game.getCurrentLevel()).toBe(1);
 
         let player = jasmine.createSpyObj("player", 
