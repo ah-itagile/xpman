@@ -1,6 +1,4 @@
-Multi-Level-Game
-
- no hard coded tilemap loading in gameScene
+New ghost class for ghosts chasing the player.
 Make real level
 Draw graphics
 Integration Test
@@ -15,6 +13,7 @@ Ideas:
 Wallaby.js
 Movement abstraction: player, ghost
 Timer class for handling intervals.
+ no hard coded tilemap loading in gameScene
 
 
 https://www.retrogames.cc/arcade-games/pac-man-midway.html
@@ -22,6 +21,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+Multi-Level-Game
 cleanup game resetLevel / initialize
  remove lives left duplication in game and player
  Save global state (points, left lives) for whole game.

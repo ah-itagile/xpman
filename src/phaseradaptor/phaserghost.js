@@ -40,10 +40,6 @@ export default class PhaserGhost {
         return this.ghostModel.shouldUpdateAtTime(time);
     }
     update(time) {
-        let options = this.ghostModel.findPossibleMoves();
-        let newDirection = Phaser.Math.RND.pick(options);
-        this.ghostModel.setDirection(newDirection);          
-        this.ghostModel.move(newDirection);
         this.ghostModel.update(time);
 
         let position = this.getTranslatedPosition();
