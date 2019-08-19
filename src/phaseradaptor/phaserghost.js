@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import TilePositionToPhaserTranslator from "./TilePositionToPhaserTranslator";
 
 export default class PhaserGhost {

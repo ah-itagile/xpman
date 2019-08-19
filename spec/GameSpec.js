@@ -31,7 +31,7 @@ describe("XPacmanGame", () => {
         player = new Player(map, {}, 0, 0, 0, 2);
         game.setPlayer(player);
         ghosts = [new Ghost(map, 0, 0)];
-        game.setGhosts(ghosts);
+        game.setInitialGhosts(ghosts);
         lifeLostDisplay = jasmine.createSpyObj('lifeLostDisplay', ['showMessage']);
         game.setLifeLostDisplay(lifeLostDisplay);
         gameOverCallback = jasmine.createSpy("gameOverCallback");
@@ -78,7 +78,7 @@ describe("XPacmanGame", () => {
             setDotEatenEventListener: ()=>{}
         });
         game.setPlayer(player);
-        game.setGhosts([ghost1, ghost2]);
+        game.setInitialGhosts([ghost1, ghost2]);
 
         game.update();
 
@@ -88,6 +88,19 @@ describe("XPacmanGame", () => {
         expect(ghost2.update).toHaveBeenCalled();
         expect(player.shouldUpdateAtTime).toHaveBeenCalled();
         expect(player.update).toHaveBeenCalled();
+    });
+
+    it("should update all timed actions during update loop", () => {
+        let timedAction = jasmine.createSpyObj("timed action", {
+            shouldUpdateAtTime: true, 
+            update: () => { }
+        });
+        game.setTimedActions([timedAction]);
+        game.update();
+
+        expect(timedAction.shouldUpdateAtTime).toHaveBeenCalled();
+        expect(timedAction.update).toHaveBeenCalled();
+
     });
 
     it("should fire level finished event if player ate all dots", () => {
@@ -128,7 +141,7 @@ describe("XPacmanGame", () => {
         }
         );
         game.setPlayer(player);
-        game.setGhosts([]);
+        game.setInitialGhosts([]);
 
         game.update();
 
@@ -144,7 +157,7 @@ describe("XPacmanGame", () => {
 
         let player = new Player(map, {}, 0, 0, 0);
         game.setPlayer(player);
-        game.setGhosts([ghost]);
+        game.setInitialGhosts([ghost]);
 
         game.update();
 
@@ -165,7 +178,7 @@ describe("XPacmanGame", () => {
         }];
         game.setLevelConfigs(levels);
         game.setPlayer(player);
-        game.setGhosts([ghost]);
+        game.setInitialGhosts([ghost]);
 
         game.continueAfterLifeLost();
 
@@ -174,6 +187,30 @@ describe("XPacmanGame", () => {
         expect(player.getPosX()).toBe(levels[0].player.posX);
         expect(player.getPosY()).toBe(levels[0].player.posY);
     });
+
+    it("should remove spawned ghosts after a life was lost", () => {
+        let map = { countDots: () => { return 1; } };
+        let ghost = new Ghost(map, 0, 0);
+
+        let player = new Player(map, {}, 0, 0, 0);
+
+        let levels = [{
+            ghosts: [{ posX: 2, posY: 2 }
+            ],
+            player: { posX: 3, posY: 3 }
+        }];
+        game.setLevelConfigs(levels);
+        game.setPlayer(player);
+        let initialGhosts = [ghost];
+        game.setInitialGhosts(initialGhosts);
+        let spawnedGhost = new Ghost(map, 0, 0);
+        game.addGhost(spawnedGhost);
+
+        game.continueAfterLifeLost();
+
+        expect(game.getGhosts().length).toBe(initialGhosts.length);
+    });
+
 
     it("should end game if no player lives left", () => {
         let map = { countDots: () => { return 1; } };
@@ -184,7 +221,7 @@ describe("XPacmanGame", () => {
 
         let player = new Player(map, {}, 0, 0, 0);
         game.setPlayer(player);
-        game.setGhosts([ghost]);
+        game.setInitialGhosts([ghost]);
 
         game.update();
         game.update();

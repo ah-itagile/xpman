@@ -1,4 +1,5 @@
 Spawn bug ghosts (random choser) after certain time. reset timer when moving to "integration server" field.
+ examine dependency: game<->SpawnGhostAction
 Kill bug ghosts when eating pp pill for a certain time.
 Make real level
 Draw graphics

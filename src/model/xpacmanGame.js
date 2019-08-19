@@ -4,14 +4,24 @@ export default class XPacmanGame {
         this.initialDotCount;
         this.points = 0;
         this.livesLeft = 2;
+        this.timedActions = [];
     }
 
     setLevelConfigs(levelConfigs) {
         this.levels = levelConfigs;
     }
 
-    setGhosts(ghosts) {
-        this.ghosts = ghosts;
+    setInitialGhosts(ghosts) {
+        this.initialGhosts = ghosts; 
+        this.ghosts = [...ghosts];
+    }
+
+    addGhost(ghost) {
+        this.ghosts.push(ghost);
+    }
+
+    getGhosts() {
+        return this.ghosts;
     }
 
     setPlayer(player) {
@@ -19,6 +29,10 @@ export default class XPacmanGame {
         this.player.setDotEatenEventListener(()=>{
             this.points++;
         });
+    }
+
+    setTimedActions(timedActions) {
+        this.timedActions = timedActions;
     }
 
     setMapAdaptor(mapAdaptor) {
@@ -74,7 +88,12 @@ export default class XPacmanGame {
         this.livesLeft = 2;
     }
 
+    removeSpawnedGhosts() {
+        this.ghosts = [...this.initialGhosts];
+    }
+
     resetGhostAndPlayerPositions() {
+        this.removeSpawnedGhosts();
         for (let i = 0; i < this.ghosts.length; i++) {
             const ghost = this.ghosts[i];
             ghost.setPosX(this.levels[this.currentLevelOneBased-1].ghosts[i].posX);
@@ -104,6 +123,11 @@ export default class XPacmanGame {
                 this.ghostCaughtPlayer();
             }
                     
+        });
+        this.timedActions.forEach(timedAction => {
+            if (timedAction.shouldUpdateAtTime(time)) {
+                timedAction.update(time);
+            }
         });
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);

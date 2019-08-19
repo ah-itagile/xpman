@@ -32,6 +32,10 @@ class Game extends Phaser.Game {
         ghosts: [{posX: 2, posY: 14},
                 {posX: 6, posY: 14}
         ],
+        spawnGhosts: {
+          spawnX: 4,
+          spawnY: 15
+        },
         player: {posX: 2, posY: 3}
       },
       {
