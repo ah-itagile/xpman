@@ -47,4 +47,8 @@ export default class SpawnGhostsAction {
         this.counterDisplay.showMessage("CI Countdown:" + this.currentCounter);
     }
 
+    reset() {
+        this.currentCounter = this.initialCounter;
+        this.showMessage();
+    }
 }

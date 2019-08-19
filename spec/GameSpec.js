@@ -165,6 +165,19 @@ describe("XPacmanGame", () => {
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
     });
 
+    it("should reset timed actions if player lost life", () => {
+        let timedAction = jasmine.createSpyObj("timed action", {
+            shouldUpdateAtTime: true, 
+            update: () => { },
+            reset: ()=>{}
+        });
+        game.setTimedActions([timedAction]);
+
+        game.continueAfterLifeLost();
+
+        expect(timedAction.reset).toHaveBeenCalled();
+    });
+
     it("should reset player and ghost positions when game continues after a life was lost", () => {
         let map = { countDots: () => { return 1; } };
         let ghost = new Ghost(map, 0, 0);

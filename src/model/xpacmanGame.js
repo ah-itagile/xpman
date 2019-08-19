@@ -79,6 +79,9 @@ export default class XPacmanGame {
     }
 
     continueAfterLifeLost() {
+       this.timedActions.forEach(action =>{
+            action.reset();
+       } );
        this.resetGhostAndPlayerPositions();
     }
 

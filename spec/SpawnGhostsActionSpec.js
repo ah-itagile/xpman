@@ -43,4 +43,10 @@ describe("Spawn ghost action", ()=>{
         expect(game.addGhost).toHaveBeenCalled();
         expect(display.showMessage).toHaveBeenCalledWith("CI Countdown:2");
     });
+
+    it("should reset counter after reset was triggered", ()=>{
+        action.reset();            
+        expect(display.showMessage).toHaveBeenCalledWith("CI Countdown:2");
+    });
+
 });
