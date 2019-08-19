@@ -15,6 +15,9 @@ export default class Ghost {
         this.possibleMovesFinder = possibleMovesFinder;
     }
 
+    setDestroyListener(destroyListener) {
+        this.destroyListener = destroyListener;
+    }
     getPosX() {
         return this.posX;
     }
@@ -49,6 +52,10 @@ export default class Ghost {
         this.setDirection(newDirection);          
         this.move(newDirection);
         this.lastUpdatedAtInMs = time;
+    }
+
+    destroy() {
+        this.destroyListener.destroy();
     }
 
     canMoveTo(tile) {

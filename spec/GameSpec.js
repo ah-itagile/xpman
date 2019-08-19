@@ -203,12 +203,15 @@ describe("XPacmanGame", () => {
         game.setPlayer(player);
         let initialGhosts = [ghost];
         game.setInitialGhosts(initialGhosts);
-        let spawnedGhost = new Ghost(map, 0, 0);
+        let destroyListener = jasmine.createSpyObj("destroyListener", ["destroy"]);
+        let spawnedGhost = new Ghost(map, 0, 0, null, null);
+        spawnedGhost.setDestroyListener(destroyListener);
         game.addGhost(spawnedGhost);
 
         game.continueAfterLifeLost();
 
         expect(game.getGhosts().length).toBe(initialGhosts.length);
+        expect(destroyListener.destroy).toHaveBeenCalled();
     });
 
 

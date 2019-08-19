@@ -4,7 +4,7 @@ export default class PhaserGhost {
 
     constructor(scene, tilesize, imageName, ghostModel, mazeOffsetY) {
         this.tilesize = tilesize;
-        this.ghostModel = ghostModel;
+        this.ghostModel = ghostModel;        
         this.offset = tilesize / 2;
         this.mazeOffsetY = mazeOffsetY;
         this.tilePositionToPhaserTranslator = new TilePositionToPhaserTranslator(tilesize, mazeOffsetY);
@@ -44,6 +44,10 @@ export default class PhaserGhost {
         let position = this.getTranslatedPosition();
         this.ghostImage.x = position.x;
         this.ghostImage.y = position.y;
+    }
+
+    destroy() {
+        this.ghostImage.destroy();
     }
 
 }

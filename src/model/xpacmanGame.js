@@ -89,11 +89,14 @@ export default class XPacmanGame {
     }
 
     removeSpawnedGhosts() {
+        for (let i=this.initialGhosts.length; i<this.ghosts.length; i++) {
+            this.ghosts[i].destroy();
+        }
         this.ghosts = [...this.initialGhosts];
     }
 
     resetGhostAndPlayerPositions() {
-        this.removeSpawnedGhosts();
+        this.removeSpawnedGhosts();        
         for (let i = 0; i < this.ghosts.length; i++) {
             const ghost = this.ghosts[i];
             ghost.setPosX(this.levels[this.currentLevelOneBased-1].ghosts[i].posX);

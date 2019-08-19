@@ -34,7 +34,9 @@ export default class SpawnGhostsAction {
             let ghostModel = new Ghost(this.mapAdaptor, 500, 0, phaserRandomMoveDecider, possibleMovesFinder);
             ghostModel.setPosX(this.config.spawnGhosts.spawnX);
             ghostModel.setPosY(this.config.spawnGhosts.spawnY);
-            this.game.addGhost(new PhaserGhost(this.scene, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));            
+            let phaserGhost = new PhaserGhost(this.scene, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY);
+            ghostModel.setDestroyListener(phaserGhost);
+            this.game.addGhost(phaserGhost);            
             this.currentCounter = this.initialCounter;        
         }
 
