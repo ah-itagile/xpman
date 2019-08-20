@@ -4,7 +4,7 @@ import GhostPossibleMovesFinder from './ghostPossibleMovesFinder';
 
 export default class Ghost {
 
-    constructor(map, waitTimeInMs, lastUpdatedAtInMs, moveDecider, possibleMovesFinder){
+    constructor(map, waitTimeInMs, lastUpdatedAtInMs, moveDecider, possibleMovesFinder, isKillableByPairProgramming){
         this.posX = 0;
         this.posY = 0;
         this.direction = Constants.DIRECTION_UP;
@@ -13,6 +13,7 @@ export default class Ghost {
         this.lastUpdatedAtInMs = lastUpdatedAtInMs;
         this.moveDecider = moveDecider;
         this.possibleMovesFinder = possibleMovesFinder;
+        this.isKillableByPairProgramming = isKillableByPairProgramming;
     }
 
     setDestroyListener(destroyListener) {
@@ -42,6 +43,10 @@ export default class Ghost {
         this.direction = direction;
     }
 
+    getKillableByPairProgramming() {
+        return this.isKillableByPairProgramming;
+    }
+
     shouldUpdateAtTime(time) {
         return this.lastUpdatedAtInMs+this.waitTimeInMs < time;
     }
@@ -56,10 +61,6 @@ export default class Ghost {
 
     destroy() {
         this.destroyListener.destroy();
-    }
-
-    canMoveTo(tile) {
-        return tile===Constants.MAP_FREE || tile===Constants.MAP_DOT;
     }
     
     move(direction) {

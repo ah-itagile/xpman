@@ -1,6 +1,3 @@
-reset player after life lost
-ghost caught player - player caught ghost: check also for every player update ghost contact
-Kill bug ghosts when eating pp pill for a certain time.
 Make real level
 Draw graphics
 Integration Test
@@ -10,8 +7,9 @@ Different ghosts
 * tracer ghost
 
 Ideas:
- getPairProgramming->isPairProgramming problem
+ getPairProgramming->isPairProgramming problem (also getKillableByPairProgramming)
  examine dependency: game<->SpawnGhostAction
+ reset player after life lost (pair programming...)
  create ghosts and player via injected factory
  Rename point count in player to story points done in level
 Wallaby.js
@@ -25,6 +23,10 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+ghost caught player - player caught ghost: check also for every player update ghost contact
+kill only bugs when pair programming
+Kill bug ghosts when eating pp pill for a certain time.
+ghosts should march through pair programming fields
 Spawn bug ghosts (random choser) after certain time. reset timer when moving to "integration server" field.
 Chasing ghosts: pick random move when two possible chasing directions possible.
 New ghost class for ghosts chasing the player.

@@ -31,6 +31,10 @@ export default class PhaserGhost {
         this.ghostModel.setPosY(y);
     }
 
+    getKillableByPairProgramming() {
+        return this.ghostModel.getKillableByPairProgramming();
+    }
+
     getTranslatedPosition() {
         return this.tilePositionToPhaserTranslator.translate(this.ghostModel.getPosX(), this.ghostModel.getPosY());
     }

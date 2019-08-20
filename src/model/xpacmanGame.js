@@ -111,7 +111,7 @@ export default class XPacmanGame {
     }
 
     ghostCaughtPlayer(ghostIndex) {
-        if (this.player.getPairProgramming()) {
+        if (this.player.getPairProgramming() && this.ghosts[ghostIndex].getKillableByPairProgramming()) {
             this.ghosts[ghostIndex].destroy();
             this.ghosts.splice(ghostIndex,1);
         } else {
@@ -130,9 +130,7 @@ export default class XPacmanGame {
             let ghost = this.ghosts[g];
             if (ghost.shouldUpdateAtTime(time)) {
                 ghost.update(time, this.player);
-            }
-            if (ghost.getPosX()===this.player.getPosX() && ghost.getPosY()===this.player.getPosY()) {
-                this.ghostCaughtPlayer(g);
+                this.checkForGhostPlayerContact(g);    
             }
         }
         this.timedActions.forEach(timedAction => {
@@ -142,6 +140,9 @@ export default class XPacmanGame {
         });
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);
+            for (var g = this.ghosts.length - 1; g >= 0; g--) {
+                this.checkForGhostPlayerContact(g);                    
+            }
             this.pointsDisplay.update(this.points);
             this.timedActions.forEach(timedAction => {
                 let tile = this.mapAdaptor.getTileAt(this.player.getPosX(), this.player.getPosY());
@@ -156,6 +157,13 @@ export default class XPacmanGame {
                 this.currentLevelOneBased++;
                 this.levelFinishedCallback();
             }
+        }
+    }
+
+    checkForGhostPlayerContact(g) {
+        let ghost = this.ghosts[g];
+        if (ghost.getPosX() === this.player.getPosX() && ghost.getPosY() === this.player.getPosY()) {
+            this.ghostCaughtPlayer(g);
         }
     }
 }

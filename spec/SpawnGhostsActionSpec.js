@@ -36,6 +36,7 @@ describe("Spawn ghost action", ()=>{
         let spawnedGhost = game.addGhost.calls.argsFor(0)[0];
         expect(spawnedGhost.getPosX()).toBe(77);
         expect(spawnedGhost.getPosY()).toBe(88);
+        expect(spawnedGhost.getKillableByPairProgramming()).toBeTruthy();
     });
 
     it("should reset counter after ghost was spawned", ()=>{

@@ -39,7 +39,7 @@ export default class SpawnGhostsAction {
         if (this.currentCounter <= 0) {
             let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
             let possibleMovesFinder = new GhostPossibleMovesFinder();            
-            let ghostModel = new Ghost(this.mapAdaptor, 500, 0, phaserRandomMoveDecider, possibleMovesFinder);
+            let ghostModel = new Ghost(this.mapAdaptor, 500, 0, phaserRandomMoveDecider, possibleMovesFinder, true);
             ghostModel.setPosX(this.config.spawnGhosts.spawnX);
             ghostModel.setPosY(this.config.spawnGhosts.spawnY);
             let phaserGhost = new PhaserGhost(this.scene, this.tilesize, this.spriteName, ghostModel, this.mazeOffsetY);

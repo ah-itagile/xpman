@@ -61,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
       let possibleMovesFinder = new GhostPossibleMovesFinder();
       let chasingMoveDecider = new ChasingMoveDecider(phaserRandomMoveDecider);
       this.xpacmanGame.getLevelConfigs()[0].ghosts.forEach((ghost) => {
-        let ghostModel = new Ghost(mapAdaptor, 500, 0, chasingMoveDecider, possibleMovesFinder);
+        let ghostModel = new Ghost(mapAdaptor, 500, 0, chasingMoveDecider, possibleMovesFinder, false);
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);

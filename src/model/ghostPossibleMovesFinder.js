@@ -3,7 +3,7 @@ import * as Constants from './constants';
 export default class GhostPossibleMovesFinder {
 
     canMoveTo(tile) {
-        return tile===Constants.MAP_FREE || tile===Constants.MAP_DOT;
+        return tile===Constants.MAP_FREE || tile===Constants.MAP_DOT || tile===Constants.MAP_PAIRPROG;
     }
 
     findPossibleMoves(map, currentPosX, currentPosY, currentDirection) {
