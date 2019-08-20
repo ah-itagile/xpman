@@ -19,6 +19,8 @@ export default class PhaserMapAdaptor {
       return ModelConstants.MAP_DOT;
     } else if (phaserTile === TilesConstants.CiServerField) {
       return ModelConstants.MAP_CI_SERVER;
+    } else if (phaserTile === TilesConstants.PairProgField) {
+      return ModelConstants.MAP_PAIRPROG;
     } else {
       return ModelConstants.MAP_WALL;
     }

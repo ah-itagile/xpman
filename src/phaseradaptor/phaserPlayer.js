@@ -43,6 +43,10 @@ export default class PhaserPlayer {
         return this.model.shouldUpdateAtTime(time);
     }
 
+    getPairProgramming() {
+        return this.model.getPairProgramming();
+    }
+
     getEatenDots() {
         return this.model.getEatenDots();
     }

@@ -110,26 +110,31 @@ export default class XPacmanGame {
         this.player.setPosY(this.levels[this.currentLevelOneBased-1].player.posY);
     }
 
-    ghostCaughtPlayer() {
-        this.livesLeft--;
-        if (this.livesLeft<0) {
-            this.gameOverCallback();
+    ghostCaughtPlayer(ghostIndex) {
+        if (this.player.getPairProgramming()) {
+            this.ghosts[ghostIndex].destroy();
+            this.ghosts.splice(ghostIndex,1);
         } else {
-            this.lifeLostDisplay.showMessage("YOU LOST ONE LIFE!");
+            this.livesLeft--;
+            if (this.livesLeft<0) {
+                this.gameOverCallback();
+            } else {
+                this.lifeLostDisplay.showMessage("YOU LOST ONE LIFE!");
+            }
+            this.playerLivesLeftDisplay.update(this.livesLeft);
         }
-        this.playerLivesLeftDisplay.update(this.livesLeft);
     }
 
     update(time, forceLevelEnd) {
-        this.ghosts.forEach(ghost => {
+        for (var g = this.ghosts.length - 1; g >= 0; g--) {
+            let ghost = this.ghosts[g];
             if (ghost.shouldUpdateAtTime(time)) {
                 ghost.update(time, this.player);
             }
             if (ghost.getPosX()===this.player.getPosX() && ghost.getPosY()===this.player.getPosY()) {
-                this.ghostCaughtPlayer();
+                this.ghostCaughtPlayer(g);
             }
-                    
-        });
+        }
         this.timedActions.forEach(timedAction => {
             if (timedAction.shouldUpdateAtTime(time)) {
                 timedAction.update(time);

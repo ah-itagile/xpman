@@ -1,5 +1,5 @@
-Spawn bug ghosts (random choser) after certain time. reset timer when moving to "integration server" field.
- examine dependency: game<->SpawnGhostAction
+reset player after life lost
+ghost caught player - player caught ghost: check also for every player update ghost contact
 Kill bug ghosts when eating pp pill for a certain time.
 Make real level
 Draw graphics
@@ -10,6 +10,8 @@ Different ghosts
 * tracer ghost
 
 Ideas:
+ getPairProgramming->isPairProgramming problem
+ examine dependency: game<->SpawnGhostAction
  create ghosts and player via injected factory
  Rename point count in player to story points done in level
 Wallaby.js
@@ -23,6 +25,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+Spawn bug ghosts (random choser) after certain time. reset timer when moving to "integration server" field.
 Chasing ghosts: pick random move when two possible chasing directions possible.
 New ghost class for ghosts chasing the player.
 Multi-Level-Game

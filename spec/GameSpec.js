@@ -166,6 +166,27 @@ describe("XPacmanGame", () => {
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
     });
 
+    it("should remove ghost if player catches ghost while pair programming", () => {
+        let map = { countDots: () => { return 1; } };
+        let ghost = jasmine.createSpyObj("ghost", {
+            shouldUpdateAtTime: true, update: () => { },
+            getPosX: 0, 
+            getPosY: 0,
+            destroy: ()=>{}
+        });
+
+        let player = new Player(map, {}, 0, 0, 0);
+        player.setPairProgramming(true);
+        game.setPlayer(player);
+        game.setInitialGhosts([ghost]);
+
+        game.update();
+
+        expect(game.getGhosts().length).toBe(0);
+        expect(ghost.destroy).toHaveBeenCalled();
+        expect(lifeLostDisplay.showMessage).not.toHaveBeenCalled();        
+    });
+
     it("should reset timed actions if player lost life", () => {
         let timedAction = jasmine.createSpyObj("timed action", {
             shouldUpdateAtTime: true, 
@@ -187,6 +208,7 @@ describe("XPacmanGame", () => {
             }
         );
         game.setPlayer(player);
+        game.setInitialGhosts([]);
         let timedAction = jasmine.createSpyObj("timed action", {
             shouldUpdateAtTime: true, 
             update: () => { },

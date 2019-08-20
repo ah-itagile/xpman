@@ -20,6 +20,8 @@ import GhostPossibleMovesFinder from "../model/ghostPossibleMovesFinder";
 import ChasingMoveDecider from "../model/chasingMoveDecider";
 import PhaserCiCounterDisplay from "../phaseradaptor/phaserCiCounterDisplay";
 import SpawnGhostsAction from "../phaseradaptor/SpawnGhostsAction";
+import PhaserPairProgrammingDisplay from "../phaseradaptor/phaserPairProgrammingDisplay";
+import PairProgrammingTimedAction from "../model/PairProgrammingTimedAction";
 
 
 export default class GameScene extends Phaser.Scene {
@@ -63,12 +65,14 @@ export default class GameScene extends Phaser.Scene {
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
-      let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0);
+      let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0, 5000);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
       let ciCounterDisplay = new PhaserCiCounterDisplay(this);
+      let pairProgrammingDisplay = new PhaserPairProgrammingDisplay(this);
+      let pairProgrammingTimedAction = new PairProgrammingTimedAction(0, 0, playerModel, 2000, pairProgrammingDisplay);
       let spawnGhostsAction = new SpawnGhostsAction(200, 0, 500, 10, this.xpacmanGame, 
         this.xpacmanGame.getLevelConfigs()[0], mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
-      this.xpacmanGame.setTimedActions([spawnGhostsAction]);
+      this.xpacmanGame.setTimedActions([spawnGhostsAction, pairProgrammingTimedAction]);
       this.levelFinishedCallback = () => { 
         this.scene.stop()        
         this.scene.start('NextLevel', this.xpacmanGame);

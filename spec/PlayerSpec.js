@@ -14,11 +14,12 @@ describe("Player", () => {
         {pressedControl:'down', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
         {pressedControl:'right', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
 
-        {pressedControl:'right', expectedPosX:2, expectedPosY:1, tiles:Constants.MAP_CI_SERVER}
+        {pressedControl:'right', expectedPosX:2, expectedPosY:1, tiles:Constants.MAP_CI_SERVER},
+        {pressedControl:'right', expectedPosX:2, expectedPosY:1, tiles:Constants.MAP_PAIRPROG}
     ];
     parameters.forEach((parameter)=> {
         it("should move according to input controls", () => {
-            let map = { getTileAt: () => { return parameter.tiles;}};
+            let map = { getTileAt: () => { return parameter.tiles;}, replaceTile: ()=>{}};
             let stubControls = { up: ()=> {return false;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
             let player = new Player(map, stubControls);
             player.setPosX(1);
@@ -62,6 +63,37 @@ describe("Player", () => {
             
         });
     });
+
+    it("should start pair programming if stepping on pair programming field", ()=>{
+        let map = { getTileAt: () => { return Constants.MAP_PAIRPROG; }, replaceTile: ()=>{}};
+        spyOn(map, 'replaceTile');
+
+        let stubControls = { up: ()=> {return true;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
+        let player = new Player(map, stubControls, 0, 0, 0, 100);
+
+        player.update(0);
+
+        expect(map.replaceTile).toHaveBeenCalledWith(0,-1, Constants.MAP_FREE);
+        expect(player.getPairProgramming()).toBeTruthy();
+        expect(player.getLeftPairProgrammingTime(0)).toBe(100);        
+    });
+
+    it("should stop pair programming after time span", ()=>{
+        let map = { getTileAt: () => { return Constants.MAP_PAIRPROG; }, replaceTile: ()=>{}};
+        spyOn(map, 'replaceTile');
+
+        let stubControls = { up: ()=> {return true;}, left: ()=> {return false;}, down: ()=>{return false;}, right: ()=>{return false;}};
+        let player = new Player(map, stubControls, 0, 0, 0, 100);
+
+        player.update(0);
+        expect(player.getPairProgramming()).toBeTruthy();
+        stubControls.up = () => {return false;}
+
+        player.update(100);
+        expect(player.getLeftPairProgrammingTime(100)).toBe(0);        
+        expect(player.getPairProgramming()).toBeFalsy();        
+    });
+
 
     it("should call update after waiting short time when no movement", ()=>{
         let waitTimeInMs = 1;

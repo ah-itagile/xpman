@@ -7,6 +7,7 @@ describe("PhaserMapAdaptor", () => {
      {phaserMapTile:TilesConstants.OccupiedField, expectedMappedTile:Constants.MAP_WALL},
      {phaserMapTile:null, expectedMappedTile:Constants.MAP_UNSET},
      {phaserMapTile:TilesConstants.CiServerField, expectedMappedTile:Constants.MAP_CI_SERVER},
+     {phaserMapTile:TilesConstants.PairProgField, expectedMappedTile:Constants.MAP_PAIRPROG},
      {phaserMapTile:TilesConstants.DotField, expectedMappedTile:Constants.MAP_DOT}].forEach((parameter) => {
         it("should map tile map tiles to domain tiles", ()=>{
             let phaserMap = { getTileAt: ()=>{
