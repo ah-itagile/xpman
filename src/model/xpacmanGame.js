@@ -138,6 +138,10 @@ export default class XPacmanGame {
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);
             this.pointsDisplay.update(this.points);
+            this.timedActions.forEach(timedAction => {
+                let tile = this.mapAdaptor.getTileAt(this.player.getPosX(), this.player.getPosY());
+                timedAction.playerSteppedOn(tile);
+            });
         }
         if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
             if (this.currentLevelOneBased == this.levels.length) {

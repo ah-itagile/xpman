@@ -12,7 +12,9 @@ describe("Player", () => {
         {pressedControl:'up', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
         {pressedControl:'left', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
         {pressedControl:'down', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
-        {pressedControl:'right', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL}
+        {pressedControl:'right', expectedPosX:1, expectedPosY:1, tiles:Constants.MAP_WALL},
+
+        {pressedControl:'right', expectedPosX:2, expectedPosY:1, tiles:Constants.MAP_CI_SERVER}
     ];
     parameters.forEach((parameter)=> {
         it("should move according to input controls", () => {

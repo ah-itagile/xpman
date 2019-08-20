@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import tilesImg from "../assets/super-mario.png";
 import playerImg from "../assets/player16x16.png";
 import ghostPng from "../assets/security.png";
+import bugPng from "../assets/bug_sprite.png";
 import tileMapLevel1 from "../assets/xpacman-level1.csv";
 import tileMapLevel2 from "../assets/xpacman-level2.csv";
 
@@ -39,6 +40,7 @@ export default class GameScene extends Phaser.Scene {
       this.load.image('tiles', tilesImg);
       this.load.image('player', playerImg);
       this.load.image('ghost', ghostPng);
+      this.load.image('bug', bugPng);
       this.load.tilemapCSV('tileMapLevel1', tileMapLevel1);
       this.load.tilemapCSV('tileMapLevel2', tileMapLevel2);
   }
@@ -65,7 +67,7 @@ export default class GameScene extends Phaser.Scene {
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
       let ciCounterDisplay = new PhaserCiCounterDisplay(this);
       let spawnGhostsAction = new SpawnGhostsAction(200, 0, 500, 10, this.xpacmanGame, 
-        this.xpacmanGame.getLevelConfigs()[0], mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay);
+        this.xpacmanGame.getLevelConfigs()[0], mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
       this.xpacmanGame.setTimedActions([spawnGhostsAction]);
       this.levelFinishedCallback = () => { 
         this.scene.stop()        

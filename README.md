@@ -58,6 +58,7 @@ you should be able to open `http://mycoolserver.com/index.html` and play your ga
 Use `npm test` for test execution in console.
 Use `npm run watch` for continuous test execution. Hint: Use integrated terminal pane in VS Code.
 Use `Jasmine Test` in debug view in VS Code for debugging.
+Put a `f` infront of a test if you want to execute just one test (`fit` )
 
 ## Using Tiled
 You need a tileset and map

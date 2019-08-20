@@ -1,4 +1,5 @@
 import SpawnGhostsAction from "../src/phaseradaptor/SpawnGhostsAction";
+import * as Constants from '../src/model/constants';
 
 describe("Spawn ghost action", ()=>{
 
@@ -40,7 +41,12 @@ describe("Spawn ghost action", ()=>{
     it("should reset counter after ghost was spawned", ()=>{
         action.update();
         action.update();
-        expect(game.addGhost).toHaveBeenCalled();
+        expect(display.showMessage).toHaveBeenCalledWith("CI Countdown:2");
+    });
+
+    it("should reset counter if player stepped on CI server", ()=>{
+        action.update();
+        action.playerSteppedOn(Constants.MAP_CI_SERVER); 
         expect(display.showMessage).toHaveBeenCalledWith("CI Countdown:2");
     });
 

@@ -1,6 +1,7 @@
 import XPacmanGame from '../src/model/xpacmanGame';
 import Player from '../src/model/player';
 import Ghost from '../src/model/ghost';
+import * as Constants from '../src/model/constants'; 
 
 describe("XPacmanGame", () => {
 
@@ -176,6 +177,29 @@ describe("XPacmanGame", () => {
         game.continueAfterLifeLost();
 
         expect(timedAction.reset).toHaveBeenCalled();
+    });
+
+    it("should inform timed actions about player step", () => {
+        let player = jasmine.createSpyObj("player", {
+                shouldUpdateAtTime: true, update: () => { },
+                getEatenDots: 0, getPosX: 1, getPosY: 1,
+                setDotEatenEventListener: ()=>{}
+            }
+        );
+        game.setPlayer(player);
+        let timedAction = jasmine.createSpyObj("timed action", {
+            shouldUpdateAtTime: true, 
+            update: () => { },
+            reset: ()=>{},
+            playerSteppedOn: ()=>{}
+        });
+        game.setTimedActions([timedAction]);
+        let map = jasmine.createSpyObj("map", {getTileAt:Constants.MAP_CI_SERVER});
+        game.setMapAdaptor(map);
+
+        game.update();
+
+        expect(timedAction.playerSteppedOn).toHaveBeenCalledWith(Constants.MAP_CI_SERVER);
     });
 
     it("should reset player and ghost positions when game continues after a life was lost", () => {
