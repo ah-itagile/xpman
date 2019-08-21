@@ -3,6 +3,7 @@ import TilePositionToPhaserTranslator from "./TilePositionToPhaserTranslator";
 export default class PhaserPlayer {
 
     constructor(scene, tilesize, imageName, model, mazeOffsetY) {
+        this.scene = scene;
         this.tilesize = tilesize;
         this.model = model;
         this.offset = tilesize / 2;
@@ -12,7 +13,7 @@ export default class PhaserPlayer {
 
         this.image = scene.add.image(position.x, 
                                     position.y, 
-                                    imageName);    
+                                    imageName);                                        
     }
 
     getPosX() {
@@ -53,8 +54,15 @@ export default class PhaserPlayer {
     update(time) {
         this.model.update(time);
         let position = this.getTranslatedPosition();
-        this.image.x = position.x;
-        this.image.y = position.y;
+        this.scene.tweens.add({
+            targets: this.image,
+            ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: this.model.getSpeed(),
+            repeat: 0,            // -1: infinity
+            yoyo: false,
+            x: position.x,
+            y: position.y
+        });
     }
 
 }

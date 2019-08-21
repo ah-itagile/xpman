@@ -3,6 +3,7 @@ import TilePositionToPhaserTranslator from "./TilePositionToPhaserTranslator";
 export default class PhaserGhost {
 
     constructor(scene, tilesize, imageName, ghostModel, mazeOffsetY) {
+        this.scene = scene;
         this.tilesize = tilesize;
         this.ghostModel = ghostModel;        
         this.offset = tilesize / 2;
@@ -46,9 +47,15 @@ export default class PhaserGhost {
         this.ghostModel.update(time, player);
 
         let position = this.getTranslatedPosition();
-        this.ghostImage.x = position.x;
-        this.ghostImage.y = position.y;
-    }
+        this.scene.tweens.add({
+            targets: this.ghostImage,
+            ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: this.ghostModel.getSpeed(),
+            repeat: 0,            // -1: infinity
+            yoyo: false,
+            x: position.x,
+            y: position.y
+        });    }
 
     destroy() {
         this.ghostImage.destroy();
