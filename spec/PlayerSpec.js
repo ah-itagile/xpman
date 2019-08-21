@@ -33,6 +33,20 @@ describe("Player", () => {
         });
     });
 
+    it("should accept only one move if two buttons are pressed", () => {
+        let map = { getTileAt: () => { return Constants.MAP_FREE;}, replaceTile: ()=>{}};
+        let stubControls = { up: ()=> {return true;}, left: ()=> {return true;}, down: ()=>{return false;}, right: ()=>{return false;}};
+        let player = new Player(map, stubControls);
+        player.setPosX(1);
+        player.setPosY(1);
+
+        player.update();
+
+        expect(player.getPosX()).toBe(1);
+        expect(player.getPosY()).toBe(0);
+    });
+
+
     [
         {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_FREE, expectTileToBeReplaced: false, expectedEatenDots: 0, expectDotEatenEventFiredTimes:0 },
         {pressedControl:'up', expectedPosX:1, expectedPosY:0, tiles:Constants.MAP_DOT, expectTileToBeReplaced: true, expectedEatenDots: 1, expectDotEatenEventFiredTimes:1},

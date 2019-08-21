@@ -50,8 +50,10 @@ export default class Player {
                 this.setPairProgramming(false);
             }
         }
+
+        let executedAMovement = false;
         this.movements.forEach((movement) => {
-            if (this.controls[movement.name]()) {
+            if (!executedAMovement && this.controls[movement.name]()) {
                 if (this.map.getTileAt(this.posX+movement.dx,this.posY+movement.dy) !== Constants.MAP_WALL) {
                     this.posX += movement.dx;
                     this.posY += movement.dy;
@@ -65,7 +67,7 @@ export default class Player {
                         this.eatenDots++;
                         this.dotEatenEventListener();
                     }
-
+                    executedAMovement = true;
                     this.waitTimeInMs = this.waitTimeAfterMovementInMs;
                 }
             }
@@ -88,6 +90,10 @@ export default class Player {
     
     setPosY(y) {
         this.posY = y;
+    }
+
+    getSpeed() {
+        return this.waitTimeInMs;
     }
 
     getEatenDots() {
