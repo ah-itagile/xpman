@@ -1,6 +1,10 @@
 import 'phaser';
 import titleImg from "../assets/title.jpg";
-import { runInThisContext } from 'vm';
+import ghostPng from "../assets/manager.png";
+import bugPng from "../assets/bug_sprite.png";
+import ciServerPng from "../assets/ciServer.png";
+import kentPng from "../assets/kentbeck.png";
+
  
 export default class TitleScene extends Phaser.Scene {
   constructor () {
@@ -9,6 +13,10 @@ export default class TitleScene extends Phaser.Scene {
  
   preload () {
     this.load.image('title', titleImg);
+    this.load.image('ghostPng', ghostPng);
+    this.load.image('bugPng', bugPng);
+    this.load.image('ciServerPng', ciServerPng);
+    this.load.image('kentPng', kentPng);
   }
  
   init(xpacmanGame) {
@@ -16,7 +24,34 @@ export default class TitleScene extends Phaser.Scene {
   };
 
   create () {
-    this.add.image(400, 300, 'title');
+    // this.add.image(400, 300, 'title');
+    this.add.text(300, 150, "XPman", {
+        fontFamily: 'Courier',
+        fontSize: '48px',
+        fontStyle: '',
+        backgroundColor: null,
+        color: '#fff',
+        stroke: '#fff',
+        strokeThickness: 0,
+        shadow: {
+            offsetX: 0,
+            offsetY: 0,
+            color: '#000',
+            blur: 0,
+            stroke: false,
+            fill: false
+        }});
+    this.add.image(200, 300, 'ghostPng');
+    this.add.text(240, 300, 'Avoid the SaFE managers');
+    this.add.image(200, 340, 'ciServerPng');
+    this.add.text(240, 330, 'Integrate at the CI Server');
+    this.add.text(240, 360, 'before bugs appear!');
+    this.add.image(450, 370, 'bugPng');
+    this.add.image(200, 400, 'kentPng');
+    this.add.text(240, 390, 'Pair with Kent to kill bugs');
+
+    this.add.text(280, 500, 'Press ENTER to start');
+
     this.input.keyboard.on('keydown_ENTER', ()=> {
         this.scene.stop();
         this.xpacmanGame.resetGame();
