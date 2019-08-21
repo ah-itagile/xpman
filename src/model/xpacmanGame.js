@@ -130,7 +130,6 @@ export default class XPacmanGame {
             let ghost = this.ghosts[g];
             if (ghost.shouldUpdateAtTime(time)) {
                 ghost.update(time, this.player);
-                this.checkForGhostPlayerContact(g);    
             }
         }
         this.timedActions.forEach(timedAction => {
@@ -140,14 +139,14 @@ export default class XPacmanGame {
         });
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);
-            for (var g = this.ghosts.length - 1; g >= 0; g--) {
-                this.checkForGhostPlayerContact(g);                    
-            }
             this.pointsDisplay.update(this.points);
             this.timedActions.forEach(timedAction => {
                 let tile = this.mapAdaptor.getTileAt(this.player.getPosX(), this.player.getPosY());
                 timedAction.playerSteppedOn(tile);
             });
+        }
+        for (var g = this.ghosts.length - 1; g >= 0; g--) {
+            this.checkForGhostPlayerContact(g);                    
         }
         if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
             if (this.currentLevelOneBased == this.levels.length) {

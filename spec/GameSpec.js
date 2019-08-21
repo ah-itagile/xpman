@@ -167,7 +167,6 @@ describe("XPacmanGame", () => {
     });
 
     it("should decrease player lives and show message if player steps on ghost", () => {
-        let map = { countDots: () => { return 1; } };
         let ghost = jasmine.createSpyObj("ghost", {
             shouldUpdateAtTime: false, update: () => { },
             getPosX: 0, getPosY: 0
@@ -186,6 +185,26 @@ describe("XPacmanGame", () => {
 
         expect(lifeLostDisplay.showMessage).toHaveBeenCalledWith("YOU LOST ONE LIFE!");
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
+    });
+
+    it("should decrease player lives only once if player and ghosts are moved in the same update loop call", () => {
+        let ghost = jasmine.createSpyObj("ghost", {
+            shouldUpdateAtTime: true, update: () => { },
+            getPosX: 0, getPosY: 0
+        });
+        let player = jasmine.createSpyObj("player", {
+            shouldUpdateAtTime: true, update: () => { }, getEatenDots: () => { return 1; },
+            getPosX: 0 , getPosY: 0,
+            getPairProgramming: false,
+            setDotEatenEventListener: ()=>{}
+        });
+
+        game.setPlayer(player);
+        game.setInitialGhosts([ghost]);
+
+        game.update(0);
+
+        expect(playerLivesLeftDisplay.update).toHaveBeenCalledTimes(1);
     });
 
     it("should remove killable ghost if player catches ghost while pair programming", () => {
