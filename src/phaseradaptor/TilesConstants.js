@@ -1,5 +1,5 @@
-export const EmptyField = 33;
-export const DotField = 4;
-export const OccupiedField = 11;
-export const CiServerField = 29;
-export const PairProgField = 10;
+export const EmptyField = 0;
+export const DotField = 2;
+export const OccupiedField = 1;
+export const CiServerField = 4;
+export const PairProgField = 3;

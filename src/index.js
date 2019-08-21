@@ -32,17 +32,23 @@ class Game extends Phaser.Game {
         ghosts: [{posX: 2, posY: 14},
                  {posX: 6, posY: 14}
         ],
+        ghostStepTime: 500,
         spawnGhosts: {
-          spawnX: 4,
-          spawnY: 15          
+          spawnX: 8,
+          spawnY: 9          
         },
-        player: {posX: 2, posY: 3}
+        player: {posX: 1, posY: 1}
       },
       {
         mapName: 'tileMapLevel2',
         ghosts: [{posX: 2, posY: 14},
                 {posX: 6, posY: 14}
         ],
+        ghostStepTime: 250,
+        spawnGhosts: {
+          spawnX: 12,
+          spawnY: 7          
+        },
         player: {posX: 2, posY: 3}
       }
     ];

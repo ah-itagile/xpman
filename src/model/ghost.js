@@ -34,6 +34,10 @@ export default class Ghost {
     setPosY(y) {
         this.posY = y;
     }
+
+    getSpeed() {
+        return this.waitTimeInMs;
+    }
     
     getDirection() {
         return this.direction;

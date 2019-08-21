@@ -1,10 +1,10 @@
 import Phaser from "phaser";
-import tilesImg from "../assets/super-mario.png";
-import playerImg from "../assets/player16x16.png";
-import ghostPng from "../assets/security.png";
+import tilesImg from "../assets/xpman-tileset.png";
+import playerImg from "../assets/player.png";
+import ghostPng from "../assets/manager.png";
 import bugPng from "../assets/bug_sprite.png";
 import tileMapLevel1 from "../assets/xpacman-level1.csv";
-import tileMapLevel2 from "../assets/xpacman-level2.csv";
+import tileMapLevel2 from "../assets/xpman-level2.csv";
 
 import Ghost from '../model/ghost';
 import PhaserGhost from '../phaseradaptor/phaserghost';
@@ -28,7 +28,7 @@ export default class GameScene extends Phaser.Scene {
 
   constructor (config) {
       super(config);
-      this.tilesize = 16;
+      this.tilesize = 32;
       this.offset = (this.tilesize / 2)
       this.mazeOffsetY = 20;
   }
@@ -49,10 +49,11 @@ export default class GameScene extends Phaser.Scene {
   
   create ()
   {
+      let levelConfig = this.xpacmanGame.getLevelConfigs()[this.xpacmanGame.getCurrentLevel()-1];
       let pointsDisplay = new PhaserPointsDisplay(this);
       let playerLivesLeftDisplay = new PhaserLivesDisplay(this);
-      let phaserTileMap = this.make.tilemap({ key: this.xpacmanGame.getLevelConfigs()[this.xpacmanGame.getCurrentLevel()-1].mapName, tileWidth: 16, tileHeight: 16 });
-      var tileset = phaserTileMap.addTilesetImage('tiles', null, 16, 16, 0, 0);
+      let phaserTileMap = this.make.tilemap({ key: this.xpacmanGame.getLevelConfigs()[this.xpacmanGame.getCurrentLevel()-1].mapName, tileWidth: this.tilesize, tileHeight: this.tilesize });
+      var tileset = phaserTileMap.addTilesetImage('tiles', null, this.tilesize, this.tilesize, 0, 0);
       phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
 
       let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
@@ -60,8 +61,8 @@ export default class GameScene extends Phaser.Scene {
       let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
       let possibleMovesFinder = new GhostPossibleMovesFinder();
       let chasingMoveDecider = new ChasingMoveDecider(phaserRandomMoveDecider);
-      this.xpacmanGame.getLevelConfigs()[0].ghosts.forEach((ghost) => {
-        let ghostModel = new Ghost(mapAdaptor, 500, 0, chasingMoveDecider, possibleMovesFinder, false);
+      levelConfig.ghosts.forEach((ghost) => {
+        let ghostModel = new Ghost(mapAdaptor, levelConfig.ghostStepTime, 0, chasingMoveDecider, possibleMovesFinder, false);
         phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
       });
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
@@ -71,7 +72,7 @@ export default class GameScene extends Phaser.Scene {
       let pairProgrammingDisplay = new PhaserPairProgrammingDisplay(this);
       let pairProgrammingTimedAction = new PairProgrammingTimedAction(0, 0, playerModel, 2000, pairProgrammingDisplay);
       let spawnGhostsAction = new SpawnGhostsAction(200, 0, 500, 10, this.xpacmanGame, 
-        this.xpacmanGame.getLevelConfigs()[0], mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
+        levelConfig, mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
       this.xpacmanGame.setTimedActions([spawnGhostsAction, pairProgrammingTimedAction]);
       this.levelFinishedCallback = () => { 
         this.scene.stop()        

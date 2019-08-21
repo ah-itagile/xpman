@@ -63,7 +63,8 @@ Put a `f` infront of a test if you want to execute just one test (`fit` )
 ## Using Tiled
 You need a tileset and map
 ### Tileset
-Import tileset from image. (e.g. 'super-mario.png')
+After editing xpman-tileset.xcf in Gimp export as png to src/assets/xpman-tileset.png
+Import tileset from image. (e.g. 'xpman-tileset.png')
 ### Map
 Create map for tileset.
-"Export as" CSV to assets (e.g. 'stadium-tilemap.csv').
+"Export as" CSV to assets (e.g. 'xpman-level1.csv').
