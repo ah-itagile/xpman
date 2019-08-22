@@ -40,7 +40,7 @@ export default class TitleScene extends Phaser.Scene {
             fill: false
         }});
     this.add.image(200, 300, 'opponentPng');
-    this.add.text(240, 300, 'Avoid the SaFE managers');
+    this.add.text(240, 300, 'Avoid the SAFe managers');
     this.add.image(200, 340, 'ciServerPng');
     this.add.text(240, 330, 'Integrate at the CI Server');
     this.add.text(240, 360, 'before bugs appear!');
