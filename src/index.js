@@ -5,7 +5,7 @@ import NextLevelScene from "./scenes/nextLevelScene"
 import GameOverScene from "./scenes/gameOverScene";
 import LifeLostScene from "./scenes/lifeLostScene";
 import EndGameScene from "./scenes/endGameScene";
-import XPacmanGame from "./model/xpacmanGame";
+import XPManGame from "./model/xpmanGame";
 
 
 const config = {
@@ -53,10 +53,10 @@ class Game extends Phaser.Game {
       }
     ];
 
-    let xpacmanGame = new XPacmanGame();
+    let xpmanGame = new XPManGame();
     
-    xpacmanGame.setLevelConfigs(levelConfigs);
-    this.scene.start('Title', xpacmanGame);
+    xpmanGame.setLevelConfigs(levelConfigs);
+    this.scene.start('Title', xpmanGame);
   }
 }
  

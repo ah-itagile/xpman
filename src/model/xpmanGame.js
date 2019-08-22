@@ -1,4 +1,4 @@
-export default class XPacmanGame {
+export default class XPManGame {
     constructor() {
         this.currentLevelOneBased = 1;
         this.initialDotCount;

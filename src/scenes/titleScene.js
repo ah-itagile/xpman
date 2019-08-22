@@ -17,8 +17,8 @@ export default class TitleScene extends Phaser.Scene {
     this.load.image('kentPng', kentPng);
   }
  
-  init(xpacmanGame) {
-      this.xpacmanGame = xpacmanGame;
+  init(xpmanGame) {
+      this.xpmanGame = xpmanGame;
   };
 
   create () {
@@ -52,8 +52,8 @@ export default class TitleScene extends Phaser.Scene {
 
     this.input.keyboard.on('keydown_ENTER', ()=> {
         this.scene.stop();
-        this.xpacmanGame.resetGame();
-        this.scene.start('Game', this.xpacmanGame);
+        this.xpmanGame.resetGame();
+        this.scene.start('Game', this.xpmanGame);
     });
   }
 };

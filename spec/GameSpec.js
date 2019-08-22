@@ -1,9 +1,9 @@
-import XPacmanGame from '../src/model/xpacmanGame';
+import XPManGame from '../src/model/xpmanGame';
 import Player from '../src/model/player';
 import Ghost from '../src/model/ghost';
 import * as Constants from '../src/model/constants'; 
 
-describe("XPacmanGame", () => {
+describe("XPManGame", () => {
 
     let pointsDisplay;
     let endGameCallback;
@@ -18,7 +18,7 @@ describe("XPacmanGame", () => {
 
     beforeEach(() => {
         pointsDisplay = { update: () => { } };
-        game = new XPacmanGame();
+        game = new XPManGame();
         levelFinishedCallback = jasmine.createSpy("levelFinishedCallback");
         game.setLevelFinishedCallback(levelFinishedCallback);
         map = { countDots: () => { return 1; } };
