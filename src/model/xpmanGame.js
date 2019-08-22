@@ -11,17 +11,17 @@ export default class XPManGame {
         this.levels = levelConfigs;
     }
 
-    setInitialGhosts(ghosts) {
-        this.initialGhosts = ghosts; 
-        this.ghosts = [...ghosts];
+    setInitialOpponents(opponents) {
+        this.initialOpponents = opponents; 
+        this.opponents = [...opponents];
     }
 
-    addGhost(ghost) {
-        this.ghosts.push(ghost);
+    addOpponent(opponent) {
+        this.opponents.push(opponent);
     }
 
-    getGhosts() {
-        return this.ghosts;
+    getOpponents() {
+        return this.opponents;
     }
 
     setPlayer(player) {
@@ -75,14 +75,14 @@ export default class XPManGame {
         this.initialDotCount = this.mapAdaptor.countDots();
         this.pointsDisplay.update(this.player.getEatenDots());
         this.playerLivesLeftDisplay.update(this.livesLeft);
-        this.resetGhostAndPlayerPositions();
+        this.resetOpponentAndPlayerPositions();
     }
 
     continueAfterLifeLost() {
        this.timedActions.forEach(action =>{
             action.reset();
        } );
-       this.resetGhostAndPlayerPositions();
+       this.resetOpponentAndPlayerPositions();
     }
 
     resetGame() {
@@ -91,29 +91,29 @@ export default class XPManGame {
         this.livesLeft = 2;
     }
 
-    removeSpawnedGhosts() {
-        for (let i=this.initialGhosts.length; i<this.ghosts.length; i++) {
-            this.ghosts[i].destroy();
+    removeSpawnedOpponents() {
+        for (let i=this.initialOpponents.length; i<this.opponents.length; i++) {
+            this.opponents[i].destroy();
         }
-        this.ghosts = [...this.initialGhosts];
+        this.opponents = [...this.initialOpponents];
     }
 
-    resetGhostAndPlayerPositions() {
-        this.removeSpawnedGhosts();        
-        for (let i = 0; i < this.ghosts.length; i++) {
-            const ghost = this.ghosts[i];
-            ghost.setPosX(this.levels[this.currentLevelOneBased-1].ghosts[i].posX);
-            ghost.setPosY(this.levels[this.currentLevelOneBased-1].ghosts[i].posY);
+    resetOpponentAndPlayerPositions() {
+        this.removeSpawnedOpponents();        
+        for (let i = 0; i < this.opponents.length; i++) {
+            const opponent = this.opponents[i];
+            opponent.setPosX(this.levels[this.currentLevelOneBased-1].opponents[i].posX);
+            opponent.setPosY(this.levels[this.currentLevelOneBased-1].opponents[i].posY);
         }
 
         this.player.setPosX(this.levels[this.currentLevelOneBased-1].player.posX);
         this.player.setPosY(this.levels[this.currentLevelOneBased-1].player.posY);
     }
 
-    ghostCaughtPlayer(ghostIndex) {
-        if (this.player.getPairProgramming() && this.ghosts[ghostIndex].getKillableByPairProgramming()) {
-            this.ghosts[ghostIndex].destroy();
-            this.ghosts.splice(ghostIndex,1);
+    opponentCaughtPlayer(opponentIndex) {
+        if (this.player.getPairProgramming() && this.opponents[opponentIndex].getKillableByPairProgramming()) {
+            this.opponents[opponentIndex].destroy();
+            this.opponents.splice(opponentIndex,1);
         } else {
             this.livesLeft--;
             if (this.livesLeft<0) {
@@ -126,10 +126,10 @@ export default class XPManGame {
     }
 
     update(time, forceLevelEnd) {
-        for (var g = this.ghosts.length - 1; g >= 0; g--) {
-            let ghost = this.ghosts[g];
-            if (ghost.shouldUpdateAtTime(time)) {
-                ghost.update(time, this.player);
+        for (var g = this.opponents.length - 1; g >= 0; g--) {
+            let opponent = this.opponents[g];
+            if (opponent.shouldUpdateAtTime(time)) {
+                opponent.update(time, this.player);
             }
         }
         this.timedActions.forEach(timedAction => {
@@ -145,8 +145,8 @@ export default class XPManGame {
                 timedAction.playerSteppedOn(tile);
             });
         }
-        for (var g = this.ghosts.length - 1; g >= 0; g--) {
-            this.checkForGhostPlayerContact(g);                    
+        for (var g = this.opponents.length - 1; g >= 0; g--) {
+            this.checkForOpponentPlayerContact(g);                    
         }
         if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
             if (this.currentLevelOneBased == this.levels.length) {
@@ -159,10 +159,10 @@ export default class XPManGame {
         }
     }
 
-    checkForGhostPlayerContact(g) {
-        let ghost = this.ghosts[g];
-        if (ghost.getPosX() === this.player.getPosX() && ghost.getPosY() === this.player.getPosY()) {
-            this.ghostCaughtPlayer(g);
+    checkForOpponentPlayerContact(g) {
+        let opponent = this.opponents[g];
+        if (opponent.getPosX() === this.player.getPosX() && opponent.getPosY() === this.player.getPosY()) {
+            this.opponentCaughtPlayer(g);
         }
     }
 }

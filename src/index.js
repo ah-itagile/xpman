@@ -29,11 +29,11 @@ class Game extends Phaser.Game {
     let levelConfigs = [
       {
         mapName: 'tileMapLevel1',
-        ghosts: [{posX: 2, posY: 14},
+        opponents: [{posX: 2, posY: 14},
                  {posX: 6, posY: 14}
         ],
-        ghostStepTime: 500,
-        spawnGhosts: {
+        opponentStepTime: 500,
+        spawnOpponents: {
           spawnX: 8,
           spawnY: 9          
         },
@@ -41,11 +41,11 @@ class Game extends Phaser.Game {
       },
       {
         mapName: 'tileMapLevel2',
-        ghosts: [{posX: 2, posY: 14},
+        opponents: [{posX: 2, posY: 14},
                 {posX: 6, posY: 14}
         ],
-        ghostStepTime: 250,
-        spawnGhosts: {
+        opponentStepTime: 250,
+        spawnOpponents: {
           spawnX: 12,
           spawnY: 7          
         },

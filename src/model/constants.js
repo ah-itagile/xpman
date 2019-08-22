@@ -8,4 +8,4 @@ export const MAP_WALL = 1;
 export const MAP_PAIRPROG = 2;
 export const MAP_DOT = 3;
 export const MAP_CI_SERVER = 4;
-export const MAP_UNSET = 99;
+export const MAP_UNSET = -1;

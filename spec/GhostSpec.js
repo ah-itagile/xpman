@@ -1,13 +1,13 @@
-import Ghost from '../src/model/ghost';
+import Opponent from '../src/model/opponent';
 import * as Constants from '../src/model/constants';
-import GhostPossibleMovesFinder from '../src/model/ghostPossibleMovesFinder';
+import OpponentPossibleMovesFinder from '../src/model/opponentPossibleMovesFinder';
 
-describe("Ghost", function() {
+describe("Opponent", function() {
 
     it("should be initialized", function() {
-        let ghost = new Ghost();
-        expect(ghost.getPosX()).toBe(0);
-        expect(ghost.getPosY()).toBe(0);
+        let opponent = new Opponent();
+        expect(opponent.getPosX()).toBe(0);
+        expect(opponent.getPosY()).toBe(0);
     });
 
 
@@ -18,23 +18,23 @@ describe("Ghost", function() {
     ].forEach((parameters) => it("should update position according to the chosen direction", () => {
         let moveDecider = jasmine.createSpyObj("moveDecider", { chooseMove:  parameters.direction});
         let possibleMovesFinder = jasmine.createSpyObj("possibleMovesFinder", {findPossibleMoves:[]});
-        let ghost = new Ghost({}, 0, 0, moveDecider, possibleMovesFinder);
-        ghost.setPosX(1);
-        ghost.setPosY(1);
+        let opponent = new Opponent({}, 0, 0, moveDecider, possibleMovesFinder);
+        opponent.setPosX(1);
+        opponent.setPosY(1);
 
-        ghost.update(0);
+        opponent.update(0);
 
-        expect(ghost.getPosX()).toBe(parameters.expectedX);
-        expect(ghost.getPosY()).toBe(parameters.expectedY);
+        expect(opponent.getPosX()).toBe(parameters.expectedX);
+        expect(opponent.getPosY()).toBe(parameters.expectedY);
     }));
 
     it("should update after waiting long enough", ()=>{
         let waitTimeInMs = 500;
         let lastUpdatedAtTimeInMs = 0;
-        let ghost = new Ghost({}, waitTimeInMs, lastUpdatedAtTimeInMs);
+        let opponent = new Opponent({}, waitTimeInMs, lastUpdatedAtTimeInMs);
 
-        expect(ghost.shouldUpdateAtTime(0)).toBeFalsy();
-        expect(ghost.shouldUpdateAtTime(500)).toBeFalsy();
-        expect(ghost.shouldUpdateAtTime(501)).toBeTruthy();
+        expect(opponent.shouldUpdateAtTime(0)).toBeFalsy();
+        expect(opponent.shouldUpdateAtTime(500)).toBeFalsy();
+        expect(opponent.shouldUpdateAtTime(501)).toBeTruthy();
     });
 });

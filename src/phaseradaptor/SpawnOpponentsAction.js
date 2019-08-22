@@ -1,11 +1,11 @@
 import PhaserRandomMoveDecider from "../phaseradaptor/phaserRandomMoveDecider";
-import GhostPossibleMovesFinder from "../model/ghostPossibleMovesFinder";
-import Ghost from "../model/ghost";
-import PhaserGhost from "../phaseradaptor/phaserghost";
+import OpponentPossibleMovesFinder from "../model/opponentPossibleMovesFinder";
+import Opponent from "../model/opponent";
+import PhaserOpponent from "../phaseradaptor/phaseropponent";
 import * as Constants from '../model/constants';
 
 
-export default class SpawnGhostsAction {
+export default class SpawnOpponentsAction {
     constructor(waitTimeInMs, lastUpdatedAtInMs, initialCounter, decreaseBy, game, config, mapAdaptor, scene, tilesize, mazeOffsetY, counterDisplay, spriteName) {
         this.waitTimeInMs = waitTimeInMs;
         this.lastUpdatedAtInMs = lastUpdatedAtInMs;
@@ -38,13 +38,13 @@ export default class SpawnGhostsAction {
 
         if (this.currentCounter <= 0) {
             let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
-            let possibleMovesFinder = new GhostPossibleMovesFinder();            
-            let ghostModel = new Ghost(this.mapAdaptor, 500, 0, phaserRandomMoveDecider, possibleMovesFinder, true);
-            ghostModel.setPosX(this.config.spawnGhosts.spawnX);
-            ghostModel.setPosY(this.config.spawnGhosts.spawnY);
-            let phaserGhost = new PhaserGhost(this.scene, this.tilesize, this.spriteName, ghostModel, this.mazeOffsetY);
-            ghostModel.setDestroyListener(phaserGhost);
-            this.game.addGhost(phaserGhost);            
+            let possibleMovesFinder = new OpponentPossibleMovesFinder();            
+            let opponentModel = new Opponent(this.mapAdaptor, 500, 0, phaserRandomMoveDecider, possibleMovesFinder, true);
+            opponentModel.setPosX(this.config.spawnOpponents.spawnX);
+            opponentModel.setPosY(this.config.spawnOpponents.spawnY);
+            let phaserOpponent = new PhaserOpponent(this.scene, this.tilesize, this.spriteName, opponentModel, this.mazeOffsetY);
+            opponentModel.setDestroyListener(phaserOpponent);
+            this.game.addOpponent(phaserOpponent);            
             this.currentCounter = this.initialCounter;        
         }
 

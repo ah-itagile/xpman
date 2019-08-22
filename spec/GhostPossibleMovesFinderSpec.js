@@ -1,7 +1,7 @@
 import * as Constants from '../src/model/constants';
-import GhostPossibleMovesFinder from '../src/model/ghostPossibleMovesFinder';
+import OpponentPossibleMovesFinder from '../src/model/opponentPossibleMovesFinder';
 
-describe("GhostPossibleMovesFinder", function() {
+describe("OpponentPossibleMovesFinder", function() {
 
     const parameters = [ 
         {
@@ -70,9 +70,9 @@ describe("GhostPossibleMovesFinder", function() {
                 return map[y][x];
             }
         };
-        let ghostPossibleMovesFinder = new GhostPossibleMovesFinder();
+        let opponentPossibleMovesFinder = new OpponentPossibleMovesFinder();
         
-        let possibleOptions = ghostPossibleMovesFinder.findPossibleMoves(map, 1, 1, parameter.currentDirection);
+        let possibleOptions = opponentPossibleMovesFinder.findPossibleMoves(map, 1, 1, parameter.currentDirection);
         expect(possibleOptions).toEqual(parameter.expected);
     })});
 

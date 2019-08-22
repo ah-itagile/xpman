@@ -1,56 +1,56 @@
 import TilePositionToPhaserTranslator from "./TilePositionToPhaserTranslator";
 
-export default class PhaserGhost {
+export default class PhaserOpponent {
 
-    constructor(scene, tilesize, imageName, ghostModel, mazeOffsetY) {
+    constructor(scene, tilesize, imageName, opponentModel, mazeOffsetY) {
         this.scene = scene;
         this.tilesize = tilesize;
-        this.ghostModel = ghostModel;        
+        this.opponentModel = opponentModel;        
         this.offset = tilesize / 2;
         this.mazeOffsetY = mazeOffsetY;
         this.tilePositionToPhaserTranslator = new TilePositionToPhaserTranslator(tilesize, mazeOffsetY);
         let position = this.getTranslatedPosition();
 
-        this.ghostImage = scene.add.image(position.x, 
+        this.opponentImage = scene.add.image(position.x, 
                                           position.y + mazeOffsetY, 
                                           imageName);    
     }
 
     getPosX() {
-        return this.ghostModel.getPosX();
+        return this.opponentModel.getPosX();
     }
 
     getPosY() {
-        return this.ghostModel.getPosY();
+        return this.opponentModel.getPosY();
     }
 
     setPosX(x) {
-        this.ghostModel.setPosX(x);
+        this.opponentModel.setPosX(x);
     }
 
     setPosY(y) {
-        this.ghostModel.setPosY(y);
+        this.opponentModel.setPosY(y);
     }
 
     getKillableByPairProgramming() {
-        return this.ghostModel.getKillableByPairProgramming();
+        return this.opponentModel.getKillableByPairProgramming();
     }
 
     getTranslatedPosition() {
-        return this.tilePositionToPhaserTranslator.translate(this.ghostModel.getPosX(), this.ghostModel.getPosY());
+        return this.tilePositionToPhaserTranslator.translate(this.opponentModel.getPosX(), this.opponentModel.getPosY());
     }
     
     shouldUpdateAtTime(time) {
-        return this.ghostModel.shouldUpdateAtTime(time);
+        return this.opponentModel.shouldUpdateAtTime(time);
     }
     update(time, player) {
-        this.ghostModel.update(time, player);
+        this.opponentModel.update(time, player);
 
         let position = this.getTranslatedPosition();
         this.scene.tweens.add({
-            targets: this.ghostImage,
+            targets: this.opponentImage,
             ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
-            duration: this.ghostModel.getSpeed(),
+            duration: this.opponentModel.getSpeed(),
             repeat: 0,            // -1: infinity
             yoyo: false,
             x: position.x,
@@ -58,7 +58,7 @@ export default class PhaserGhost {
         });    }
 
     destroy() {
-        this.ghostImage.destroy();
+        this.opponentImage.destroy();
     }
 
 }

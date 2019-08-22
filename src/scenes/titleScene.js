@@ -1,5 +1,5 @@
 import 'phaser';
-import ghostPng from "../assets/manager.png";
+import opponentPng from "../assets/manager.png";
 import bugPng from "../assets/bug.png";
 import ciServerPng from "../assets/ciServer.png";
 import kentPng from "../assets/kent.png";
@@ -11,7 +11,7 @@ export default class TitleScene extends Phaser.Scene {
   }
  
   preload () {
-    this.load.image('ghostPng', ghostPng);
+    this.load.image('opponentPng', opponentPng);
     this.load.image('bugPng', bugPng);
     this.load.image('ciServerPng', ciServerPng);
     this.load.image('kentPng', kentPng);
@@ -39,7 +39,7 @@ export default class TitleScene extends Phaser.Scene {
             stroke: false,
             fill: false
         }});
-    this.add.image(200, 300, 'ghostPng');
+    this.add.image(200, 300, 'opponentPng');
     this.add.text(240, 300, 'Avoid the SaFE managers');
     this.add.image(200, 340, 'ciServerPng');
     this.add.text(240, 330, 'Integrate at the CI Server');

@@ -1,8 +1,8 @@
 
 import * as Constants from './constants';
-import GhostPossibleMovesFinder from './ghostPossibleMovesFinder';
+import OpponentPossibleMovesFinder from './opponentPossibleMovesFinder';
 
-export default class Ghost {
+export default class Opponent {
 
     constructor(map, waitTimeInMs, lastUpdatedAtInMs, moveDecider, possibleMovesFinder, isKillableByPairProgramming){
         this.posX = 0;

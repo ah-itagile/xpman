@@ -1,13 +1,13 @@
 import Phaser from "phaser";
 import tilesImg from "../assets/xpman-tileset.png";
 import playerImg from "../assets/player.png";
-import ghostPng from "../assets/manager.png";
+import opponentPng from "../assets/manager.png";
 import bugPng from "../assets/bug.png";
 import tileMapLevel1 from "../assets/xpman-level1.csv";
 import tileMapLevel2 from "../assets/xpman-level2.csv";
 
-import Ghost from '../model/ghost';
-import PhaserGhost from '../phaseradaptor/phaserghost';
+import Opponent from '../model/opponent';
+import PhaserOpponent from '../phaseradaptor/phaseropponent';
 import PhaserKeyControlsAdapter from "../phaseradaptor/phaserKeyControlsAdaptor";
 import PhaserMapAdaptor from '../phaseradaptor/PhaserMapAdaptor';
 import PhaserPointsDisplay from '../phaseradaptor/phaserPointsDisplay';
@@ -16,10 +16,10 @@ import Player from "../model/player";
 import PhaserPlayer from "../phaseradaptor/phaserPlayer";
 import XPManGame from '../model/xpmanGame';
 import PhaserRandomMoveDecider from "../phaseradaptor/phaserRandomMoveDecider";
-import GhostPossibleMovesFinder from "../model/ghostPossibleMovesFinder";
+import OpponentPossibleMovesFinder from "../model/opponentPossibleMovesFinder";
 import ChasingMoveDecider from "../model/chasingMoveDecider";
 import PhaserCiCounterDisplay from "../phaseradaptor/phaserCiCounterDisplay";
-import SpawnGhostsAction from "../phaseradaptor/SpawnGhostsAction";
+import SpawnOpponentsAction from "../phaseradaptor/SpawnOpponentsAction";
 import PhaserPairProgrammingDisplay from "../phaseradaptor/phaserPairProgrammingDisplay";
 import PairProgrammingTimedAction from "../model/PairProgrammingTimedAction";
 
@@ -41,7 +41,7 @@ export default class GameScene extends Phaser.Scene {
   {
       this.load.image('tiles', tilesImg);
       this.load.image('player', playerImg);
-      this.load.image('ghost', ghostPng);
+      this.load.image('opponent', opponentPng);
       this.load.image('bug', bugPng);
       this.load.tilemapCSV('tileMapLevel1', tileMapLevel1);
       this.load.tilemapCSV('tileMapLevel2', tileMapLevel2);
@@ -57,13 +57,13 @@ export default class GameScene extends Phaser.Scene {
       phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
 
       let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
-      let phaserGhosts = [];
+      let phaserOpponents = [];
       let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
-      let possibleMovesFinder = new GhostPossibleMovesFinder();
+      let possibleMovesFinder = new OpponentPossibleMovesFinder();
       let chasingMoveDecider = new ChasingMoveDecider(phaserRandomMoveDecider);
-      levelConfig.ghosts.forEach((ghost) => {
-        let ghostModel = new Ghost(mapAdaptor, levelConfig.ghostStepTime, 0, chasingMoveDecider, possibleMovesFinder, false);
-        phaserGhosts.push(new PhaserGhost(this, this.tilesize, 'ghost', ghostModel, this.mazeOffsetY));
+      levelConfig.opponents.forEach((opponent) => {
+        let opponentModel = new Opponent(mapAdaptor, levelConfig.opponentStepTime, 0, chasingMoveDecider, possibleMovesFinder, false);
+        phaserOpponents.push(new PhaserOpponent(this, this.tilesize, 'opponent', opponentModel, this.mazeOffsetY));
       });
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
       let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0, 5000);
@@ -71,9 +71,9 @@ export default class GameScene extends Phaser.Scene {
       let ciCounterDisplay = new PhaserCiCounterDisplay(this);
       let pairProgrammingDisplay = new PhaserPairProgrammingDisplay(this);
       let pairProgrammingTimedAction = new PairProgrammingTimedAction(0, 0, playerModel, 2000, pairProgrammingDisplay);
-      let spawnGhostsAction = new SpawnGhostsAction(200, 0, 500, 10, this.xpmanGame, 
+      let spawnOpponentsAction = new SpawnOpponentsAction(200, 0, 500, 10, this.xpmanGame, 
         levelConfig, mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
-      this.xpmanGame.setTimedActions([spawnGhostsAction, pairProgrammingTimedAction]);
+      this.xpmanGame.setTimedActions([spawnOpponentsAction, pairProgrammingTimedAction]);
       this.levelFinishedCallback = () => { 
         this.scene.stop()        
         this.scene.start('NextLevel', this.xpmanGame);
@@ -91,7 +91,7 @@ export default class GameScene extends Phaser.Scene {
         this.scene.launch('LifeLost', message);
       }};
       this.xpmanGame.setMapAdaptor(mapAdaptor);
-      this.xpmanGame.setInitialGhosts(phaserGhosts);
+      this.xpmanGame.setInitialOpponents(phaserOpponents);
       this.xpmanGame.setPlayer(phaserPlayer);
       this.xpmanGame.setLevelFinishedCallback(this.levelFinishedCallback);
       this.xpmanGame.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);

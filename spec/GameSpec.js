@@ -1,6 +1,6 @@
 import XPManGame from '../src/model/xpmanGame';
 import Player from '../src/model/player';
-import Ghost from '../src/model/ghost';
+import Opponent from '../src/model/opponent';
 import * as Constants from '../src/model/constants'; 
 
 describe("XPManGame", () => {
@@ -13,7 +13,7 @@ describe("XPManGame", () => {
     let map;
     let playerLivesLeftDisplay;
     let player;
-    let ghosts;
+    let opponents;
     let lifeLostDisplay;
 
     beforeEach(() => {
@@ -31,14 +31,14 @@ describe("XPManGame", () => {
         game.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
         player = new Player(map, {}, 0, 0, 0, 2);
         game.setPlayer(player);
-        ghosts = [new Ghost(map, 0, 0)];
-        game.setInitialGhosts(ghosts);
+        opponents = [new Opponent(map, 0, 0)];
+        game.setInitialOpponents(opponents);
         lifeLostDisplay = jasmine.createSpyObj('lifeLostDisplay', ['showMessage']);
         game.setLifeLostDisplay(lifeLostDisplay);
         gameOverCallback = jasmine.createSpy("gameOverCallback");
         game.setGameOverCallback(gameOverCallback);
         let levels = [{
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }];
@@ -47,7 +47,7 @@ describe("XPManGame", () => {
 
     it("should initialize on creation", () => {
         let levels = [{
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }];
@@ -60,16 +60,16 @@ describe("XPManGame", () => {
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(2);
         expect(player.getPosX()).toBe(levels[0].player.posX);
         expect(player.getPosY()).toBe(levels[0].player.posY);
-        expect(ghosts[0].getPosX()).toBe(levels[0].ghosts[0].posX);
-        expect(ghosts[0].getPosY()).toBe(levels[0].ghosts[0].posY);
+        expect(opponents[0].getPosX()).toBe(levels[0].opponents[0].posX);
+        expect(opponents[0].getPosY()).toBe(levels[0].opponents[0].posY);
     });
 
-    it("should update all ghosts and player during update loop", () => {
-        let ghost1 = jasmine.createSpyObj("ghost1", {
+    it("should update all opponents and player during update loop", () => {
+        let opponent1 = jasmine.createSpyObj("opponent1", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, getPosY: 0
         });
-        let ghost2 = jasmine.createSpyObj("ghost2", {
+        let opponent2 = jasmine.createSpyObj("opponent2", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, getPosY: 0
         });
@@ -79,14 +79,14 @@ describe("XPManGame", () => {
             setDotEatenEventListener: ()=>{}
         });
         game.setPlayer(player);
-        game.setInitialGhosts([ghost1, ghost2]);
+        game.setInitialOpponents([opponent1, opponent2]);
 
         game.update();
 
-        expect(ghost1.shouldUpdateAtTime).toHaveBeenCalled();
-        expect(ghost1.update).toHaveBeenCalled();
-        expect(ghost2.shouldUpdateAtTime).toHaveBeenCalled();
-        expect(ghost2.update).toHaveBeenCalled();
+        expect(opponent1.shouldUpdateAtTime).toHaveBeenCalled();
+        expect(opponent1.update).toHaveBeenCalled();
+        expect(opponent2.shouldUpdateAtTime).toHaveBeenCalled();
+        expect(opponent2.update).toHaveBeenCalled();
         expect(player.shouldUpdateAtTime).toHaveBeenCalled();
         expect(player.update).toHaveBeenCalled();
     });
@@ -106,11 +106,11 @@ describe("XPManGame", () => {
 
     it("should fire level finished event if player ate all dots", () => {
         let levels = [{
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }, {
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }];
@@ -142,23 +142,23 @@ describe("XPManGame", () => {
         }
         );
         game.setPlayer(player);
-        game.setInitialGhosts([]);
+        game.setInitialOpponents([]);
 
         game.update();
 
         expect(pointsDisplay.update).toHaveBeenCalledWith(0);
     });
 
-    it("should decrease player lives and show message if ghost catches player", () => {
+    it("should decrease player lives and show message if opponent catches player", () => {
         let map = { countDots: () => { return 1; } };
-        let ghost = jasmine.createSpyObj("ghost", {
+        let opponent = jasmine.createSpyObj("opponent", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, getPosY: 0
         });
 
         let player = new Player(map, {}, 0, 0, 0);
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.update();
 
@@ -166,8 +166,8 @@ describe("XPManGame", () => {
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
     });
 
-    it("should decrease player lives and show message if player steps on ghost", () => {
-        let ghost = jasmine.createSpyObj("ghost", {
+    it("should decrease player lives and show message if player steps on opponent", () => {
+        let opponent = jasmine.createSpyObj("opponent", {
             shouldUpdateAtTime: false, update: () => { },
             getPosX: 0, getPosY: 0
         });
@@ -179,7 +179,7 @@ describe("XPManGame", () => {
         });
 
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.update(0);
 
@@ -187,8 +187,8 @@ describe("XPManGame", () => {
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledWith(1);
     });
 
-    it("should decrease player lives only once if player and ghosts are moved in the same update loop call", () => {
-        let ghost = jasmine.createSpyObj("ghost", {
+    it("should decrease player lives only once if player and opponents are moved in the same update loop call", () => {
+        let opponent = jasmine.createSpyObj("opponent", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, getPosY: 0
         });
@@ -200,16 +200,16 @@ describe("XPManGame", () => {
         });
 
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.update(0);
 
         expect(playerLivesLeftDisplay.update).toHaveBeenCalledTimes(1);
     });
 
-    it("should remove killable ghost if player catches ghost while pair programming", () => {
+    it("should remove killable opponent if player catches opponent while pair programming", () => {
         let map = { countDots: () => { return 1; } };
-        let ghost = jasmine.createSpyObj("ghost", {
+        let opponent = jasmine.createSpyObj("opponent", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, 
             getPosY: 0,
@@ -220,18 +220,18 @@ describe("XPManGame", () => {
         let player = new Player(map, {}, 0, 0, 0);
         player.setPairProgramming(true);
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.update();
 
-        expect(game.getGhosts().length).toBe(0);
-        expect(ghost.destroy).toHaveBeenCalled();
+        expect(game.getOpponents().length).toBe(0);
+        expect(opponent.destroy).toHaveBeenCalled();
         expect(lifeLostDisplay.showMessage).not.toHaveBeenCalled();        
     });
 
-    it("should not remove non-killable ghost if player catches ghost while pair programming", () => {
+    it("should not remove non-killable opponent if player catches opponent while pair programming", () => {
         let map = { countDots: () => { return 1; } };
-        let ghost = jasmine.createSpyObj("ghost", {
+        let opponent = jasmine.createSpyObj("opponent", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, 
             getPosY: 0,
@@ -242,12 +242,12 @@ describe("XPManGame", () => {
         let player = new Player(map, {}, 0, 0, 0);
         player.setPairProgramming(true);
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.update();
 
-        expect(game.getGhosts().length).toBe(1);
-        expect(ghost.destroy).not.toHaveBeenCalled();        
+        expect(game.getOpponents().length).toBe(1);
+        expect(opponent.destroy).not.toHaveBeenCalled();        
     });
 
     it("should reset timed actions if player lost life", () => {
@@ -271,7 +271,7 @@ describe("XPManGame", () => {
             }
         );
         game.setPlayer(player);
-        game.setInitialGhosts([]);
+        game.setInitialOpponents([]);
         let timedAction = jasmine.createSpyObj("timed action", {
             shouldUpdateAtTime: true, 
             update: () => { },
@@ -287,66 +287,66 @@ describe("XPManGame", () => {
         expect(timedAction.playerSteppedOn).toHaveBeenCalledWith(Constants.MAP_CI_SERVER);
     });
 
-    it("should reset player and ghost positions when game continues after a life was lost", () => {
+    it("should reset player and opponent positions when game continues after a life was lost", () => {
         let map = { countDots: () => { return 1; } };
-        let ghost = new Ghost(map, 0, 0);
+        let opponent = new Opponent(map, 0, 0);
 
         let player = new Player(map, {}, 0, 0, 0);
 
         let levels = [{
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }];
         game.setLevelConfigs(levels);
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.continueAfterLifeLost();
 
-        expect(ghost.getPosX()).toBe(levels[0].ghosts[0].posX);
-        expect(ghost.getPosY()).toBe(levels[0].ghosts[0].posY);
+        expect(opponent.getPosX()).toBe(levels[0].opponents[0].posX);
+        expect(opponent.getPosY()).toBe(levels[0].opponents[0].posY);
         expect(player.getPosX()).toBe(levels[0].player.posX);
         expect(player.getPosY()).toBe(levels[0].player.posY);
     });
 
-    it("should remove spawned ghosts after a life was lost", () => {
+    it("should remove spawned opponents after a life was lost", () => {
         let map = { countDots: () => { return 1; } };
-        let ghost = new Ghost(map, 0, 0);
+        let opponent = new Opponent(map, 0, 0);
 
         let player = new Player(map, {}, 0, 0, 0);
 
         let levels = [{
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }];
         game.setLevelConfigs(levels);
         game.setPlayer(player);
-        let initialGhosts = [ghost];
-        game.setInitialGhosts(initialGhosts);
+        let initialOpponents = [opponent];
+        game.setInitialOpponents(initialOpponents);
         let destroyListener = jasmine.createSpyObj("destroyListener", ["destroy"]);
-        let spawnedGhost = new Ghost(map, 0, 0, null, null);
-        spawnedGhost.setDestroyListener(destroyListener);
-        game.addGhost(spawnedGhost);
+        let spawnedOpponent = new Opponent(map, 0, 0, null, null);
+        spawnedOpponent.setDestroyListener(destroyListener);
+        game.addOpponent(spawnedOpponent);
 
         game.continueAfterLifeLost();
 
-        expect(game.getGhosts().length).toBe(initialGhosts.length);
+        expect(game.getOpponents().length).toBe(initialOpponents.length);
         expect(destroyListener.destroy).toHaveBeenCalled();
     });
 
 
     it("should end game if no player lives left", () => {
         let map = { countDots: () => { return 1; } };
-        let ghost = jasmine.createSpyObj("ghost", {
+        let opponent = jasmine.createSpyObj("opponent", {
             shouldUpdateAtTime: true, update: () => { },
             getPosX: 0, getPosY: 0
         });
 
         let player = new Player(map, {}, 0, 0, 0);
         game.setPlayer(player);
-        game.setInitialGhosts([ghost]);
+        game.setInitialOpponents([opponent]);
 
         game.update();
         game.update();
@@ -358,11 +358,11 @@ describe("XPManGame", () => {
 
     it("should increase current level if level was finished", ()=>{
         let levels = [{
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }, {
-            ghosts: [{ posX: 2, posY: 2 }
+            opponents: [{ posX: 2, posY: 2 }
             ],
             player: { posX: 3, posY: 3 }
         }];
