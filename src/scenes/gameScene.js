@@ -51,28 +51,12 @@ export default class GameScene extends Phaser.Scene {
       let levelConfig = this.xpmanGame.getLevelConfigs()[this.xpmanGame.getCurrentLevel()-1];
       let pointsDisplay = new PhaserPointsDisplay(this);
       let playerLivesLeftDisplay = new PhaserLivesDisplay(this);
-      let phaserTileMap = this.make.tilemap({ key: this.xpmanGame.getLevelConfigs()[this.xpmanGame.getCurrentLevel()-1].mapName, tileWidth: this.tilesize, tileHeight: this.tilesize });
-      var tileset = phaserTileMap.addTilesetImage('tiles', null, this.tilesize, this.tilesize, 0, 0);
-      phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
-
-      let mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
-      let phaserOpponents = [];
-      let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
-      let possibleMovesFinder = new OpponentPossibleMovesFinder();
-      let chasingMoveDecider = new ChasingMoveDecider(phaserRandomMoveDecider);
-      levelConfig.opponents.forEach((opponent) => {
-        let opponentModel = new Opponent(mapAdaptor, levelConfig.opponentStepTime, 0, chasingMoveDecider, possibleMovesFinder, false);
-        phaserOpponents.push(new PhaserOpponent(this, this.tilesize, 'opponent', opponentModel, this.mazeOffsetY));
-      });
+      let mapAdaptor = this.createMapAdaptor(mapAdaptor);
+      this.createAndSetOpponents(levelConfig, mapAdaptor);
       this.phaserKeyAdaptor = new PhaserKeyControlsAdapter(this);
       let playerModel = new Player(mapAdaptor, this.phaserKeyAdaptor, 1, 250, 0, 5000);
       let phaserPlayer = new PhaserPlayer(this, this.tilesize, 'player', playerModel, this.mazeOffsetY);
-      let ciCounterDisplay = new PhaserCiCounterDisplay(this);
-      let pairProgrammingDisplay = new PhaserPairProgrammingDisplay(this);
-      let pairProgrammingTimedAction = new PairProgrammingTimedAction(0, 0, playerModel, 2000, pairProgrammingDisplay);
-      let spawnOpponentsAction = new SpawnOpponentsAction(200, 0, 500, 10, this.xpmanGame, 
-        levelConfig, mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
-      this.xpmanGame.setTimedActions([spawnOpponentsAction, pairProgrammingTimedAction]);
+      this.createAndSetTimedActions(levelConfig, mapAdaptor, playerModel);
       this.levelFinishedCallback = () => { 
         this.scene.stop()        
         this.scene.start('NextLevel', this.xpmanGame);
@@ -90,7 +74,6 @@ export default class GameScene extends Phaser.Scene {
         this.scene.launch('LifeLost', message);
       }};
       this.xpmanGame.setMapAdaptor(mapAdaptor);
-      this.xpmanGame.setInitialOpponents(phaserOpponents);
       this.xpmanGame.setPlayer(phaserPlayer);
       this.xpmanGame.setLevelFinishedCallback(this.levelFinishedCallback);
       this.xpmanGame.setPlayerLivesLeftDisplay(playerLivesLeftDisplay);
@@ -105,6 +88,35 @@ export default class GameScene extends Phaser.Scene {
       });
 
       this.keyL_ONLY_FOR_DEVELOPMENT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
+  }
+
+  createMapAdaptor(mapAdaptor) {
+    let phaserTileMap = this.make.tilemap({ key: this.xpmanGame.getLevelConfigs()[this.xpmanGame.getCurrentLevel() - 1].mapName, tileWidth: this.tilesize, tileHeight: this.tilesize });
+    var tileset = phaserTileMap.addTilesetImage('tiles', null, this.tilesize, this.tilesize, 0, 0);
+    phaserTileMap.createDynamicLayer(0, tileset, 0, this.mazeOffsetY);
+    mapAdaptor = new PhaserMapAdaptor(phaserTileMap);
+    return mapAdaptor;
+  }
+
+  createAndSetTimedActions(levelConfig, mapAdaptor, playerModel) {
+    let ciCounterDisplay = new PhaserCiCounterDisplay(this);
+    let pairProgrammingDisplay = new PhaserPairProgrammingDisplay(this);
+    let pairProgrammingTimedAction = new PairProgrammingTimedAction(0, 0, playerModel, 2000, pairProgrammingDisplay);
+
+    let spawnOpponentsAction = new SpawnOpponentsAction(200, 0, 500, 10, this.xpmanGame, levelConfig, mapAdaptor, this, this.tilesize, this.mazeOffsetY, ciCounterDisplay, 'bug');
+    this.xpmanGame.setTimedActions([spawnOpponentsAction, pairProgrammingTimedAction]);
+  }
+
+  createAndSetOpponents(levelConfig, mapAdaptor) {
+    let phaserOpponents = [];
+    let phaserRandomMoveDecider = new PhaserRandomMoveDecider();
+    let possibleMovesFinder = new OpponentPossibleMovesFinder();
+    let chasingMoveDecider = new ChasingMoveDecider(phaserRandomMoveDecider);
+    levelConfig.opponents.forEach(() => {
+      let opponentModel = new Opponent(mapAdaptor, levelConfig.opponentStepTime, 0, chasingMoveDecider, possibleMovesFinder, false);
+      phaserOpponents.push(new PhaserOpponent(this, this.tilesize, 'opponent', opponentModel, this.mazeOffsetY));
+    });
+    this.xpmanGame.setInitialOpponents(phaserOpponents);
   }
 
   // only for development
