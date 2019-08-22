@@ -1,5 +1,5 @@
 import * as ModelConstants from '../model/constants';
-import * as TilesConstants from './TilesConstants';
+import * as TilesConstants from './tilesConstants';
 
 export default class PhaserMapAdaptor {
 

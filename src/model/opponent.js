@@ -1,6 +1,5 @@
 
 import * as Constants from './constants';
-import OpponentPossibleMovesFinder from './opponentPossibleMovesFinder';
 
 export default class Opponent {
 

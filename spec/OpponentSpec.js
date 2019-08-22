@@ -1,6 +1,5 @@
 import Opponent from '../src/model/opponent';
 import * as Constants from '../src/model/constants';
-import OpponentPossibleMovesFinder from '../src/model/opponentPossibleMovesFinder';
 
 describe("Opponent", function() {
 

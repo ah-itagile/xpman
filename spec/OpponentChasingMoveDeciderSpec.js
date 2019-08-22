@@ -1,5 +1,4 @@
 import * as Constants from '../src/model/constants';
-import OpponentRandomMoveDecider from '../src/model/opponentPossibleMovesFinder';
 import ChasingMoveDecider from '../src/model/chasingMoveDecider';
 
 describe("ChasingMoveDecider", function () {

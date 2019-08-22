@@ -1,5 +1,3 @@
-import * as Constants from '../model/constants';
-
 export default class PairProgrammingTimedAction {
 
     constructor(waitTimeInMs, lastUpdatedAtInMs, player, pairprogrammingTimeSpan, display) {

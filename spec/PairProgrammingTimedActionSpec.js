@@ -1,6 +1,4 @@
-import PairProgrammingTimedAction from "../src/model/PairProgrammingTimedAction";
-import * as Constants from "../src/model/constants";
-import Player from "../src/model/player";
+import PairProgrammingTimedAction from "../src/model/pairProgrammingTimedAction";
 
 describe("Pair Programming Timed Action", ()=>{
 

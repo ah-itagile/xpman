@@ -1,5 +1,4 @@
 import * as Constants from './constants'
-import { throws } from 'assert';
 
 export default class Player {
     constructor(map, controls, waitTimeWithoutMovementInMs, waitTimeAfterMovementInMs, lastUpdatedAtInMs, pairProgrammingTimeSpan) {
@@ -51,29 +50,43 @@ export default class Player {
             }
         }
 
+        this.movePlayer(time);
+
+        this.lastUpdatedAtInMs = time;
+    }
+
+    movePlayer(time) {
         let executedAMovement = false;
         this.movements.forEach((movement) => {
             if (!executedAMovement && this.controls[movement.name]()) {
-                if (this.map.getTileAt(this.posX+movement.dx,this.posY+movement.dy) !== Constants.MAP_WALL) {
+                if (this.map.getTileAt(this.posX + movement.dx, this.posY + movement.dy) !== Constants.MAP_WALL) {
                     this.posX += movement.dx;
                     this.posY += movement.dy;
-                    if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_PAIRPROG) {
-                        this.map.replaceTile(this.posX,this.posY, Constants.MAP_FREE);
-                        this.setPairProgramming(true);
-                        this.startedPairprogrammingTime = time;
-                    }
-                    if (this.map.getTileAt(this.posX,this.posY) === Constants.MAP_DOT) {
-                        this.map.replaceTile(this.posX,this.posY, Constants.MAP_FREE);
-                        this.eatenDots++;
-                        this.dotEatenEventListener();
-                    }
+
+                    this.checkForPairProgramming(time);
+                    this.checkForEatingStorypoing();
+
                     executedAMovement = true;
                     this.waitTimeInMs = this.waitTimeAfterMovementInMs;
                 }
             }
         });
+    }
 
-        this.lastUpdatedAtInMs = time;
+    checkForEatingStorypoing() {
+        if (this.map.getTileAt(this.posX, this.posY) === Constants.MAP_DOT) {
+            this.map.replaceTile(this.posX, this.posY, Constants.MAP_FREE);
+            this.eatenDots++;
+            this.dotEatenEventListener();
+        }
+    }
+
+    checkForPairProgramming(time) {
+        if (this.map.getTileAt(this.posX, this.posY) === Constants.MAP_PAIRPROG) {
+            this.map.replaceTile(this.posX, this.posY, Constants.MAP_FREE);
+            this.setPairProgramming(true);
+            this.startedPairprogrammingTime = time;
+        }
     }
 
     getPosX() {

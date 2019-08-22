@@ -55,7 +55,8 @@ export default class PhaserOpponent {
             yoyo: false,
             x: position.x,
             y: position.y
-        });    }
+        });    
+    }
 
     destroy() {
         this.opponentImage.destroy();

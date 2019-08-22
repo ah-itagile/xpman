@@ -1,4 +1,3 @@
-Draw graphics
 Integration Test
 CI Build
 
@@ -6,12 +5,17 @@ Different ghosts
 * tracer ghost
 
 Ideas:
+ SpawnOpponentsAction:
+  make independent from phaser.
+  opponent speed should be configurable
  getPairProgramming->isPairProgramming problem (also getKillableByPairProgramming)
  examine dependency: game<->SpawnGhostAction
  reset player after life lost (pair programming...)
  create ghosts and player via injected factory
  Rename point count in player to story points done in level
 Wallaby.js
+Build and deploy app in AWS:
+ https://medium.com/faun/deploy-static-website-to-amazon-s3-from-github-repository-3f1245d2a780
 Movement abstraction: player, ghost
 Timer class for handling intervals.
  no hard coded tilemap loading in gameScene
@@ -22,6 +26,7 @@ https://phasertutorials.com/creating-a-phaser-3-template-part-1/
 
 ----------
 Done:
+Draw graphics
 Make real level
 Fix bug: lives are double decreased if player is on same position...
 ghost caught player - player caught ghost: check also for every player update ghost contact

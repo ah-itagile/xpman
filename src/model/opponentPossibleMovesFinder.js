@@ -1,6 +1,6 @@
 import * as Constants from './constants';
 
-export default class GhostPossibleMovesFinder {
+export default class OpponentPossibleMovesFinder {
 
     canMoveTo(tile) {
         return tile===Constants.MAP_FREE || tile===Constants.MAP_DOT || tile===Constants.MAP_PAIRPROG;

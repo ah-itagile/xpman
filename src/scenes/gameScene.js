@@ -1,25 +1,24 @@
 import Phaser from "phaser";
 import tilesImg from "../assets/xpman-tileset.png";
 import playerImg from "../assets/player.png";
-import opponentPng from "../assets/manager.png";
-import bugPng from "../assets/bug.png";
+import opponentImg from "../assets/manager.png";
+import bugImg from "../assets/bug.png";
 import tileMapLevel1 from "../assets/xpman-level1.csv";
 import tileMapLevel2 from "../assets/xpman-level2.csv";
 
 import Opponent from '../model/opponent';
-import PhaserOpponent from '../phaseradaptor/phaseropponent';
+import PhaserOpponent from '../phaseradaptor/phaserOpponent';
 import PhaserKeyControlsAdapter from "../phaseradaptor/phaserKeyControlsAdaptor";
 import PhaserMapAdaptor from '../phaseradaptor/PhaserMapAdaptor';
 import PhaserPointsDisplay from '../phaseradaptor/phaserPointsDisplay';
 import PhaserLivesDisplay from '../phaseradaptor/phaserLivesDisplay';
 import Player from "../model/player";
 import PhaserPlayer from "../phaseradaptor/phaserPlayer";
-import XPManGame from '../model/xpmanGame';
 import PhaserRandomMoveDecider from "../phaseradaptor/phaserRandomMoveDecider";
 import OpponentPossibleMovesFinder from "../model/opponentPossibleMovesFinder";
 import ChasingMoveDecider from "../model/chasingMoveDecider";
 import PhaserCiCounterDisplay from "../phaseradaptor/phaserCiCounterDisplay";
-import SpawnOpponentsAction from "../phaseradaptor/SpawnOpponentsAction";
+import SpawnOpponentsAction from "../phaseradaptor/spawnOpponentsAction";
 import PhaserPairProgrammingDisplay from "../phaseradaptor/phaserPairProgrammingDisplay";
 import PairProgrammingTimedAction from "../model/PairProgrammingTimedAction";
 
@@ -41,8 +40,8 @@ export default class GameScene extends Phaser.Scene {
   {
       this.load.image('tiles', tilesImg);
       this.load.image('player', playerImg);
-      this.load.image('opponent', opponentPng);
-      this.load.image('bug', bugPng);
+      this.load.image('opponent', opponentImg);
+      this.load.image('bug', bugImg);
       this.load.tilemapCSV('tileMapLevel1', tileMapLevel1);
       this.load.tilemapCSV('tileMapLevel2', tileMapLevel2);
   }

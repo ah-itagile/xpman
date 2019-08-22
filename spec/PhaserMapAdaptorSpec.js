@@ -1,6 +1,6 @@
 import PhaserMapAdaptor from '../src/phaseradaptor/PhaserMapAdaptor'
 import * as Constants from '../src/model/constants'
-import * as TilesConstants from '../src/phaseradaptor/TilesConstants'
+import * as TilesConstants from '../src/phaseradaptor/tilesConstants'
 
 describe("PhaserMapAdaptor", () => {
     [{phaserMapTile:TilesConstants.EmptyField, expectedMappedTile:Constants.MAP_FREE},

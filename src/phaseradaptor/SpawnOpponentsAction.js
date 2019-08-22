@@ -1,7 +1,7 @@
-import PhaserRandomMoveDecider from "../phaseradaptor/phaserRandomMoveDecider";
+import PhaserRandomMoveDecider from "./phaserRandomMoveDecider";
 import OpponentPossibleMovesFinder from "../model/opponentPossibleMovesFinder";
 import Opponent from "../model/opponent";
-import PhaserOpponent from "../phaseradaptor/phaseropponent";
+import PhaserOpponent from "./phaserOpponent";
 import * as Constants from '../model/constants';
 
 

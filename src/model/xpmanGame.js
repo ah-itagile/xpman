@@ -1,4 +1,5 @@
 export default class XPManGame {
+
     constructor() {
         this.currentLevelOneBased = 1;
         this.initialDotCount;
@@ -126,17 +127,33 @@ export default class XPManGame {
     }
 
     update(time, forceLevelEnd) {
-        for (var g = this.opponents.length - 1; g >= 0; g--) {
-            let opponent = this.opponents[g];
-            if (opponent.shouldUpdateAtTime(time)) {
-                opponent.update(time, this.player);
+        this.updateOpponents(time);
+        this.updateTimedActions(time);
+        this.updatePlayer(time);
+
+        this.checkForPlayerOpponentsContact();
+        this.checkForLevelFinished(forceLevelEnd);
+    }
+
+    checkForPlayerOpponentsContact() {
+        for (let i = this.opponents.length - 1; i >= 0; i--) {
+            this.checkForOpponentPlayerContact(i);
+        }
+    }
+
+    checkForLevelFinished(forceLevelEnd) {
+        if (this.player.getEatenDots() === this.initialDotCount || forceLevelEnd) {
+            if (this.currentLevelOneBased == this.levels.length) {
+                this.endGameCallback();
+            }
+            else {
+                this.currentLevelOneBased++;
+                this.levelFinishedCallback();
             }
         }
-        this.timedActions.forEach(timedAction => {
-            if (timedAction.shouldUpdateAtTime(time)) {
-                timedAction.update(time);
-            }
-        });
+    }
+
+    updatePlayer(time) {
         if (this.player.shouldUpdateAtTime(time)) {
             this.player.update(time);
             this.pointsDisplay.update(this.points);
@@ -145,24 +162,29 @@ export default class XPManGame {
                 timedAction.playerSteppedOn(tile);
             });
         }
-        for (var g = this.opponents.length - 1; g >= 0; g--) {
-            this.checkForOpponentPlayerContact(g);                    
-        }
-        if (this.player.getEatenDots()===this.initialDotCount || forceLevelEnd) {
-            if (this.currentLevelOneBased == this.levels.length) {
-                this.endGameCallback();
-            } else
-            {
-                this.currentLevelOneBased++;
-                this.levelFinishedCallback();
+    }
+
+    updateTimedActions(time) {
+        this.timedActions.forEach(timedAction => {
+            if (timedAction.shouldUpdateAtTime(time)) {
+                timedAction.update(time);
+            }
+        });
+    }
+
+    updateOpponents(time) {
+        for (let i = this.opponents.length - 1; i >= 0; i--) {
+            let opponent = this.opponents[i];
+            if (opponent.shouldUpdateAtTime(time)) {
+                opponent.update(time, this.player);
             }
         }
     }
 
-    checkForOpponentPlayerContact(g) {
-        let opponent = this.opponents[g];
+    checkForOpponentPlayerContact(opponentIndex) {
+        let opponent = this.opponents[opponentIndex];
         if (opponent.getPosX() === this.player.getPosX() && opponent.getPosY() === this.player.getPosY()) {
-            this.opponentCaughtPlayer(g);
+            this.opponentCaughtPlayer(opponentIndex);
         }
     }
 }
