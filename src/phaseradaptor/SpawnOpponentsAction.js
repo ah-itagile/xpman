@@ -52,7 +52,7 @@ export default class SpawnOpponentsAction {
     }
 
     showMessage() {
-        this.counterDisplay.showMessage("CI Countdown:" + this.currentCounter);
+        this.counterDisplay.showMessage(this.currentCounter);
     }
 
     reset() {

@@ -5,7 +5,13 @@ export default class PhaserPairProgrammingDisplay {
     }
 
     update(timeLeft) {
-        this.phaserPairProgrammingDisplay.setText("Pairing:"+(Math.ceil(timeLeft/1000)));
+        let secondsLeft = (Math.ceil(timeLeft/1000));
+        if (Math.ceil(timeLeft/300) % 2) {
+            this.phaserPairProgrammingDisplay.setColor('#0f0');
+        } else {
+            this.phaserPairProgrammingDisplay.setColor('#000');
+        }
+        this.phaserPairProgrammingDisplay.setText("Pairing:"+secondsLeft);
     }
 
     showNothing() {

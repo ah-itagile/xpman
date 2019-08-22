@@ -5,6 +5,11 @@ export default class PhaserCiCounterDisplay {
     }
 
     showMessage(counter) {
-        this.phaserCiCounterDisplay.setText(counter);
+        if (counter < 100 && (counter % 20)) {
+            this.phaserCiCounterDisplay.setColor('#f00');
+        } else {
+            this.phaserCiCounterDisplay.setColor('#fff');
+        }
+        this.phaserCiCounterDisplay.setText("CI Countdown:" + counter);
     }
 }
