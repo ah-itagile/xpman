@@ -62,9 +62,13 @@ Put a `f` infront of a test if you want to execute just one test (`fit` )
 
 ## Using Tiled
 You need a tileset and map
+
 ### Tileset
-After editing xpman-tileset.xcf in Gimp export as png to src/assets/xpman-tileset.png
-Import tileset from image. (e.g. 'xpman-tileset.png')
+Open `dev_assets/tiled/xpman-tileset.tsx`
+
+Or for a fresh start: After editing xpman-tileset.xcf in Gimp export as png to `src/assets/xpman-tileset.png`
+In Tiled: Import tileset from image. (e.g. `src/assets/xpman-tileset.png`)
+
 ### Map
-Create map for tileset.
-"Export as" CSV to assets (e.g. 'xpman-level1.csv').
+Open `dev_assets/tiled/xpman-levelX.tsx`
+After editing "Export as" CSV (e.g. 'assets/xpman-level1.csv').

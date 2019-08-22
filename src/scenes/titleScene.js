@@ -1,9 +1,8 @@
 import 'phaser';
-import titleImg from "../assets/title.jpg";
 import ghostPng from "../assets/manager.png";
-import bugPng from "../assets/bug_sprite.png";
+import bugPng from "../assets/bug.png";
 import ciServerPng from "../assets/ciServer.png";
-import kentPng from "../assets/kentbeck.png";
+import kentPng from "../assets/kent.png";
 
  
 export default class TitleScene extends Phaser.Scene {
@@ -12,7 +11,6 @@ export default class TitleScene extends Phaser.Scene {
   }
  
   preload () {
-    this.load.image('title', titleImg);
     this.load.image('ghostPng', ghostPng);
     this.load.image('bugPng', bugPng);
     this.load.image('ciServerPng', ciServerPng);

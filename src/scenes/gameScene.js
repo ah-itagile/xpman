@@ -2,8 +2,8 @@ import Phaser from "phaser";
 import tilesImg from "../assets/xpman-tileset.png";
 import playerImg from "../assets/player.png";
 import ghostPng from "../assets/manager.png";
-import bugPng from "../assets/bug_sprite.png";
-import tileMapLevel1 from "../assets/xpacman-level1.csv";
+import bugPng from "../assets/bug.png";
+import tileMapLevel1 from "../assets/xpman-level1.csv";
 import tileMapLevel2 from "../assets/xpman-level2.csv";
 
 import Ghost from '../model/ghost';
