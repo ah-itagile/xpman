@@ -20,7 +20,7 @@ import ChasingMoveDecider from "../model/chasingMoveDecider";
 import PhaserCiCounterDisplay from "../phaseradaptor/phaserCiCounterDisplay";
 import SpawnOpponentsAction from "../phaseradaptor/spawnOpponentsAction";
 import PhaserPairProgrammingDisplay from "../phaseradaptor/phaserPairProgrammingDisplay";
-import PairProgrammingTimedAction from "../model/PairProgrammingTimedAction";
+import PairProgrammingTimedAction from "../model/pairProgrammingTimedAction";
 
 
 export default class GameScene extends Phaser.Scene {
