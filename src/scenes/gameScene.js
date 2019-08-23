@@ -9,7 +9,7 @@ import tileMapLevel2 from "../assets/xpman-level2.csv";
 import Opponent from '../model/opponent';
 import PhaserOpponent from '../phaseradaptor/phaserOpponent';
 import PhaserKeyControlsAdapter from "../phaseradaptor/phaserKeyControlsAdaptor";
-import PhaserMapAdaptor from '../phaseradaptor/PhaserMapAdaptor';
+import PhaserMapAdaptor from '../phaseradaptor/phaserMapAdaptor';
 import PhaserPointsDisplay from '../phaseradaptor/phaserPointsDisplay';
 import PhaserLivesDisplay from '../phaseradaptor/phaserLivesDisplay';
 import Player from "../model/player";

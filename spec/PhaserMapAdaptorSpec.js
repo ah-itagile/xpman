@@ -1,4 +1,4 @@
-import PhaserMapAdaptor from '../src/phaseradaptor/PhaserMapAdaptor'
+import PhaserMapAdaptor from '../src/phaseradaptor/phaserMapAdaptor'
 import * as Constants from '../src/model/constants'
 import * as TilesConstants from '../src/phaseradaptor/tilesConstants'
 

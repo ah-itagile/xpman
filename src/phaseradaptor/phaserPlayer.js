@@ -1,4 +1,4 @@
-import TilePositionToPhaserTranslator from "./TilePositionToPhaserTranslator";
+import TilePositionToPhaserTranslator from "./tilePositionToPhaserTranslator";
 
 export default class PhaserPlayer {
 
